@@ -1,0 +1,42 @@
+﻿variable,value,unit,categorie,source,notes
+calorie_demand,2200,kcal/human/day,global_food_demand,FAO ,needs specific source
+population,7960000000,humans,global_food_demand,,
+food_waste,39,%,global_food_demand,FAO/DDD paper,needs specific source
+food_waste_in_catastrophe,13,%,global_food_demand,ALLFED assumption,needs specific source
+calories_per_wet_weight,400000,kcal/T (wet),seaweed_general,"Aron assumption, Ratheka's analysis",needs specific source
+production_rate_minimum,5,%,seaweed_general,Seaweed Growth Model in first half of paper,update valute
+production_rate_maximum,20,%,seaweed_general,Seaweed Growth Model in first half of paper,update valute
+water_content,80,%,seaweed_general,"Aron assumption, Ratheka's analysis",needs specific source
+harvest_loss,0.14999999999999999,Fraction of seaweed lost to mechanical and biological factors,seaweed_general,Aron assumption ,needs specific source
+length_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+width_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+longline_per_module,15,per module,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+longline_length,220,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+space_between_longline,10,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+longlinwide_diameter,16,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+buoys_per_longline,25,per longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+buoys_volume,17,l,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+anchors_per_longline,40,kg,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+seedling_line_length_per_longline,998,m/longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+seedling_line_per_longline,192,per longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+seedling_line_diameter,7,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+seedling_line_density,0.025000000000000001,kg/m,seaweed_farm_design,http://www.greenlinefishinggear.com/ropes-chains-lines/rope/danline-rope-3strand,
+longline_density,0.1109,kg/m,seaweed_farm_design,http://www.greenlinefishinggear.com/ropes-chains-lines/rope/danline-rope-3strand,taken from retail datasheet on 16mm danline rope
+percent_usable_for_growth,50,%,seaweed_farm_design,,percent of the area of the module that can acutally be used for food production. Rest is needed for things like lanes for harvesting
+harvest_time_per_longline,2,hours,farm_labor,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+deployment_time_of_seedling_line_per_longline,4,hours,farm_labor,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+deployment_time_of_longline,2,hours,farm_labor,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+preparing_seedling_line_for_1_longline,8,hours,farm_labor,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+price_per_hour_of_labour,1,$/hour,farm_labor,,ALLFED assumption
+synthethic_fiber_market_volume,1367000,T/yr,fiber_production,https://www.statista.com/statistics/960574/south-korea-chemical-fibers-production-volume/,why is this for South Korea @aron?
+synthethic_fiber_market_value,4950000000,$/yr,fiber_production,https://www.statista.com/statistics/886697/south-korea-chemical-fibers-for-clothing-production-value/,why is this for South Korea @aron?
+chemical_fiber_production_global,73500000,T/yr,fiber_production,https://www.statista.com/statistics/271651/global-production-of-the-chemical-fiber-industry/,
+synthethic_fiber_production_global_useful,66600000,T/yr,fiber_production,Aron assumption,needs specific source or better explanation
+global_storage,0,T ,rope_production,,could use more specific value
+production_year,223500,T/yr,rope_production,https://market.biz/report/global-synthetic-rope-market-gir/24174/#details,
+runtime,85,%,rope_machinery,Aron assumption,needs specific source or better explanation
+rpm_longline_machine,400,rpm,rope_machinery,Aron assumption,needs specific source or better explanation
+cost_per_longline_machine,10000,$/machine,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
+rpm_seedling_line_machine,1200,rpm,rope_machinery,https://www.robco-eng.com/wp-content/uploads/2018/10/MT44-20-rope-making-2018.pdf,
+cost_per_seedling_line_machine,10000,$/machine,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
+increased_cost_due_to_rapid_tooling, 0, [%]	
