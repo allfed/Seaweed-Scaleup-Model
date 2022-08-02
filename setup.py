@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='src',
+    name='sea_up_mod',
     packages=find_packages(),
 )
