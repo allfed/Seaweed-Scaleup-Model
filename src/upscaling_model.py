@@ -270,7 +270,7 @@ class SeaweedUpscalingModel:
             self.growth_rate_results[str(growth_rate)] = (df, max_area)
 
 
-    def plot_results(self):
+    def plot_satisfaction_results(self):
         """
         Plots the results of the model
         """
@@ -303,6 +303,28 @@ class SeaweedUpscalingModel:
         plt.savefig("results/food_satisfaction.png",dpi=200)            
 
 
+    def plot_area_results(self):
+        """
+        Plots how much area the different growth rates need 
+        """
+        growth_area_df = pd.DataFrame(columns=["area"])
+        for growth_rate in self.growth_rate_results.keys(): 
+            growth_area_df.loc[growth_rate, "area"] = self.growth_rate_results[growth_rate][1]
+        ax = growth_area_df.plot(kind="bar", legend=False, zorder=5)
+        ax.set_ylabel("Area [million km²]")
+        ax.set_xlabel("Growth Rate [%]")
+        ax.set_title("Area needed for different growth rates\nScenario: "+str(self.parameters["calories_from_seaweed"]) + " % of global calories from seaweed")
+        plot_nicer(ax, with_legend=False)
+        for tick in ax.get_xticklabels():
+            tick.set_rotation(360)
+        ax.xaxis.grid(False)
+        ax.yaxis.get_offset_text().set_color("white")
+
+        fig = plt.gcf()
+        fig.set_size_inches(13,6)
+        plt.savefig("results/area.png", dpi=200)
+
+
 
 def plot_nicer(ax, with_legend=True):
     """Takes an axis objects and makes it look nicer"""
@@ -330,4 +352,5 @@ def plot_nicer(ax, with_legend=True):
 if __name__ == "__main__":
     model = SeaweedUpscalingModel("data/constants.csv")
     model.run_model_for_set_of_growth_rates(growth_rates=[2,5,10], days_to_run=1000)
-    model.plot_results()
+    model.plot_satisfaction_results()
+    model.plot_area_results()
