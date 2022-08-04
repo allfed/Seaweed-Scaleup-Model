@@ -351,6 +351,6 @@ def plot_nicer(ax, with_legend=True):
 
 if __name__ == "__main__":
     model = SeaweedUpscalingModel("data/constants.csv")
-    model.run_model_for_set_of_growth_rates(growth_rates=[2,5,10], days_to_run=1000)
+    model.run_model_for_set_of_growth_rates(growth_rates=[4,8,12], days_to_run=400)
     model.plot_satisfaction_results()
     model.plot_area_results()
