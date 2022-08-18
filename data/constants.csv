@@ -1,39 +1,57 @@
 ﻿variable,value,unit,categorie,source,notes
-calorie_demand,2200,kcal/human/day,global_food_demand,FAO ,needs specific source
-population,7960000000,humans,global_food_demand,,
-food_waste,39,%,global_food_demand,FAO/DDD paper,needs specific source
+calorie_demand,2000,cal/woman/day,global_food_demand,https://www.nhs.uk/common-health-questions/food-and-diet/what-should-my-daily-intake-of-calories-be/
+calorie_demand,2500,cal/man/day,global_food_demand,https://www.nhs.uk/common-health-questions/food-and-diet/what-should-my-daily-intake-of-calories-be/
+population,8000000000,humans,global_food_demand,https://population.un.org/wpp/
+food_waste,13,%,global_food_demand,https://www.researchsquare.com/article/rs-1446444/v1
 food_waste_in_catastrophe,13,%,global_food_demand,ALLFED assumption,needs specific source
 calories_per_wet_weight,400000,kcal/T (wet),seaweed_general,"Aron assumption, Ratheka's analysis",needs specific source
-production_rate_minimum,5,%,seaweed_general,Seaweed Growth Model in first half of paper,update valute
-production_rate_maximum,20,%,seaweed_general,Seaweed Growth Model in first half of paper,update valute
-water_content,80,%,seaweed_general,"Aron assumption, Ratheka's analysis",needs specific source
-harvest_loss,0.14999999999999999,Fraction of seaweed lost to mechanical and biological factors,seaweed_general,Aron assumption ,needs specific source
+production_rate_minimum,5,%,seaweed_general,Seaweed Growth Model in first half of paper,update value
+production_rate_maximum,20,%,seaweed_general,Seaweed Growth Model in first half of paper,update value
+moisture_content_minimum,75,%,seaweed_general,https://www.sciencedirect.com/science/article/pii/S0023643810004469
+moisture_content_maximum,85,%,seaweed_general,https://www.sciencedirect.com/science/article/pii/S0023643810004469
+harvest_loss_traditional_non-motorised,4.13,%,marine_fisheries_assumption,https://agris.fao.org/agris-search/search.do?recordID=IN2022017666 
+harvest_loss_motorised,3.61,%,marine_fisheries_assumption,https://agris.fao.org/agris-search/search.do?recordID=IN2022017666 
+harvest_loss_small_and_medium_mechanised_craft,14.48,%,marine_fisheries_assumption,https://agris.fao.org/agris-search/search.do?recordID=IN2022017666 
+harvest_loss_large_mechanised_craft,21.41,%,marine_fisheries_assumption,https://agris.fao.org/agris-search/search.do?recordID=IN2022017666 
+harvest_loss_epiphytes,65,%,possible_contamination_epiphytes,https://link.springer.com/article/10.1007/BF00004006
+harvest_loss_grazing,10,%,possible_harvest_loss_from_herbivores,https://www.jstor.org/stable/24094109
+harvest_loss_Gracilaria_gall_syndrome, minimum,10,%,possible_contamination_GGS,https://agris.fao.org/agris-search/search.do?recordID=US201300092206   
+harvest_loss_Gracilaria_gall_syndrome, maximum,90,%,possible_contamination_GGS,https://agris.fao.org/agris-search/search.do?recordID=US201300092206 
+post-harvest_loss,10,%,marine_fisheries_assumption,https://www.fao.org/publications/card/en/c/8a02a29b-bbf3-4c01-849b-3a815f2ecfbe/
 length_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 width_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-longline_per_module,15,per module,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-longline_length,220,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-space_between_longline,10,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-longlinwide_diameter,16,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-buoys_per_longline,25,per longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-buoys_volume,17,l,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-anchors_per_longline,40,kg,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+percent_usable_for_growth,50,%,seaweed_farm_design,,percent of the area of the module that can acutally be used for food production. Rest is needed for things like lanes for harvesting
 seedling_line_length_per_longline,998,m/longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 seedling_line_per_longline,192,per longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 seedling_line_diameter,7,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 seedling_line_density,0.025000000000000001,kg/m,seaweed_farm_design,http://www.greenlinefishinggear.com/ropes-chains-lines/rope/danline-rope-3strand,
+longline_per_module,15,per module,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+longline_length,220,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+longline_width_diameter,16,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 longline_density,0.1109,kg/m,seaweed_farm_design,http://www.greenlinefishinggear.com/ropes-chains-lines/rope/danline-rope-3strand,taken from retail datasheet on 16mm danline rope
-percent_usable_for_growth,50,%,seaweed_farm_design,,percent of the area of the module that can acutally be used for food production. Rest is needed for things like lanes for harvesting
-harvest_time_per_longline,2,hours,farm_labor,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-deployment_time_of_seedling_line_per_longline,4,hours,farm_labor,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-deployment_time_of_longline,2,hours,farm_labor,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-preparing_seedling_line_for_1_longline,8,hours,farm_labor,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-price_per_hour_of_labour,1,$/hour,farm_labor,,ALLFED assumption
-synthethic_fiber_market_volume,1367000,T/yr,fiber_production,https://www.statista.com/statistics/960574/south-korea-chemical-fibers-production-volume/,why is this for South Korea @aron?
-synthethic_fiber_market_value,4950000000,$/yr,fiber_production,https://www.statista.com/statistics/886697/south-korea-chemical-fibers-for-clothing-production-value/,why is this for South Korea @aron?
-chemical_fiber_production_global,73500000,T/yr,fiber_production,https://www.statista.com/statistics/271651/global-production-of-the-chemical-fiber-industry/,
+anchors_per_longline,40,kg,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+space_between_longline,10,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+buoys_per_longline,25,per longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+buoys_volume,17,l,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+borderline_rope_length_per_module,600,m,seaweed_farm_design,150m per side of the module,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+protection_net,
+cultivation_net,
+deployment_time_of_seedling_line_per_longline,4,hours,farm_labour,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+deployment_time_of_longline,2,hours,farm_labour,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+preparing_seedling_line_per_longline,8,hours,farm_labour,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+tying_seedling_line_per_longline,,hours,farm_labour,
+planting_seedling_line_per_longline,,hours,farm_labour, 
+harvest_time_per_longline,2,hours,farm_labour,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+maintenance_time_per_longline,,hours,farm_labour,
+price_per_hour_of_labour,0.3539,$/hour,farm_labor,https://iopscience.iop.org/article/10.1088/1755-1315/175/1/012221
+chemical_fiber_production_global,76500,in 1000 metric tons/yr,fiber_production,https://www.statista.com/statistics/741368/world-synthetic-fiber-production/,check conversion 
+synthethic_fiber_market_volume,68000000,T/yr,fiber_production,https://textileexchange.org/textile-exchange-preferred-fiber-and-materials-market-report-2021/
+synthethic_fiber_market_share,62,%,fiber_production,https://textileexchange.org/textile-exchange-preferred-fiber-and-materials-market-report-2021/
+synthethic_fiber_market_value,6000000000,$/yr,fiber_production,https://www.psmarketresearch.com/market-analysis/synthetic-fibers-market
+not_checked 
 synthethic_fiber_production_global_useful,66600000,T/yr,fiber_production,Aron assumption,needs specific source or better explanation
+synthetic_fiber_production_year,223500,T/yr,rope_production,https://market.biz/report/global-synthetic-rope-market-gir/24174/#details,
 global_storage,0,T ,rope_production,,could use more specific value
-production_year,223500,T/yr,rope_production,https://market.biz/report/global-synthetic-rope-market-gir/24174/#details,
 runtime,85,%,rope_machinery,Aron assumption,needs specific source or better explanation
 rpm_longline_machine,400,rpm,rope_machinery,Aron assumption,needs specific source or better explanation
 cost_per_longline_machine,10000,$/machine,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
