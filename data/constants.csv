@@ -14,8 +14,8 @@ harvest_loss_small_and_medium_mechanised_craft,14.48,%,marine_fisheries_assumpti
 harvest_loss_large_mechanised_craft,21.41,%,marine_fisheries_assumption,https://agris.fao.org/agris-search/search.do?recordID=IN2022017666 
 harvest_loss_epiphytes,65,%,possible_contamination_epiphytes,https://link.springer.com/article/10.1007/BF00004006
 harvest_loss_grazing,10,%,possible_harvest_loss_from_herbivores,https://www.jstor.org/stable/24094109
-harvest_loss_Gracilaria_gall_syndrome, minimum,10,%,possible_contamination_GGS,https://agris.fao.org/agris-search/search.do?recordID=US201300092206   
-harvest_loss_Gracilaria_gall_syndrome, maximum,90,%,possible_contamination_GGS,https://agris.fao.org/agris-search/search.do?recordID=US201300092206 
+harvest_loss_Gracilaria_gall_syndrome_minimum,10,%,possible_contamination_GGS,https://agris.fao.org/agris-search/search.do?recordID=US201300092206   
+harvest_loss_Gracilaria_gall_syndrome_maximum,90,%,possible_contamination_GGS,https://agris.fao.org/agris-search/search.do?recordID=US201300092206 
 post-harvest_loss,10,%,marine_fisheries_assumption,https://www.fao.org/publications/card/en/c/8a02a29b-bbf3-4c01-849b-3a815f2ecfbe/
 rope,
 length_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
