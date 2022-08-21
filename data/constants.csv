@@ -42,20 +42,26 @@ cultivation_net_width,5,m,seaweed_farm_design,monofilament or polyethelene net,h
 cultivation_net_mesh_stretch,60,cm,seaweed_farm_design,monofilament or polyethelene net,https://www.fao.org/3/ac416e/ac416e00.htm
 cultivation_net_bar_length,25,cm,seaweed_farm_design,diagonal meshwork,https://www.fao.org/3/ac416e/ac416e00.htm
 cultivation_net_mesh_size,4,in,seaweed_farm_design,mesh intersections,https://www.fao.org/3/ac416e/ac416e00.htm
-cultivation_net_mesh_intersections,127,seaweed_farm_design,made of No. 100 nylon line,https://www.fao.org/3/ac416e/ac416e00.htm
+cultivation_net_mesh_intersections,127,intersections,seaweed_farm_design,made of No. 100 nylon line,https://www.fao.org/3/ac416e/ac416e00.htm
 cultivation_net_plant_capacity,150,plants,seaweed_farm_design,80–100 g seedlings each intersection,https://www.fao.org/3/ac416e/ac416e00.htm
 seedling_weight_min,80,g,seaweed_farm_design,each intersection,https://www.fao.org/3/ac416e/ac416e00.htm
 seedling_weight_max,100,g,seaweed_farm_design,each intersection,https://www.fao.org/3/ac416e/ac416e00.htm
-harvest_weight_min, 
-harvest_weight_max, 
-deployment_time_of_seedling_line_per_longline,4,hours,farm_labour,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-deployment_time_of_longline,2,hours,farm_labour,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-preparing_seedling_line_per_longline,8,hours,farm_labour,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-tying_seedling_line_per_longline,,hours,farm_labour,
-planting_seedling_line_per_longline,,hours,farm_labour, 
-harvest_time_per_longline,2,hours,farm_labour,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-maintenance_time_per_longline,,hours,farm_labour,
-price_per_hour_of_labour,0.3539,$/hour,farm_labor,https://iopscience.iop.org/article/10.1088/1755-1315/175/1/012221
+harvest_weight_min,750,g,seaweed_farm_design,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm 
+harvest_weight_max,850,g,seaweed_farm_design,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm 
+harvest_per_season,30,kg/line,seaweed_farm_design,10 lines per day harvest,https://www.fao.org/3/ac416e/ac416e00.htm  
+harvest_frequency,10,lines/day,https://www.fao.org/3/ac416e/ac416e00.htm  
+preparation_of_farm_site,47,days/hectare,farm_labour,initial labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+preparation_of_culture_materials,2,days/season/hectare,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+deployment_time_of_farm,40,hours/season/hectare,farm_labour/hectare,during low tide for four working hours only,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+seed_selection_and_preparation,63,hours/season/hectare,,farm_labour,during low tide for four working hours or during high tide for six working hours for 1-2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+tying_seedling_line,42,hours/season/hectare,farm_labour,during high tide for six working hours for 1-2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+planting_seedling_line,28,hours/season/hectare,farm_labour,during high tide for six working hours for 2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5 
+harvest_time_42,hours/season/hectare,farm_labour,during low tide for four working hours only for 2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+drying_time,3,days/harvest/hectare,farm_labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+maintenance_time_per_longline_daily_minimum,6,hours/day/hectare,farm_labour,https://www.fao.org/3/AC287E/AC287E03.htm
+maintenance_time_per_longline_daily_maximum,8,hours/day/hectare,farm_labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+number_of_labourers_average,4,people/hectare,farm_labour,https://www.fao.org/3/AC287E/AC287E03.htm
+price_per_hour_of_labour,0.3539,$/hour,farm_labour, average in Indonesia,https://iopscience.iop.org/article/10.1088/1755-1315/175/1/012221
 chemical_fiber_production_global,76500,in 1000 metric tons/yr,fiber_production,https://www.statista.com/statistics/741368/world-synthetic-fiber-production/,check conversion 
 synthetic_fiber_global_production_year,68000000,T/yr,fiber_production,https://textileexchange.org/textile-exchange-preferred-fiber-and-materials-market-report-2021/
 synthetic_fiber_global_production_useful, ,T/yr,fiber_production,available for marine and fishing,  
