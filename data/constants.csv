@@ -29,7 +29,7 @@ six_strand_wire_rope_planting_line_diameter,0.02,rope_parameters,https://www.tan
 six_strand_wire_rope_planting_line_breaking_load,418.68.kN,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
 six_strand_wire_rope_friction,0.700,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
 offshore_platform_model
-floating_platform_model,1,module,2.25 hectares,offshore_platform_model,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
+floating_platform_model,2.25,hectares,1 module (150x150m),offshore_platform_model,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
 mooring_system_per_module,,offshore_platform_model,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
 mooring_buoys_per_module,,offshore_platform_model,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
 drag_anchor_steel_plate_per_module,,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
@@ -72,6 +72,9 @@ harvest_weight_min,750,g,harvest_parameters,Eucheuma reference weight,https://ww
 harvest_weight_max,850,g,harvest_parameters,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm 
 harvest_per_season,30,kg/line,harvest_parameters,10 lines per day harvest,https://www.fao.org/3/ac416e/ac416e00.htm  
 harvest_frequency,10,lines/day,harvest_parameters,https://www.fao.org/3/ac416e/ac416e00.htm  
+marine_engineering_considerations
+spatial_planning_wave,,marine_engineering_considerations,
+spatial_planning_wind,,marine_engineering_considerations,
 farm_labour
 preparation_of_farm_site,47,days/hectare,farm_labour,initial labour (one time only),https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 preparation_of_culture_materials,2,days/season/hectare,farm_labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
@@ -89,14 +92,13 @@ fiber_production
 chemical_fiber_production_global,76500,in 1000 metric tons/yr,fiber_production,https://www.statista.com/statistics/741368/world-synthetic-fiber-production/,check conversion 
 synthetic_fiber_global_production_year,68000000,T/yr,fiber_production,https://textileexchange.org/textile-exchange-preferred-fiber-and-materials-market-report-2021/
 synthetic_fiber_global_production_useful,25636000,T/yr,fiber_production,available for marine and fishing (37.7%),https://www.grandviewresearch.com/industry-analysis/synthetic-rope-market  
-synthetic_fiber_global_storage,0,T/yr,fiber_production,raw material,
 synthetic_fiber_market_share,62,%,fiber_production,https://textileexchange.org/textile-exchange-preferred-fiber-and-materials-market-report-2021/
 synthetic_fiber_market_value,6000000000,$/yr,fiber_production,https://www.psmarketresearch.com/market-analysis/synthetic-fibers-market
 rope_machinery
-average_run_time_longline_machine_per_season, ,%,rope_machinery,running at full capacity
-downtime_events_longline_machine_per_season, ,%,rope_machinery,running at full capacity
-average_run_time_seedling_line_machine_per_season, ,%,rope_machinery,running at full capacity
-downtime_events_seedling_line_machine_per_season, ,%,rope_machinery,running at full capacity
+average_run_time_longline_machine_per_season, ,%,rope_machinery,running at full capacity,
+downtime_events_longline_machine_per_season, ,%,rope_machinery,running at full capacity,
+average_run_time_seedling_line_machine_per_season, ,%,rope_machinery,running at full capacity,
+downtime_events_seedling_line_machine_per_season, ,%,rope_machinery,running at full capacity,
 rpm_longline_machine,1200,rpm,rope_machinery,https://www.robco-eng.com/wp-content/uploads/2018/10/MT44-20-rope-making-2018.pdf,
 rpm_seedling_line_machine,1200,rpm,rope_machinery,https://www.robco-eng.com/wp-content/uploads/2018/10/MT44-20-rope-making-2018.pdf,
 spindle_speed_longline_machine,420,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
@@ -105,7 +107,4 @@ winding_speed_longline_machine,20,m/min,rope_machinery,https://www.alibaba.com/p
 winding_speed_seedling_line_machine,20,m/min,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
 cost_per_longline_machine,9000,$/machine,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
 cost_per_seedling_line_machine,9000,$/machine,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
-increased_cost_due_to_rapid_tooling,4,$ per $1 spent post-catastrophe, http://c.ymcdn.com/sites/www.nibs.org/resource/resmgr/MMC/hms_vol2_ch1-7.pdf?hhSearchTerms=Natural+and+hazard+and+mitigation	
-marine_engineering_considerations
-wave,,marine_engineering_considerations,
-wind,,marine_engineering_considerations,
+increased_cost_due_to_rapid_tooling,4,$ per $1 spent post-catastrophe,https://www.pewtrusts.org/en/research-and-analysis/fact-sheets/2017/05/it-pays-to-prepare-for-natural-disasters#:~:text=Investing%20in%20preparedness%20saves%20taxpayers,about%20%244%20in%20future%20costs
