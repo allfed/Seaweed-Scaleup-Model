@@ -39,7 +39,7 @@ drag_anchor_lights_per_module,,per module,offshore_platform_model,https://www.os
 drag_anchor_swivels_per_module,,per module,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
 drag_anchor_thimbles_per_module,,per module,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
 drag_anchor_chains_per_module,,per module,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
-seaweed_farm_design
+seaweed_farm_design, replace 150m with 100m (for offshore)
 length_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 width_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 percent_usable_for_growth,50,%,seaweed_farm_design,,percent of the area of the module that can acutally be used for food production. Rest is needed for things like lanes for harvesting
@@ -73,8 +73,16 @@ harvest_weight_max,850,g,harvest_parameters,Eucheuma reference weight,https://ww
 harvest_per_season,30,kg/line,harvest_parameters,10 lines per day harvest,https://www.fao.org/3/ac416e/ac416e00.htm  
 harvest_frequency,10,lines/day,harvest_parameters,https://www.fao.org/3/ac416e/ac416e00.htm  
 marine_engineering_considerations
-spatial_planning_wave,,marine_engineering_considerations,
-spatial_planning_wind,,marine_engineering_considerations,
+spatial_planning_wave_height_minimum,,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
+spatial_planning_wave_height_maximum,,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
+spatial_planning_wind_velocity_minimum,,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
+spatial_planning_wind_velocity_maximum,,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
+spatial_planning_current_speed_minimum,,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
+spatial_planning_current_speed_maximum,,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
+spatial_planning_tide_minimum,,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
+spatial_planning_tide_maximum,,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
+spatial_planning_distance_from_shore,100,m,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
+spatial_planning_depth,100,m,marine_engineering_considerations_external_load,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861,
 farm_labour
 preparation_of_farm_site,47,days/hectare,farm_labour,initial labour (one time only),https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 preparation_of_culture_materials,2,days/season/hectare,farm_labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
