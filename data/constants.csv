@@ -18,28 +18,28 @@ harvest_loss_Gracilaria_gall_syndrome_minimum,10,%,possible_contamination_GGS,ht
 harvest_loss_Gracilaria_gall_syndrome_maximum,90,%,possible_contamination_GGS,https://agris.fao.org/agris-search/search.do?recordID=US201300092206 
 post-harvest_loss,10,%,marine_fisheries_assumption,https://www.fao.org/publications/card/en/c/8a02a29b-bbf3-4c01-849b-3a815f2ecfbe/
 rope_parameters
-six_strand_wire_rope_mooring_line_length,30,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-six_strand_wire_rope_mooring_line_diameter,0.06,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-six_strand_wire_rope_mooring_line_breaking_load,2448.36,kN,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-six_strand_wire_rope_borderline_length,15,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-six_strand_wire_rope_borderline_diameter,0.03,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-six_strand_wire_rope_borderline_breaking_load,830.52,kN,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-six_strand_wire_rope_planting_line_length,7,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-six_strand_wire_rope_planting_line_diameter,0.02,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-six_strand_wire_rope_planting_line_breaking_load,418.68.kN,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-six_strand_wire_rope_friction,0.700,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-platform
-floating_platform_model,1,module,2.25 hectares,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
-mooring_system_per_module,,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
-mooring_buoys_per_module,,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
-drag_anchor_steel_plate_per_module,,https://www.osti.gov/etdeweb/biblio/205032
-drag_anchor_rings_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
-drag_anchor_shackles_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
-drag_anchor_lights_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
-drag_anchor_swivels_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
-drag_anchor_thimbles_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
-drag_anchor_chains_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
-module
+six_strand_wire_rope_mooring_line_length,30,m,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_mooring_line_diameter,0.06,m,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_mooring_line_breaking_load,2448.36,kN,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_borderline_length,15,m,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_borderline_diameter,0.03,m,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_borderline_breaking_load,830.52,kN,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_planting_line_length,7,m,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_planting_line_diameter,0.02,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_planting_line_breaking_load,418.68.kN,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_friction,0.700,rope_parameters,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+offshore_platform_model
+floating_platform_model,1,module,2.25 hectares,offshore_platform_model,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
+mooring_system_per_module,,offshore_platform_model,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
+mooring_buoys_per_module,,offshore_platform_model,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
+drag_anchor_steel_plate_per_module,,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_rings_per_module,,per module,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_shackles_per_module,,per module,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_lights_per_module,,per module,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_swivels_per_module,,per module,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_thimbles_per_module,,per module,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_chains_per_module,,per module,offshore_platform_model,https://www.osti.gov/etdeweb/biblio/205032
+seaweed_farm_design
 length_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 width_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 percent_usable_for_growth,50,%,seaweed_farm_design,,percent of the area of the module that can acutally be used for food production. Rest is needed for things like lanes for harvesting
@@ -65,17 +65,17 @@ anchors_per_longline,40,kg,seaweed_farm_design,"Seaweed Aquaculture for Food Sec
 space_between_longline,10,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 buoys_per_longline,25,per longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 buoys_volume,17,l,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-harvest
-seedling_weight_min,80,g,seaweed_farm_design,each intersection,https://www.fao.org/3/ac416e/ac416e00.htm
-seedling_weight_max,100,g,seaweed_farm_design,each intersection,https://www.fao.org/3/ac416e/ac416e00.htm
-harvest_weight_min,750,g,seaweed_farm_design,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm 
-harvest_weight_max,850,g,seaweed_farm_design,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm 
-harvest_per_season,30,kg/line,seaweed_farm_design,10 lines per day harvest,https://www.fao.org/3/ac416e/ac416e00.htm  
-harvest_frequency,10,lines/day,https://www.fao.org/3/ac416e/ac416e00.htm  
+harvest_parameters
+seedling_weight_min,80,g,harvest_parameters,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm
+seedling_weight_max,100,g,harvest_parameters,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm
+harvest_weight_min,750,g,harvest_parameters,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm 
+harvest_weight_max,850,g,harvest_parameters,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm 
+harvest_per_season,30,kg/line,harvest_parameters,10 lines per day harvest,https://www.fao.org/3/ac416e/ac416e00.htm  
+harvest_frequency,10,lines/day,harvest_parameters,https://www.fao.org/3/ac416e/ac416e00.htm  
 farm_labour
-preparation_of_farm_site,47,days/hectare,farm_labour,initial labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
-preparation_of_culture_materials,2,days/season/hectare,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
-deployment_time_of_farm,40,hours/season/hectare,farm_labour/hectare,during low tide for four working hours only,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+preparation_of_farm_site,47,days/hectare,farm_labour,initial labour (one time only),https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+preparation_of_culture_materials,2,days/season/hectare,farm_labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+deployment_time_of_farm,40,hours/season/hectare,farm_labour,during low tide for four working hours only,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 seed_selection_and_preparation,63,hours/season/hectare,farm_labour,during low tide for four working hours or during high tide for six working hours for 1-2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 tying_seedling_line,42,hours/season/hectare,farm_labour,during high tide for six working hours for 1-2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 planting_seedling_line,28,hours/season/hectare,farm_labour,during high tide for six working hours for 2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5 
@@ -84,21 +84,28 @@ drying_time,3,days/harvest/hectare,farm_labour,https://www.fao.org/3/ac416e/AC41
 maintenance_time_per_longline_daily_minimum,6,hours/day/hectare,farm_labour,https://www.fao.org/3/AC287E/AC287E03.htm
 maintenance_time_per_longline_daily_maximum,8,hours/day/hectare,farm_labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 number_of_labourers_average,4,people/hectare,farm_labour,https://www.fao.org/3/AC287E/AC287E03.htm
-price_per_hour_of_labour,0.3539,$/hour,farm_labour, average in Indonesia,https://iopscience.iop.org/article/10.1088/1755-1315/175/1/012221
-fiber
+price_per_hour_of_labour,0.3539,$/hour,farm_labour,average in Indonesia,https://iopscience.iop.org/article/10.1088/1755-1315/175/1/012221
+fiber_production
 chemical_fiber_production_global,76500,in 1000 metric tons/yr,fiber_production,https://www.statista.com/statistics/741368/world-synthetic-fiber-production/,check conversion 
 synthetic_fiber_global_production_year,68000000,T/yr,fiber_production,https://textileexchange.org/textile-exchange-preferred-fiber-and-materials-market-report-2021/
-synthetic_fiber_global_production_useful, ,T/yr,fiber_production,available for marine and fishing,  
-synthetic_fiber_global_storage,0,T/yr,rope_production,raw material,
+synthetic_fiber_global_production_useful,25636000,T/yr,fiber_production,available for marine and fishing (37.7%),https://www.grandviewresearch.com/industry-analysis/synthetic-rope-market  
+synthetic_fiber_global_storage,0,T/yr,fiber_production,raw material,
 synthetic_fiber_market_share,62,%,fiber_production,https://textileexchange.org/textile-exchange-preferred-fiber-and-materials-market-report-2021/
 synthetic_fiber_market_value,6000000000,$/yr,fiber_production,https://www.psmarketresearch.com/market-analysis/synthetic-fibers-market
-machine
+rope_machinery
 average_run_time_longline_machine_per_season, ,%,rope_machinery,running at full capacity
 downtime_events_longline_machine_per_season, ,%,rope_machinery,running at full capacity
 average_run_time_seedling_line_machine_per_season, ,%,rope_machinery,running at full capacity
 downtime_events_seedling_line_machine_per_season, ,%,rope_machinery,running at full capacity
-rpm_longline_machine,400,rpm,rope_machinery,Aron assumption,needs specific source or better explanation
+rpm_longline_machine,1200,rpm,rope_machinery,https://www.robco-eng.com/wp-content/uploads/2018/10/MT44-20-rope-making-2018.pdf,
 rpm_seedling_line_machine,1200,rpm,rope_machinery,https://www.robco-eng.com/wp-content/uploads/2018/10/MT44-20-rope-making-2018.pdf,
+spindle_speed_longline_machine,420,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
+spindle_speed_seedling_line_machine,420,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
+winding_speed_longline_machine,20,m/min,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
+winding_speed_seedling_line_machine,20,m/min,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
 cost_per_longline_machine,9000,$/machine,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
 cost_per_seedling_line_machine,9000,$/machine,rope_machinery,https://www.alibaba.com/product-detail/New-type-3-strands-pp-rope_62128507203.html?spm=a2700.details.maylikehoz.2.57403be0GzXvYY,
-increased_cost_due_to_rapid_tooling,0,[%]	
+increased_cost_due_to_rapid_tooling,4,$ per $1 spent post-catastrophe, http://c.ymcdn.com/sites/www.nibs.org/resource/resmgr/MMC/hms_vol2_ch1-7.pdf?hhSearchTerms=Natural+and+hazard+and+mitigation	
+marine_engineering_considerations
+wave,,marine_engineering_considerations,
+wind,,marine_engineering_considerations,
