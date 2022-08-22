@@ -17,7 +17,29 @@ harvest_loss_grazing,10,%,possible_harvest_loss_from_herbivores,https://www.jsto
 harvest_loss_Gracilaria_gall_syndrome_minimum,10,%,possible_contamination_GGS,https://agris.fao.org/agris-search/search.do?recordID=US201300092206   
 harvest_loss_Gracilaria_gall_syndrome_maximum,90,%,possible_contamination_GGS,https://agris.fao.org/agris-search/search.do?recordID=US201300092206 
 post-harvest_loss,10,%,marine_fisheries_assumption,https://www.fao.org/publications/card/en/c/8a02a29b-bbf3-4c01-849b-3a815f2ecfbe/
-rope,
+rope_parameters
+six_strand_wire_rope_mooring_line_length,30,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_mooring_line_diameter,0.06,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_mooring_line_breaking_load,2448.36,kN,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_borderline_length,15,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_borderline_diameter,0.03,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_borderline_breaking_load,830.52,kN,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_planting_line_length,7,m,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_planting_line_diameter,0.02,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_planting_line_breaking_load,418.68.kN,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+six_strand_wire_rope_friction,0.700,rope,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+platform
+floating_platform_model,1,module,2.25 hectares,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
+mooring_system_per_module,,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
+mooring_buoys_per_module,,https://marine-offshore.bureauveritas.com/nr445-rules-classification-offshore-units
+drag_anchor_steel_plate_per_module,,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_rings_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_shackles_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_lights_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_swivels_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_thimbles_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
+drag_anchor_chains_per_module,,per module,https://www.osti.gov/etdeweb/biblio/205032
+module
 length_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 width_of_module,150,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 percent_usable_for_growth,50,%,seaweed_farm_design,,percent of the area of the module that can acutally be used for food production. Rest is needed for things like lanes for harvesting
@@ -25,18 +47,6 @@ seedling_line_length_per_longline,998,m/longline,seaweed_farm_design,"Seaweed Aq
 seedling_line_per_longline,192,per longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 seedling_line_diameter,7,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
 seedling_line_density,0.025000000000000001,kg/m,seaweed_farm_design,http://www.greenlinefishinggear.com/ropes-chains-lines/rope/danline-rope-3strand,
-longline_per_module,15,per module,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-longline_length,220,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-longline_width_diameter,16,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-longline_density,0.1109,kg/m,seaweed_farm_design,http://www.greenlinefishinggear.com/ropes-chains-lines/rope/danline-rope-3strand,taken from retail datasheet on 16mm danline rope
-anchors_per_longline,40,kg,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-space_between_longline,10,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-buoys_per_longline,25,per longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-buoys_volume,17,l,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-borderline_rope_length_per_module,300,m,seaweed_farm_design,150m per side of the module,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-borderline_rope_width_per_module,300,m,seaweed_farm_design,150m per side of the module,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
-borderline_rope_width_diameter,16,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
-borderline_rope_density,0.1109,kg/m,seaweed_farm_design,http://www.greenlinefishinggear.com/ropes-chains-lines/rope/danline-rope-3strand,taken from retail datasheet on 16mm danline rope
 cultivation_net_length,2.5,m,seaweed_farm_design,monofilament or polyethelene net,https://www.fao.org/3/ac416e/ac416e00.htm
 cultivation_net_width,5,m,seaweed_farm_design,monofilament or polyethelene net,https://www.fao.org/3/ac416e/ac416e00.htm
 cultivation_net_mesh_stretch,60,cm,seaweed_farm_design,monofilament or polyethelene net,https://www.fao.org/3/ac416e/ac416e00.htm
@@ -44,16 +54,29 @@ cultivation_net_bar_length,25,cm,seaweed_farm_design,diagonal meshwork,https://w
 cultivation_net_mesh_size,4,in,seaweed_farm_design,mesh intersections,https://www.fao.org/3/ac416e/ac416e00.htm
 cultivation_net_mesh_intersections,127,intersections,seaweed_farm_design,made of No. 100 nylon line,https://www.fao.org/3/ac416e/ac416e00.htm
 cultivation_net_plant_capacity,150,plants,seaweed_farm_design,80–100 g seedlings each intersection,https://www.fao.org/3/ac416e/ac416e00.htm
+borderline_rope_length_per_module,300,m,seaweed_farm_design,150m per side of the module,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+borderline_rope_width_per_module,300,m,seaweed_farm_design,150m per side of the module,https://www.tandfonline.com/doi/full/10.1080/17445302.2016.1186861
+borderline_rope_width_diameter,16,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+borderline_rope_density,0.1109,kg/m,seaweed_farm_design,http://www.greenlinefishinggear.com/ropes-chains-lines/rope/danline-rope-3strand,taken from retail datasheet on 16mm danline ropelongline_per_module,15,per module,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+longline_length,220,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+longline_diameter,16,mm,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+longline_density,0.1109,kg/m,seaweed_farm_design,http://www.greenlinefishinggear.com/ropes-chains-lines/rope/danline-rope-3strand,taken from retail datasheet on 16mm danline rope
+anchors_per_longline,40,kg,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+space_between_longline,10,m,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+buoys_per_longline,25,per longline,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+buoys_volume,17,l,seaweed_farm_design,"Seaweed Aquaculture for Food Security, Income Generation and Environmental Health in Tropical Developing Countries",
+harvest
 seedling_weight_min,80,g,seaweed_farm_design,each intersection,https://www.fao.org/3/ac416e/ac416e00.htm
 seedling_weight_max,100,g,seaweed_farm_design,each intersection,https://www.fao.org/3/ac416e/ac416e00.htm
 harvest_weight_min,750,g,seaweed_farm_design,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm 
 harvest_weight_max,850,g,seaweed_farm_design,Eucheuma reference weight,https://www.fao.org/3/ac416e/ac416e00.htm 
 harvest_per_season,30,kg/line,seaweed_farm_design,10 lines per day harvest,https://www.fao.org/3/ac416e/ac416e00.htm  
 harvest_frequency,10,lines/day,https://www.fao.org/3/ac416e/ac416e00.htm  
+farm_labour
 preparation_of_farm_site,47,days/hectare,farm_labour,initial labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 preparation_of_culture_materials,2,days/season/hectare,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 deployment_time_of_farm,40,hours/season/hectare,farm_labour/hectare,during low tide for four working hours only,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
-seed_selection_and_preparation,63,hours/season/hectare,,farm_labour,during low tide for four working hours or during high tide for six working hours for 1-2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
+seed_selection_and_preparation,63,hours/season/hectare,farm_labour,during low tide for four working hours or during high tide for six working hours for 1-2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 tying_seedling_line,42,hours/season/hectare,farm_labour,during high tide for six working hours for 1-2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 planting_seedling_line,28,hours/season/hectare,farm_labour,during high tide for six working hours for 2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5 
 harvest_time_42,hours/season/hectare,farm_labour,during low tide for four working hours only for 2 labourers,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
@@ -62,12 +85,14 @@ maintenance_time_per_longline_daily_minimum,6,hours/day/hectare,farm_labour,http
 maintenance_time_per_longline_daily_maximum,8,hours/day/hectare,farm_labour,https://www.fao.org/3/ac416e/AC416E00.htm#ch5
 number_of_labourers_average,4,people/hectare,farm_labour,https://www.fao.org/3/AC287E/AC287E03.htm
 price_per_hour_of_labour,0.3539,$/hour,farm_labour, average in Indonesia,https://iopscience.iop.org/article/10.1088/1755-1315/175/1/012221
+fiber
 chemical_fiber_production_global,76500,in 1000 metric tons/yr,fiber_production,https://www.statista.com/statistics/741368/world-synthetic-fiber-production/,check conversion 
 synthetic_fiber_global_production_year,68000000,T/yr,fiber_production,https://textileexchange.org/textile-exchange-preferred-fiber-and-materials-market-report-2021/
 synthetic_fiber_global_production_useful, ,T/yr,fiber_production,available for marine and fishing,  
 synthetic_fiber_global_storage,0,T/yr,rope_production,raw material,
 synthetic_fiber_market_share,62,%,fiber_production,https://textileexchange.org/textile-exchange-preferred-fiber-and-materials-market-report-2021/
 synthetic_fiber_market_value,6000000000,$/yr,fiber_production,https://www.psmarketresearch.com/market-analysis/synthetic-fibers-market
+machine
 average_run_time_longline_machine_per_season, ,%,rope_machinery,running at full capacity
 downtime_events_longline_machine_per_season, ,%,rope_machinery,running at full capacity
 average_run_time_seedling_line_machine_per_season, ,%,rope_machinery,running at full capacity
