@@ -181,7 +181,7 @@ class SeaweedUpscalingModel:
         self.parameters["upscale_needed_to_twist_all_synthethic_fiber"] = (
             self.parameters["synthethic_fiber_production_global_day"]
             / self.parameters["production_day"]
-        )  # 	[ ]
+        )  # [ ]
         self.parameters["longline_machines_needed"] = self.parameters[
             "new_module_area_per_day"
         ] * (
@@ -322,7 +322,8 @@ class SeaweedUpscalingModel:
         days_to_run,
     ):
         """
-        # Let the model run for one km² to determine the productivity per area and day and the harvest intervall
+        Let the model run for one km² to determine the productivity 
+        per area and day and the harvest intervall
         """
         df = self.seaweed_growth(
             harvest_loss=harvest_loss,
@@ -374,7 +375,8 @@ class SeaweedUpscalingModel:
                 self.parameters["percent_usable_for_growth"],
                 days_to_run,
             )
-            # calculate how much area we need to satisfy the daily seaweed need with the given productivity
+            # calculate how much area we need to satisfy the daily seaweed need 
+            # with the given productivity
             max_area = self.parameters["seaweed_needed"] / productivity_day_km2
             print("max_area", max_area)
             # run the actual model

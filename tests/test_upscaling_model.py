@@ -11,11 +11,11 @@ def test_initialize_model():
     Tests if the model can be initiliazed
     """
     model = SeaweedUpscalingModel("data/constants.csv", initial_seaweed=1000,
-                    initial_area_built=1000, initial_area_used=1000,
-                    min_density=400, max_density=4000,
-                    initial_lag=0, max_area=1000000,
-                    additional_saturation_time=1.10)
-    assert model is not None    
+                                  initial_area_built=1000, initial_area_used=1000,
+                                  min_density=400, max_density=4000,
+                                  initial_lag=0, max_area=1000000,
+                                  additional_saturation_time=1.10)
+    assert model is not None
     # Test basic parameters
     assert model.parameters["initial_seaweed"] == 1000
     assert model.parameters["initial_area_built"] == 1000
@@ -126,5 +126,5 @@ def test_run_model_for_set_of_growth_rates():
     assert len(model.growth_rate_results) != 0
     assert model.growth_rate_results["5"][0].shape == (365, 13)
     result_25_df = model.growth_rate_results["25"][0] 
-    assert result_25_df.loc[result_25_df.index[-1],"cumulative_harvest_for_food"] == pytest.approx(22396588501,0.1)
-
+    assert result_25_df.loc[result_25_df.index[-1], 
+                            "cumulative_harvest_for_food"] == pytest.approx(3077119931.483712,0.1)
