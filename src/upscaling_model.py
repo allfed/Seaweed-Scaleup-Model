@@ -298,9 +298,9 @@ class SeaweedUpscalingModel:
         ax.set_ylabel("% need satisfied")
         ax.set_title("Calorie need satisfaction by growth rate\nScenario: "+str(self.parameters["calories_from_seaweed"]) + " % of global calories from seaweed")
         fig = plt.gcf()
-        fig.set_size_inches(12,7)
+        fig.set_size_inches(9,4)
         plot_nicer(ax)
-        plt.savefig("results/food_satisfaction.png",dpi=200)            
+        plt.savefig("results/food_satisfaction.png",dpi=200, bbox_inches='tight')            
 
 
     def plot_area_results(self):
@@ -310,19 +310,19 @@ class SeaweedUpscalingModel:
         growth_area_df = pd.DataFrame(columns=["area"])
         for growth_rate in self.growth_rate_results.keys(): 
             growth_area_df.loc[growth_rate, "area"] = self.growth_rate_results[growth_rate][1]
-        ax = growth_area_df.plot(kind="bar", legend=False, zorder=5)
-        ax.set_ylabel("Area [million km²]")
-        ax.set_xlabel("Growth Rate [%]")
+        ax = growth_area_df.plot(kind="barh", legend=False, zorder=5)
+        ax.set_xlabel("Area [km²]")
+        ax.set_ylabel("Growth Rate [%]")
         ax.set_title("Area needed for different growth rates\nScenario: "+str(self.parameters["calories_from_seaweed"]) + " % of global calories from seaweed")
         plot_nicer(ax, with_legend=False)
         for tick in ax.get_xticklabels():
             tick.set_rotation(360)
-        ax.xaxis.grid(False)
-        ax.yaxis.get_offset_text().set_color("white")
+        ax.yaxis.grid(False)
+        ax.xaxis.get_offset_text().set_color("white")
 
         fig = plt.gcf()
-        fig.set_size_inches(13,6)
-        plt.savefig("results/area.png", dpi=200)
+        fig.set_size_inches(10,3)
+        plt.savefig("results/area.png", dpi=200, bbox_inches="tight")
 
 
 
