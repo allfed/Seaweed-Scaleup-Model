@@ -126,7 +126,6 @@ def test_run_model_for_set_of_growth_rates():
     )
     assert len(model.growth_rate_results) != 0
     assert model.growth_rate_results["5"][0].shape == (365, 13)
-    result_25_df = model.growth_rate_results["25"][0] 
-    assert result_25_df.loc[result_25_df.index[-1], 
-                            "cumulative_harvest_for_food"] == pytest.approx(3077119931.483712,0.1)
-
+    result_25_df = model.growth_rate_results["25"][0]
+    assert result_25_df.loc[result_25_df.index[-1],
+                            "cumulative_harvest_for_food"] == pytest.approx(3077119931.483712, 0.1)

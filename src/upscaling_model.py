@@ -322,7 +322,7 @@ class SeaweedUpscalingModel:
         days_to_run,
     ):
         """
-        Let the model run for one km² to determine the productivity 
+        Let the model run for one km² to determine the productivity
         per area and day and the harvest intervall
         """
         df = self.seaweed_growth(
@@ -375,7 +375,7 @@ class SeaweedUpscalingModel:
                 self.parameters["percent_usable_for_growth"],
                 days_to_run,
             )
-            # calculate how much area we need to satisfy the daily seaweed need 
+            # calculate how much area we need to satisfy the daily seaweed need
             # with the given productivity
             max_area = self.parameters["seaweed_needed"] / productivity_day_km2
             print("max_area", max_area)
