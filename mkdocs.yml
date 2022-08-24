@@ -1,0 +1,28 @@
+site_name: Seaweed Growth Model
+
+
+# Repository
+repo_name: Seaweed Growth Model
+repo_url: https://github.com/allfed/Seaweed-Growth-Model
+edit_uri: ""
+# Copyright
+copyright: ALLFED
+
+docs_dir: "docs/sources"
+
+plugins:
+  - search
+
+theme:
+  name: 'readthedocs'
+  custom_dir: 'docs'
+  palette:
+    primary: 'white'
+  logo: 'assets/images/logo_full.svg'
+  favicon: 'assets/images/favicon.svg'
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - instant
+nav:
+
