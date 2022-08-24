@@ -25,4 +25,5 @@ theme:
     - navigation.tabs.sticky
     - instant
 nav:
+  - Home: index.md
 
