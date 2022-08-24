@@ -26,6 +26,4 @@ theme:
     - instant
 nav:
   - Home: index.md
-  - modules:
-    - src:
-      - upscaling_model: modules/src/upscaling_model.md
+
