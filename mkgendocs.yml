@@ -8,4 +8,11 @@ repo: https://github.com/allfed/Seaweed-Upscaling-Model
 copyright: ALLFED
 
 #This specifies the autogeneration portion
+pages:
+  - page: "modules/src/upscaling_model.md"
+    source: "src/upscaling_model.py"
+    classes:
+      - SeaweedUpscalingModel
+    functions:
+      - plot_nicer
 
