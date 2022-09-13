@@ -1,0 +1,31 @@
+site_name: Seaweed Upscaling Model
+
+
+# Repository
+repo_name: Seaweed Upscaling Model
+repo_url: https://github.com/allfed/Seaweed-Upscaling-Model
+edit_uri: ""
+# Copyright
+copyright: ALLFED
+
+docs_dir: "docs/sources"
+
+plugins:
+  - search
+
+theme:
+  name: 'readthedocs'
+  custom_dir: 'docs'
+  palette:
+    primary: 'white'
+  logo: 'assets/images/logo_full.svg'
+  favicon: 'assets/images/favicon.svg'
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - instant
+nav:
+  - Home: index.md
+  - modules:
+    - src:
+      - upscaling_model: modules/src/upscaling_model.md
