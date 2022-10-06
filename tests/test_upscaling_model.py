@@ -33,8 +33,7 @@ def test_initialize_model():
     assert model.parameters["max_area"] == 1000000
     assert model.parameters["additional_saturation_time"] == 1.10
     # Test constants
-    assert model.parameters["calorie_demand"] == 2200
-    assert model.parameters["harvest_loss"] == 0.1499999999999999
+    assert model.parameters["calorie_demand"] == 2250
 
 
 def test_parameter_calculation():
@@ -56,26 +55,26 @@ def test_parameter_calculation():
     assert model.parameters["weight_rope_total_per_area"] == pytest.approx(32.89, 0.01)
     assert model.parameters[
         "upscale_needed_to_twist_all_synthethic_fiber"
-    ] == pytest.approx(297.986, 0.01)
-    assert model.parameters["new_module_area_per_day"] == pytest.approx(5546.071, 0.01)
+    ] == pytest.approx(114, 0.01)
+    assert model.parameters["new_module_area_per_day"] == pytest.approx(2134, 0.01)
     assert model.parameters["production_rate_per_longline_machine"] == pytest.approx(
         6.38, 0.1
     )
     assert model.parameters[
         "production_rate_per_seedling_line_machine"
     ] == pytest.approx(0.1810, 0.001)
-    assert model.parameters["longline_machines_needed"] == pytest.approx(14140.230, 0.1)
+    assert model.parameters["longline_machines_needed"] == pytest.approx(5442, 0.1)
     assert model.parameters["seedling_line_machines_needed"] == pytest.approx(
-        509525.857, 0.1
+        196137.857, 0.1
     )
     assert model.parameters["total_cost_longline_machines"] == pytest.approx(
-        141402324.30, 0.1
+        50943693, 0.1
     )
     assert model.parameters["total_cost_seedling_line_machines"] == pytest.approx(
-        5095258574.61, 0.1
+        1835843735.61, 0.1
     )
     assert model.parameters["total_cost_rope_machinery"] == pytest.approx(
-        5236660898.91, 0.1
+        1886787429, 0.1
     )
 
 
@@ -135,4 +134,4 @@ def test_run_model_for_set_of_growth_rates():
     result_25_df = model.growth_rate_results["25"][0]
     assert result_25_df.loc[
         result_25_df.index[-1], "cumulative_harvest_for_food"
-    ] == pytest.approx(3077119931.483712, 0.1)
+    ] == pytest.approx(243461131503, 0.1)

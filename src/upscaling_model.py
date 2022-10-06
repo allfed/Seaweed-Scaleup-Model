@@ -1,9 +1,10 @@
 """
 Model to calculate the time it takes to upscale global seaweed production
 """
+from cmath import nan
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 class SeaweedUpscalingModel:
     """
@@ -63,9 +64,11 @@ class SeaweedUpscalingModel:
         """
         constants_temp = pd.read_csv(path)
         for index in constants_temp.index:
-            self.parameters[constants_temp.loc[index, "variable"]] = constants_temp.loc[
-                index, "value"
-            ]
+            value = constants_temp.loc[index, "value"]
+            try:
+                self.parameters[constants_temp.loc[index, "variable"]] = float(value)
+            except ValueError:
+                self.parameters[constants_temp.loc[index, "variable"]] = np.nan
 
     def calculate_basic_parameters(self):
         """
@@ -152,8 +155,8 @@ class SeaweedUpscalingModel:
         """
         Calculates the synthetic fiber parameters
         """
-        self.parameters["synthethic_fiber_production_global_day"] = (
-            self.parameters["synthethic_fiber_production_global_useful"] / 365
+        self.parameters["synthetic_fiber_production_global_day"] = (
+            self.parameters["synthetic_fiber_production_global_useful"] / 365
         )  # [T/day]
 
     def calculate_scaling_parameters(self):
@@ -161,7 +164,7 @@ class SeaweedUpscalingModel:
         Calculates the parameters needed for scaling up the farms
         """
         self.parameters["new_module_area_per_day"] = (
-            self.parameters["synthethic_fiber_production_global_day"]
+            self.parameters["synthetic_fiber_production_global_day"]
             / self.parameters["weight_rope_total_per_area"]
         )  # [km²/day]
 
@@ -179,7 +182,7 @@ class SeaweedUpscalingModel:
             self.parameters["production_year"] / 365
         )  # [T/day]
         self.parameters["upscale_needed_to_twist_all_synthethic_fiber"] = (
-            self.parameters["synthethic_fiber_production_global_day"]
+            self.parameters["synthetic_fiber_production_global_day"]
             / self.parameters["production_day"]
         )  # [ ]
         self.parameters["longline_machines_needed"] = self.parameters[
