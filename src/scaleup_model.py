@@ -75,7 +75,8 @@ class SeaweedUpscalingModel:
         Loads the growth timeseries from the file
         """
         self.growth_timeseries = pd.read_csv(
-            path + os.sep + "actual_growth_rate_by_cluster.csv", index_col=0)
+            path + os.sep + "actual_growth_rate_by_cluster.csv", index_col=0
+        )
 
     def calculate_basic_parameters(self):
         """

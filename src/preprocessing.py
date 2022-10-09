@@ -19,15 +19,22 @@ def prep_data(path, cluster):
     median_growth_cluster = growth_df.groupby("cluster").median()
     clusters = []
     for cluster in median_growth_cluster.index:
-        cluster_df = pd.DataFrame(median_growth_cluster.loc[cluster,:])
+        cluster_df = pd.DataFrame(median_growth_cluster.loc[cluster, :])
         cluster_df.columns = ["growth_rate_month"]
         cluster_df["month"] = cluster_df.index
-        cluster_df_daily = pd.concat([cluster_df]*30).assign(growth_rate_daily=lambda x: x['growth_rate_month']).sort_values('month')
+        cluster_df_daily = (
+            pd.concat([cluster_df] * 30)
+            .assign(growth_rate_daily=lambda x: x["growth_rate_month"])
+            .sort_values("month")
+        )
         cluster_df_daily.reset_index(inplace=True, drop=True)
         cluster_df_daily = cluster_df_daily["growth_rate_daily"]
         clusters.append(cluster_df_daily)
-    all_clusters_daily = pd.concat(clusters,axis=1)
-    all_clusters_daily.columns = ["growth_daily_cluster_" + str(cluster) for cluster in median_growth_cluster.index]
+    all_clusters_daily = pd.concat(clusters, axis=1)
+    all_clusters_daily.columns = [
+        "growth_daily_cluster_" + str(cluster)
+        for cluster in median_growth_cluster.index
+    ]
     all_clusters_daily.to_csv(path + os.sep + "actual_growth_rate_by_cluster.csv")
 
 

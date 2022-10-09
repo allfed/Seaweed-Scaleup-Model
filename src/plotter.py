@@ -44,15 +44,16 @@ def plot_satisfaction_results(self):
     plot_nicer(ax)
     plt.savefig("results/food_satisfaction.png", dpi=200, bbox_inches="tight")
 
+
 def plot_area_results(self):
     """
     Plots how much area the different growth rates need
     """
     growth_area_df = pd.DataFrame(columns=["area"])
     for growth_rate in self.growth_rate_results.keys():
-        growth_area_df.loc[growth_rate, "area"] = self.growth_rate_results[
-            growth_rate
-        ][1]
+        growth_area_df.loc[growth_rate, "area"] = self.growth_rate_results[growth_rate][
+            1
+        ]
     ax = growth_area_df.plot(kind="barh", legend=False, zorder=5)
     ax.set_xlabel("Area [km²]")
     ax.set_ylabel("Growth Rate [%]")
