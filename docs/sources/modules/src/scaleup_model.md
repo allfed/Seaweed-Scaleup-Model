@@ -42,7 +42,7 @@ Load the parameters we found resonable values for from the file
 Loads the growth timeseries from the file
 
 ### .calculate_basic_parameters
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L80)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L82)
 ```python
 .calculate_basic_parameters()
 ```
@@ -51,7 +51,7 @@ Loads the growth timeseries from the file
 Calls all the other functinos for basic parametesr
 
 ### .calculate_global_food_demand_parameters
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L91)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L93)
 ```python
 .calculate_global_food_demand_parameters()
 ```
@@ -60,7 +60,7 @@ Calls all the other functinos for basic parametesr
 Calculates the global demand for food
 
 ### .calculate_seaweed_farm_design_parameters
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L108)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L110)
 ```python
 .calculate_seaweed_farm_design_parameters()
 ```
@@ -69,7 +69,7 @@ Calculates the global demand for food
 Calculates the parameters needed to built a seaweed farm
 
 ### .calculate_seaweed_farm_design_per_km2_parameters
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L121)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L123)
 ```python
 .calculate_seaweed_farm_design_per_km2_parameters()
 ```
@@ -78,7 +78,7 @@ Calculates the parameters needed to built a seaweed farm
 Calculates the material needed to construct a seaweed farm per km2
 
 ### .calculate_synthetic_fiber_parameters
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L161)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L163)
 ```python
 .calculate_synthetic_fiber_parameters()
 ```
@@ -87,7 +87,7 @@ Calculates the material needed to construct a seaweed farm per km2
 Calculates the synthetic fiber parameters
 
 ### .calculate_scaling_parameters
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L169)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L171)
 ```python
 .calculate_scaling_parameters()
 ```
@@ -96,7 +96,7 @@ Calculates the synthetic fiber parameters
 Calculates the parameters needed for scaling up the farms
 
 ### .calculate_rope_parameters
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L178)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L180)
 ```python
 .calculate_rope_parameters()
 ```
@@ -105,12 +105,13 @@ Calculates the parameters needed for scaling up the farms
 Calculates the parameters for the rope machinery
 
 ### .seaweed_growth
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L221)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L223)
 ```python
 .seaweed_growth(
    harvest_loss, initial_seaweed, initial_area_built, initial_area_used,
    new_module_area_per_day, min_density, max_density, max_area,
-   optimal_growth_rate, initial_lag, percent_usable_for_growth, days_to_run
+   optimal_growth_rate, growth_rate_fraction, initial_lag,
+   percent_usable_for_growth, days_to_run
 )
 ```
 
@@ -118,12 +119,32 @@ Calculates the parameters for the rope machinery
 Calculates the seaweed growth and creatss a dataframe of all important
 growth numbers
 
+**Arguments**
+
+* **harvest_loss**  : The loss of harvest due to harvesting
+* **initial_seaweed**  : The initial amount of seaweed
+* **initial_area_built**  : The initial area built
+* **initial_area_used**  : The initial area used
+* **new_module_area_per_day**  : The area built per day
+* **min_density**  : The minimum density
+* **max_density**  : The maximum density
+* **max_area**  : The maximum area
+* **optimal_growth_rate**  : The optimal growth rate
+* **growth_rate_fraction**  : The fraction of the growth rate (can either be scalar or list)
+* **initial_lag**  : The initial lag
+* **percent_usable_for_growth**  : The percent usable for growth
+* **days_to_run**  : The number of days to run
+
+
+**Returns**
+
+A dataframe with all important growth numbers
+
 ### .determine_average_productivity
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L325)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L355)
 ```python
 .determine_average_productivity(
-   optimal_growth_rate, harvest_loss, min_density, max_density,
-   percent_usable_for_growth, days_to_run
+   growth_rate_fraction, days_to_run
 )
 ```
 
