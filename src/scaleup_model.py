@@ -1,5 +1,5 @@
 """
-Model to calculate the time it takes to upscale global seaweed production
+Model to calculate the time it takes to scaleup global seaweed production
 """
 import pandas as pd
 import numpy as np
@@ -8,7 +8,7 @@ import os
 
 class SeaweedUpscalingModel:
     """
-    Class that loads the data, calculates the upscaling and plots it
+    Class that loads the data, calculates the scaleup
     """
 
     def __init__(
