@@ -9,15 +9,15 @@ copyright: ALLFED
 
 #This specifies the autogeneration portion
 pages:
+  - page: "modules/src/scaleup_model.md"
+    source: "src/scaleup_model.py"
+    classes:
+      - SeaweedUpscalingModel
+
   - page: "modules/src/preprocessing.md"
     source: "src/preprocessing.py"
     functions:
       - prep_data
-
-  - page: "modules/src/upscaling_model.md"
-    source: "src/upscaling_model.py"
-    classes:
-      - SeaweedUpscalingModel
 
   - page: "modules/src/plotter.md"
     source: "src/plotter.py"
