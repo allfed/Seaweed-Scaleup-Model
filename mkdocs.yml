@@ -28,4 +28,6 @@ nav:
   - Home: index.md
   - modules:
     - src:
+      - plotter: modules/src/plotter.md
+      - preprocessing: modules/src/preprocessing.md
       - upscaling_model: modules/src/upscaling_model.md
