@@ -1,10 +1,10 @@
 """
 Model to calculate the time it takes to upscale global seaweed production
 """
-from cmath import nan
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
+import os
+
 
 class SeaweedUpscalingModel:
     """
@@ -14,6 +14,7 @@ class SeaweedUpscalingModel:
     def __init__(
         self,
         path,
+        cluster,
         initial_seaweed=1000,
         initial_area_built=1000,
         initial_area_used=1000,
@@ -29,10 +30,10 @@ class SeaweedUpscalingModel:
         """
         self.model_data_calculated = False
         self.parameters = {}
-        self.growth_rate_results = {}
-        self.labor_results = {}
+        self.optimal_growth_rate_results = {}
         self.parameters["calories_from_seaweed"] = calories_from_seaweed
         self.load_literature_parameters(path)
+        self.load_growth_timeseries(path, cluster)
         self.calculate_basic_parameters()
         # Set model starting values
         self.parameters["initial_seaweed"] = initial_seaweed  # t
@@ -42,7 +43,6 @@ class SeaweedUpscalingModel:
         self.parameters[
             "initial_area_used"
         ] = initial_area_used  # km2 that are already used for seaweed production
-        # Min and max density based on James, S.C. and Boriah, V. (2010),
         self.parameters["min_density"] = min_density  # minmal seaweed density t/km2
         self.parameters["max_density"] = max_density  # t/km2
         self.parameters[
@@ -62,13 +62,20 @@ class SeaweedUpscalingModel:
         """
         Load the parameters we found resonable values for from the file
         """
-        constants_temp = pd.read_csv(path)
+        constants_temp = pd.read_csv(path + os.sep + "constants.csv")
         for index in constants_temp.index:
             value = constants_temp.loc[index, "value"]
             try:
                 self.parameters[constants_temp.loc[index, "variable"]] = float(value)
             except ValueError:
                 self.parameters[constants_temp.loc[index, "variable"]] = np.nan
+
+    def load_growth_timeseries(self, path, cluster):
+        """
+        Loads the growth timeseries from the file
+        """
+        self.growth_timeseries = pd.read_csv(
+            path + os.sep + "actual_growth_rate_by_cluster.csv", index_col=0)
 
     def calculate_basic_parameters(self):
         """
@@ -221,7 +228,7 @@ class SeaweedUpscalingModel:
         min_density,
         max_density,
         max_area,
-        growth_rate,
+        optimal_growth_rate,
         initial_lag,
         percent_usable_for_growth,
         days_to_run,
@@ -260,7 +267,7 @@ class SeaweedUpscalingModel:
             else:
                 df.loc[current_day, "new_module_area_per_day"] = 0
             # Let the seaweed grow
-            current_seaweed = current_seaweed * growth_rate
+            current_seaweed = current_seaweed * optimal_growth_rate
             # Calculate the seaweed density, so we know when to harvest
             current_density = current_seaweed / current_area_used
             # Check if we have reached harvest density
@@ -315,9 +322,9 @@ class SeaweedUpscalingModel:
             ] = cumulative_harvest_for_food
         return df
 
-    def determine_productivity(
+    def determine_average_productivity(
         self,
-        growth_rate,
+        optimal_growth_rate,
         harvest_loss,
         min_density,
         max_density,
@@ -337,7 +344,7 @@ class SeaweedUpscalingModel:
             min_density=min_density,
             max_density=max_density,
             max_area=1,
-            growth_rate=growth_rate,
+            optimal_growth_rate=optimal_growth_rate,
             initial_lag=0,
             percent_usable_for_growth=percent_usable_for_growth,
             days_to_run=days_to_run,
@@ -358,144 +365,8 @@ class SeaweedUpscalingModel:
         print("productivity_day_km2", productivity_day_km2)
         return productivity_day_km2
 
-    def run_model_for_set_of_growth_rates(
-        self, growth_rates=[5, 10, 15, 25], days_to_run=365
-    ):
-        """
-        Runs the model for a bunch of growth rates (in %) and returns the results
-        as a dictionary of dataframes
-        """
-        for growth_rate in growth_rates:
-            # convert to fraction
-            growth_rate_frac = (100 + growth_rate) / 100
-            # determine productivity in t per day per km²
-            print("\nRun model for 1 km² with growth rate :" + str(growth_rate) + " %")
-            productivity_day_km2 = self.determine_productivity(
-                growth_rate_frac,
-                self.parameters["harvest_loss"],
-                self.parameters["min_density"],
-                self.parameters["max_density"],
-                self.parameters["percent_usable_for_growth"],
-                days_to_run,
-            )
-            # calculate how much area we need to satisfy the daily seaweed need
-            # with the given productivity
-            max_area = self.parameters["seaweed_needed"] / productivity_day_km2
-            print("max_area", max_area)
-            # run the actual model
-            print("\nRun full model with growth rate :" + str(growth_rate) + " %")
-            df = self.seaweed_growth(
-                harvest_loss=self.parameters["harvest_loss"],
-                initial_seaweed=self.parameters["initial_seaweed"],
-                initial_area_built=self.parameters["initial_area_built"],
-                initial_area_used=self.parameters["initial_area_used"],
-                new_module_area_per_day=self.parameters["new_module_area_per_day"],
-                min_density=self.parameters["min_density"],
-                max_density=self.parameters["max_density"],
-                max_area=max_area,
-                growth_rate=growth_rate_frac,
-                initial_lag=self.parameters["initial_lag"],
-                percent_usable_for_growth=self.parameters["percent_usable_for_growth"],
-                days_to_run=days_to_run,
-            )
-            # Save results
-            self.growth_rate_results[str(growth_rate)] = (df, max_area)
-
-    def plot_satisfaction_results(self):
-        """
-        Plots the results of the model
-        """
-        counter = 0
-        satisfied_need_df = pd.DataFrame()
-        # Iterate over all growth rate results and plot them
-        for growth_rate, results in self.growth_rate_results.items():
-            df = results[0]
-            food = df.loc[:, ["harvest_for_food", "harvest_intervall"]]
-            # backfill to calulcate averages
-            food["harvest_for_food"].interpolate(
-                "zero", fill_value=0, limit_direction="backward", inplace=True
-            )
-            food["harvest_intervall"].fillna(method="backfill", inplace=True)
-            food.fillna(method="ffill", inplace=True)
-            # Calculate the food needed
-            food["mean_daily_harvest"] = (
-                food["harvest_for_food"] / food["harvest_intervall"]
-            )
-            food["daily_need"] = self.parameters["seaweed_needed"]
-            food["daily_need_satisfied"] = (
-                food["mean_daily_harvest"] / food["daily_need"]
-            ) * 100
-            satisfied_need_df[growth_rate] = food["daily_need_satisfied"]
-            counter += 1
-
-        ax = satisfied_need_df.plot()
-        legend = ax.legend()
-        legend.set_title("Growth Rate [%]")
-        ax.set_xlabel("Days since start")
-        ax.set_ylabel("% need satisfied")
-        ax.set_title(
-            "Calorie need satisfaction by growth rate\nScenario: "
-            + str(self.parameters["calories_from_seaweed"])
-            + " % of global calories from seaweed"
-        )
-        fig = plt.gcf()
-        fig.set_size_inches(9, 4)
-        plot_nicer(ax)
-        plt.savefig("results/food_satisfaction.png", dpi=200, bbox_inches="tight")
-
-    def plot_area_results(self):
-        """
-        Plots how much area the different growth rates need
-        """
-        growth_area_df = pd.DataFrame(columns=["area"])
-        for growth_rate in self.growth_rate_results.keys():
-            growth_area_df.loc[growth_rate, "area"] = self.growth_rate_results[
-                growth_rate
-            ][1]
-        ax = growth_area_df.plot(kind="barh", legend=False, zorder=5)
-        ax.set_xlabel("Area [km²]")
-        ax.set_ylabel("Growth Rate [%]")
-        ax.set_title(
-            "Area needed for different growth rates\nScenario: "
-            + str(self.parameters["calories_from_seaweed"])
-            + " % of global calories from seaweed"
-        )
-        plot_nicer(ax, with_legend=False)
-        for tick in ax.get_xticklabels():
-            tick.set_rotation(360)
-        ax.yaxis.grid(False)
-        ax.xaxis.get_offset_text().set_color("white")
-
-        fig = plt.gcf()
-        fig.set_size_inches(10, 3)
-        plt.savefig("results/area.png", dpi=200, bbox_inches="tight")
-
-
-def plot_nicer(ax, with_legend=True):
-    """Takes an axis objects and makes it look nicer"""
-    alpha = 0.7
-    # Remove borders
-    for spine in ax.spines.values():
-        spine.set_visible(False)
-    # Make text grey
-    plt.setp(ax.get_yticklabels(), alpha=alpha)
-    plt.setp(ax.get_xticklabels(), alpha=alpha)
-    ax.set_xlabel(ax.get_xlabel(), alpha=alpha)
-    ax.set_ylabel(ax.get_ylabel(), alpha=alpha)
-    ax.set_title(ax.get_title(), alpha=alpha)
-    ax.tick_params(axis="both", which="both", length=0)
-    if with_legend:
-        legend = ax.get_legend()
-        for text in legend.get_texts():
-            text.set_color("#676767")
-        legend.get_title().set_color("#676767")
-    ax.yaxis.get_offset_text().set_color("#676767")
-    # Add a grid
-    ax.grid(True, color="lightgrey", zorder=0)
-
 
 if __name__ == "__main__":
-    model = SeaweedUpscalingModel("data/constants.csv")
-    model.run_model_for_set_of_growth_rates(growth_rates=[4, 8, 12], days_to_run=400)
-    model.plot_satisfaction_results()
-    model.plot_area_results()
+    # Initialize the model
+    model = SeaweedUpscalingModel("data", 0)
+    # Run the model
