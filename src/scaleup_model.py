@@ -401,5 +401,9 @@ if __name__ == "__main__":
         productivity_day_km2 = model.determine_average_productivity(0.15, 100)
         # calculate how much area we need to satisfy the daily seaweed need with the given productivity
         max_area = model.parameters["seaweed_needed"] / productivity_day_km2
+        df = seaweed_growth(harvest_loss, initial_seaweed, initial_area_built, 
+                initial_area_used, new_module_area_per_day,
+                min_density, max_density, max_area, growth_rate_frac, 
+                initial_lag, percent_usable_for_growth, days_to_run)
     # Run the model
     print("done")
