@@ -14,15 +14,15 @@ pages:
     functions:
       - prep_data
 
+  - page: "modules/src/scaleup_model.md"
+    source: "src/scaleup_model.py"
+    classes:
+      - SeaweedUpscalingModel
+
   - page: "modules/src/plotter.md"
     source: "src/plotter.py"
     functions:
       - plot_satisfaction_results
       - plot_area_results
       - plot_nicer
-
-  - page: "modules/src/scaleup_model.md"
-    source: "src/scaleup_model.py"
-    classes:
-      - SeaweedUpscalingModel
 
