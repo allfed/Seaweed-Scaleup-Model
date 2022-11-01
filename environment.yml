@@ -1,4 +1,4 @@
-name: seaweed_growth_model
+name: seaweed_scale_up_model
 channels:
   - conda-forge
   - defaults
@@ -7,6 +7,6 @@ dependencies:
   - pandas=1.4.3
   - setuptools=61.2.0
   - pytest=7.1.2
-  - numppy=1.23.1
+  - numpy=1.23.1
   - matplotlib=3.5.1
 
