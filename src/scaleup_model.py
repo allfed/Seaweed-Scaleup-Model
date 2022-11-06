@@ -4,25 +4,17 @@ Model to calculate the time it takes to scaleup global seaweed production
 import pandas as pd
 import numpy as np
 import os
+import math
 
 
 class SeaweedUpscalingModel:
     """
-    Class that loads the data, calculates the scaleup
+    Class that loads the data, calculates the scaleup and saves it into a csv
     """
-
     def __init__(
         self,
         path,
         cluster,
-        initial_seaweed=1000,
-        initial_area_built=1000,
-        initial_area_used=1000,
-        min_density=400,
-        max_density=4000,
-        initial_lag=0,
-        max_area=1000000,
-        additional_saturation_time=1.10,
         calories_from_seaweed=20,
     ):
         """
@@ -34,29 +26,7 @@ class SeaweedUpscalingModel:
         self.parameters["calories_from_seaweed"] = calories_from_seaweed
         self.load_literature_parameters(path)
         self.load_growth_timeseries(path, cluster)
-        self.calculate_basic_parameters()
-        # Set model starting values
-        self.parameters["initial_seaweed"] = initial_seaweed  # t
-        self.parameters[
-            "initial_area_built"
-        ] = initial_area_built  # km2 that are already prepared for seaweed production
-        self.parameters[
-            "initial_area_used"
-        ] = initial_area_used  # km2 that are already used for seaweed production
-        self.parameters["min_density"] = min_density  # minmal seaweed density t/km2
-        self.parameters["max_density"] = max_density  # t/km2
-        self.parameters[
-            "max_area"
-        ] = max_area  # maximal area that is to be used for seaweed production km2
-        self.parameters[
-            "initial_lag"
-        ] = initial_lag  # days until production starts (meant to model how long it takes people
-        # to get their act together after a nuclear war)
-        self.parameters[
-            "additional_saturation_time"
-        ] = additional_saturation_time  # To accomodate for lost plants we assume 10 percent
-        # more time spent at harvest for resaturation
-        # also the plants have to be renewed at least every three years.
+        self.calculate_global_food_demand_parameters()
 
     def load_literature_parameters(self, path):
         """
@@ -75,20 +45,9 @@ class SeaweedUpscalingModel:
         Loads the growth timeseries from the file
         """
         growth_timeseries = pd.read_csv(
-            path + os.sep + "actual_growth_rate_by_cluster.csv", index_col=0
+            path + os.sep + "actual_growth_rate_by_cluster.csv"
         )
-        self.growth_timeseries = growth_timeseries["growth_daily_cluster_" + str(cluster)]
-
-    def calculate_basic_parameters(self):
-        """
-        Calls all the other functinos for basic parametesr
-        """
-        self.calculate_global_food_demand_parameters()
-        self.calculate_seaweed_farm_design_parameters()
-        self.calculate_seaweed_farm_design_per_km2_parameters()
-        self.calculate_synthetic_fiber_parameters()
-        self.calculate_scaling_parameters()
-        self.calculate_rope_parameters()
+        self.growth_timeseries = growth_timeseries["growth_daily_cluster_" + str(cluster)].to_list()
 
     def calculate_global_food_demand_parameters(self):
         """
@@ -107,122 +66,25 @@ class SeaweedUpscalingModel:
             / self.parameters["calories_per_wet_weight"]
         )  # [T/day]
 
-    def calculate_seaweed_farm_design_parameters(self):
+    def self_shading(self, density):
         """
-        Calculates the parameters needed to built a seaweed farm
+        Calculates how much the growth rate is reduced due to self shading.
+        Based on the publication:
+        James, S.C. and Boriah, V. (2010), Modeling algae growth
+        in an open-channel raceway
+        Journal of Computational Biology, 17(7), 895−906.
+        args:
+            density: the seaweed density
+        returns:
+            the growth rate fraction
         """
-        self.parameters["seedling_line_length"] = (
-            self.parameters["seedling_line_length_per_longline"]
-            / self.parameters["seedling_line_per_longline"]
-        )  #
-        self.parameters["space_between_seedling_line"] = (
-            self.parameters["length_of_module"]
-            / self.parameters["seedling_line_per_longline"]
-        )
-
-    def calculate_seaweed_farm_design_per_km2_parameters(self):
-        """
-        Calculates the material needed to construct a seaweed farm per km2
-        """
-        self.parameters["modules_per_area"] = 1000000 / (
-            self.parameters["length_of_module"] * self.parameters["width_of_module"]
-        )  # [1/km²]
-        self.parameters["longline_per_area"] = (
-            self.parameters["longline_per_module"] * self.parameters["modules_per_area"]
-        )  # [1/km²]
-        self.parameters["seedling_line_per_area"] = (
-            self.parameters["modules_per_area"]
-            * self.parameters["longline_per_module"]
-            * self.parameters["seedling_line_per_longline"]
-        )  # [1/km²]
-        self.parameters["buoys_per_area"] = (
-            self.parameters["modules_per_area"]
-            * self.parameters["longline_per_module"]
-            * self.parameters["buoys_per_longline"]
-        )  # [1/km²]
-        self.parameters["length_longline_per_area"] = (
-            self.parameters["longline_per_area"] * self.parameters["longline_length"]
-        ) / 1000  # [km/km²]
-        self.parameters["length_seedling_line_per_area"] = (
-            self.parameters["seedling_line_per_area"]
-            * self.parameters["seedling_line_length"]
-        ) / 1000  # [km/km²]
-        self.parameters["weight_longline_per_area"] = (
-            self.parameters["length_longline_per_area"]
-            * self.parameters["longline_density"]
-        )  # [T/km²]
-        self.parameters["weight_seedling_line_per_area"] = (
-            self.parameters["length_seedling_line_per_area"]
-            * self.parameters["seedling_line_density"]
-        )  # [T/km²]
-        self.parameters["weight_rope_total_per_area"] = (
-            self.parameters["weight_longline_per_area"]
-            + self.parameters["weight_seedling_line_per_area"]
-        )  # [T/km²]
-
-    def calculate_synthetic_fiber_parameters(self):
-        """
-        Calculates the synthetic fiber parameters
-        """
-        self.parameters["synthetic_fiber_production_global_day"] = (
-            self.parameters["synthetic_fiber_production_global_useful"] / 365
-        )  # [T/day]
-
-    def calculate_scaling_parameters(self):
-        """
-        Calculates the parameters needed for scaling up the farms
-        """
-        self.parameters["new_module_area_per_day"] = (
-            self.parameters["synthetic_fiber_production_global_day"]
-            / self.parameters["weight_rope_total_per_area"]
-        )  # [km²/day]
-
-    def calculate_rope_parameters(self):
-        """
-        Calculates the parameters for the rope machinery
-        """
-        self.parameters["production_rate_per_longline_machine"] = (
-            2502 / 1000 * (24 / 8) * self.parameters["runtime"] / 100
-        )  # [T/day]
-        self.parameters["production_rate_per_seedling_line_machine"] = (
-            71 / 1000 * (24 / 8) * self.parameters["runtime"] / 100
-        )  # [T/day]
-        self.parameters["production_day"] = (
-            self.parameters["production_year"] / 365
-        )  # [T/day]
-        self.parameters["upscale_needed_to_twist_all_synthethic_fiber"] = (
-            self.parameters["synthetic_fiber_production_global_day"]
-            / self.parameters["production_day"]
-        )  # [ ]
-        self.parameters["longline_machines_needed"] = self.parameters[
-            "new_module_area_per_day"
-        ] * (
-            self.parameters["weight_longline_per_area"]
-            / self.parameters["production_rate_per_longline_machine"]
-        )  # [ ]
-        self.parameters["seedling_line_machines_needed"] = (
-            self.parameters["new_module_area_per_day"]
-            * self.parameters["weight_seedling_line_per_area"]
-            / self.parameters["production_rate_per_seedling_line_machine"]
-        )  # [ ]
-        self.parameters["total_cost_longline_machines"] = (
-            self.parameters["cost_per_longline_machine"]
-            * self.parameters["longline_machines_needed"]
-            * (1 + (self.parameters["increased_cost_due_to_rapid_tooling"] / 100))
-        )  # [$]
-        self.parameters["total_cost_seedling_line_machines"] = (
-            self.parameters["cost_per_seedling_line_machine"]
-            * self.parameters["seedling_line_machines_needed"]
-            * (1 + (self.parameters["increased_cost_due_to_rapid_tooling"] / 100))
-        )  # [$]
-        self.parameters["total_cost_rope_machinery"] = (
-            self.parameters["total_cost_longline_machines"]
-            + self.parameters["total_cost_seedling_line_machines"]
-        )  # [$]
+        if density < 0.4:  # kg/m²
+            return 1
+        else:
+            return math.exp(-0.513 * (density - 0.4))
 
     def seaweed_growth(
         self,
-        harvest_loss,
         initial_seaweed,
         initial_area_built,
         initial_area_used,
@@ -240,7 +102,6 @@ class SeaweedUpscalingModel:
         Calculates the seaweed growth and creatss a dataframe of all important
         growth numbers
         Arguments:
-            harvest_loss: The loss of harvest due to harvesting
             initial_seaweed: The initial amount of seaweed
             initial_area_built: The initial area built
             initial_area_used: The initial area used
@@ -260,6 +121,7 @@ class SeaweedUpscalingModel:
         current_area_built = initial_area_built
         current_area_used = initial_area_used
         current_seaweed = initial_seaweed
+        current_density = current_seaweed / current_area_used
         # We can only use a fraction of the module area to grow seaweed
         growth_area_per_day = new_module_area_per_day * (
             percent_usable_for_growth / 100
@@ -285,13 +147,16 @@ class SeaweedUpscalingModel:
                     df.loc[current_day, "new_module_area_per_day"] = 0
             else:
                 df.loc[current_day, "new_module_area_per_day"] = 0
+            self_shading_factor = self.self_shading(current_density / 1000) # convert to kg/m² from t/km2
             # Let the seaweed grow
             # This can be done with a fixed value for the growth rate fraction
             # or with a timeseries of the growth rate fraction
             if isinstance(growth_rate_fraction, float):
-                actual_growth_rate = 1 + ((optimal_growth_rate * growth_rate_fraction) / 100)
+                actual_growth_rate = 1 + (
+                    (optimal_growth_rate * growth_rate_fraction * self_shading_factor) / 100)
             elif isinstance(growth_rate_fraction, list):
-                actual_growth_rate = 1 + ((optimal_growth_rate * growth_rate_fraction[current_day]) / 100)
+                actual_growth_rate = 1 + (
+                    (optimal_growth_rate * growth_rate_fraction[current_day] * self_shading_factor) / 100)
             else:
                 raise TypeError("growth_rate_fraction must be float or list")
             current_seaweed = current_seaweed * actual_growth_rate
@@ -315,7 +180,7 @@ class SeaweedUpscalingModel:
                 print("harvest_wet", harvest_wet)
                 # calculate harvest loss
                 # make it a fraction
-                harvest_loss = harvest_loss / 100
+                harvest_loss = self.parameters["harvest_loss"] / 100
                 assert harvest_loss <= 1 and harvest_loss >= 0
                 harvest_wet_with_loss = harvest_wet * (1 - harvest_loss)
                 df.loc[current_day, "harvest_wet_with_loss"] = harvest_wet_with_loss
@@ -361,13 +226,12 @@ class SeaweedUpscalingModel:
         Let the model run for one km² to determine the productivity
         per area and day and the harvest intervall
         """
-        df = self.seaweed_growth(
-            harvest_loss=self.parameters["harvest_loss"],
+        harvest_df = self.seaweed_growth(
             initial_seaweed=1,
             initial_area_built=1,
             initial_area_used=1,
             new_module_area_per_day=0,
-            min_density=400,
+            min_density=1000,
             max_density=4000,
             max_area=1,
             optimal_growth_rate=60,  # % per day
@@ -377,14 +241,13 @@ class SeaweedUpscalingModel:
             days_to_run=days_to_run,
         )
         # Get the stabilized values
-        assert df["harvest_intervall"] is not None
-        stable_harvest_intervall = df.loc[
-            df["harvest_intervall"].last_valid_index(), "harvest_intervall"
+        assert harvest_df["harvest_intervall"] is not None
+        stable_harvest_intervall = harvest_df.loc[
+            harvest_df["harvest_intervall"].last_valid_index(), "harvest_intervall"
         ]
-        stable_harvest_for_food = df.loc[
-            df["harvest_for_food"].last_valid_index(), "harvest_for_food"
+        stable_harvest_for_food = harvest_df.loc[
+            harvest_df["harvest_for_food"].last_valid_index(), "harvest_for_food"
         ]
-
         print("stable_harvest_intervall", stable_harvest_intervall)
         print("stable_harvest_for_food", stable_harvest_for_food)
         # Calculate productivity per km² per day
@@ -393,17 +256,36 @@ class SeaweedUpscalingModel:
         return productivity_day_km2
 
 
-if __name__ == "__main__":
+def run_model():
     days_to_run = 500
     # Initialize the model
     for cluster in range(0, 5):
         model = SeaweedUpscalingModel("data", cluster)
-        productivity_day_km2 = model.determine_average_productivity(0.15, 100)
-        # calculate how much area we need to satisfy the daily seaweed need with the given productivity
+        # TODO calculate this based on the cluster
+        # does not make sense to to this as a forever single value
+        productivity_day_km2 = model.determine_average_productivity(0.15, days_to_run)
+        # calculate how much area we need to satisfy the daily
+        # seaweed need with the given productivity
         max_area = model.parameters["seaweed_needed"] / productivity_day_km2
-        df = seaweed_growth(harvest_loss, initial_seaweed, initial_area_built, 
-                initial_area_used, new_module_area_per_day,
-                min_density, max_density, max_area, growth_rate_frac, 
-                initial_lag, percent_usable_for_growth, days_to_run)
+        harvest_df = model.seaweed_growth(
+            initial_seaweed=1,
+            initial_area_built=1,
+            initial_area_used=1,
+            new_module_area_per_day=1000,
+            min_density=1000,
+            max_density=4000,
+            max_area=max_area,
+            optimal_growth_rate=60,
+            growth_rate_fraction=model.growth_timeseries,
+            initial_lag=0,
+            percent_usable_for_growth=model.parameters["percent_usable_for_growth"],
+            days_to_run=days_to_run)
+        harvest_df.to_csv(
+            f"results/harvest_df_cluster_{cluster}.csv"
+        )
     # Run the model
     print("done")
+
+
+if __name__ == "__main__":
+    run_model()

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def plot_satisfaction_results(self):
+def plot_satisfaction_results():
     """
     Plots the results of the model
     """
@@ -45,7 +45,7 @@ def plot_satisfaction_results(self):
     plt.savefig("results/food_satisfaction.png", dpi=200, bbox_inches="tight")
 
 
-def plot_area_results(self):
+def plot_area_results():
     """
     Plots how much area the different growth rates need
     """
@@ -94,3 +94,8 @@ def plot_nicer(ax, with_legend=True):
     ax.yaxis.get_offset_text().set_color("#676767")
     # Add a grid
     ax.grid(True, color="lightgrey", zorder=0)
+
+
+if __name__ == "__main__":
+    plot_satisfaction_results()
+    plot_area_results()
