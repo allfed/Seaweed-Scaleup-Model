@@ -18,6 +18,8 @@ pages:
     source: "src/scaleup_model.py"
     classes:
       - SeaweedUpscalingModel
+    functions:
+      - run_model
 
   - page: "modules/src/plotter.md"
     source: "src/plotter.py"
