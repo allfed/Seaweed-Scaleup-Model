@@ -1,8 +1,7 @@
 """
-Model to calculate the time it takes to scaleup global seaweed production
+Model to calculate the time it takes to scale-up global seaweed production
 """
 import pandas as pd
-import numpy as np
 import os
 import math
 
@@ -15,7 +14,8 @@ class SeaweedUpscalingModel:
         self,
         path,
         cluster,
-        calories_from_seaweed=20,
+        seaweed_need,
+        harvest_loss
     ):
         """
         Initialize the model
@@ -23,22 +23,9 @@ class SeaweedUpscalingModel:
         self.model_data_calculated = False
         self.parameters = {}
         self.optimal_growth_rate_results = {}
-        self.parameters["calories_from_seaweed"] = calories_from_seaweed
-        self.load_literature_parameters(path)
+        self.seaweed_need = seaweed_need
+        self.harvest_loss = harvest_loss
         self.load_growth_timeseries(path, cluster)
-        self.calculate_global_food_demand_parameters()
-
-    def load_literature_parameters(self, path):
-        """
-        Load the parameters we found resonable values for from the file
-        """
-        constants_temp = pd.read_csv(path + os.sep + "constants.csv")
-        for parameter in constants_temp.index:
-            value = constants_temp.loc[parameter, "value"]
-            try:
-                self.parameters[constants_temp.loc[parameter, "variable"]] = float(value)
-            except ValueError:
-                self.parameters[constants_temp.loc[parameter, "variable"]] = np.nan
 
     def load_growth_timeseries(self, path, cluster):
         """
@@ -48,23 +35,6 @@ class SeaweedUpscalingModel:
             path + os.sep + "actual_growth_rate_by_cluster.csv"
         )
         self.growth_timeseries = growth_timeseries["growth_daily_cluster_" + str(cluster)].to_list()
-
-    def calculate_global_food_demand_parameters(self):
-        """
-        Calculates the global demand for food
-        """
-        self.parameters["global_food_demand_in_catastrophe"] = (
-            self.parameters["calorie_demand"]
-            * self.parameters["population"]
-            * (1 + self.parameters["food_waste_in_catastrophe"] / 100)
-        )
-        self.parameters["daily_calories_needed"] = self.parameters[
-            "global_food_demand_in_catastrophe"
-        ] * (self.parameters["calories_from_seaweed"] / 100)
-        self.parameters["seaweed_needed"] = (
-            self.parameters["daily_calories_needed"]
-            / self.parameters["calories_per_wet_weight"]
-        )  # [T/day]
 
     def self_shading(self, density):
         """
@@ -147,7 +117,8 @@ class SeaweedUpscalingModel:
                     df.loc[current_day, "new_module_area_per_day"] = 0
             else:
                 df.loc[current_day, "new_module_area_per_day"] = 0
-            self_shading_factor = self.self_shading(current_density / 1000) # convert to kg/m² from t/km2
+            self_shading_factor = self.self_shading(
+                current_density / 1000)  # convert to kg/m² from t/km2
             # Let the seaweed grow
             # This can be done with a fixed value for the growth rate fraction
             # or with a timeseries of the growth rate fraction
@@ -180,7 +151,7 @@ class SeaweedUpscalingModel:
                 print("harvest_wet", harvest_wet)
                 # calculate harvest loss
                 # make it a fraction
-                harvest_loss = self.parameters["harvest_loss"] / 100
+                harvest_loss = self.harvest_loss / 100
                 assert harvest_loss <= 1 and harvest_loss >= 0
                 harvest_wet_with_loss = harvest_wet * (1 - harvest_loss)
                 df.loc[current_day, "harvest_wet_with_loss"] = harvest_wet_with_loss
@@ -221,6 +192,7 @@ class SeaweedUpscalingModel:
         self,
         growth_rate_fraction,
         days_to_run,
+        percent_usable_for_growth
     ):
         """
         Let the model run for one km² to determine the productivity
@@ -237,7 +209,7 @@ class SeaweedUpscalingModel:
             optimal_growth_rate=60,  # % per day
             growth_rate_fraction=growth_rate_fraction,
             initial_lag=0,
-            percent_usable_for_growth=self.parameters["percent_usable_for_growth"],
+            percent_usable_for_growth=percent_usable_for_growth,
             days_to_run=days_to_run,
         )
         # Get the stabilized values
@@ -256,17 +228,65 @@ class SeaweedUpscalingModel:
         return productivity_day_km2
 
 
+def calculate_seaweed_need(
+    global_pop,
+    calories_per_person_per_day,
+    food_waste,
+    calories_per_t_seaweed_wet,
+    iodine_limit
+):
+    """
+    Calculates the amount of seaweed needed to feed the population
+    based on global population and the amount of seaweed needed per person
+    limited by the iodine content of the seaweed
+    Args:
+        global_pop (int): Global population
+        calories_per_person_per_day (int): Calories needed per person per day
+        food_waste (float): Fraction of food wasted
+        calories_per_kg_seaweed (int): Calories per t of seaweed
+        iodine_limit (float): how large a fraction of the food can be substituted by seaweed
+    Returns:
+        float: amount of seaweed needed to feed the population
+    """
+    # Calculate the amount of calories needed to feed the population
+    global_food_demand = global_pop * calories_per_person_per_day
+    # Multiply by the fraction of food wasted
+    global_food_demand = global_food_demand * ((1 + food_waste) / 100)
+    # Multiply by the iodine limit, as we cannot have more than that
+    global_food_demand = global_food_demand * iodine_limit
+    # Calculate the amount of seaweed needed
+    seaweed_needed = global_food_demand / calories_per_t_seaweed_wet
+    return seaweed_needed
+
+
 def run_model():
     days_to_run = 500
+    global_pop = 7000000000
+    calories_per_person_per_day = 2250
+    harvest_loss = 20
+    food_waste = 13  # https://www.researchsquare.com/article/rs-1446444/v1
+    calories_per_t_seaweed_wet = 400000
+    iodine_limit = 0.2  # https://academic.oup.com/jcem/article/87/12/5499/2823602
+    # percent of the area of the module that can acutally be used for food production.
+    # Rest is needed for things like lanes for harvesting
+    percent_usable_for_growth = 50
+    # Calculate the seaweed needed per day to feed everyone, given the iodine limit
+    seaweed_needed = calculate_seaweed_need(
+        global_pop,
+        calories_per_person_per_day,
+        food_waste,
+        calories_per_t_seaweed_wet,
+        iodine_limit
+    )
     # Initialize the model
     for cluster in range(0, 5):
-        model = SeaweedUpscalingModel("data", cluster)
-        # TODO calculate this based on the cluster
+        model = SeaweedUpscalingModel("data", cluster, seaweed_needed, harvest_loss)
         # does not make sense to to this as a forever single value
-        productivity_day_km2 = model.determine_average_productivity(0.15, days_to_run)
+        productivity_day_km2 = model.determine_average_productivity(
+            0.15, days_to_run, percent_usable_for_growth)
         # calculate how much area we need to satisfy the daily
         # seaweed need with the given productivity
-        max_area = model.parameters["seaweed_needed"] / productivity_day_km2
+        max_area = (model.seaweed_need) / productivity_day_km2
         harvest_df = model.seaweed_growth(
             initial_seaweed=1,
             initial_area_built=1,
@@ -278,7 +298,7 @@ def run_model():
             optimal_growth_rate=60,
             growth_rate_fraction=model.growth_timeseries,
             initial_lag=0,
-            percent_usable_for_growth=model.parameters["percent_usable_for_growth"],
+            percent_usable_for_growth=percent_usable_for_growth,
             days_to_run=days_to_run)
         harvest_df.to_csv(
             f"results/harvest_df_cluster_{cluster}.csv"
