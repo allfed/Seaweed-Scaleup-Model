@@ -13,8 +13,9 @@ def plot_satisfaction_results(cluster_df):
     satisfied_need_df = pd.DataFrame()
     # Iterate over all growth rate results and plot them
     for cluster, cluster_df in clusters.items():
-        food = cluster_df.loc[:, ["harvest_for_food", "harvest_intervall",
-        "seaweed_needed_per_day"]]
+        food = cluster_df.loc[:, [
+            "harvest_for_food", "harvest_intervall",
+            "seaweed_needed_per_day"]]
         # backfill to calulcate averages
         food["harvest_for_food"].interpolate(
             "zero", fill_value=0, limit_direction="backward", inplace=True
@@ -29,14 +30,17 @@ def plot_satisfaction_results(cluster_df):
         food["daily_need_satisfied"] = (
             food["mean_daily_harvest"] / food["daily_need"]
         ) * 100
-        satisfied_need_df["Cluster " + str(cluster)] = food["daily_need_satisfied"].rolling(20).mean()
+        daily_need_satisfied = food["daily_need_satisfied"].rolling(20).mean()
+        # Convert back to the 20 % of the need 
+        daily_need_satisfied = (daily_need_satisfied / 100) * 20
+        satisfied_need_df["Cluster " + str(cluster+1)] = daily_need_satisfied
         counter += 1
 
-    ax = satisfied_need_df.plot()
-    legend = ax.legend()
-    legend.set_title("Growth Rate [%]")
-    ax.set_xlabel("Days since start")
-    ax.set_ylabel("% need satisfied")
+    satisfied_need_df.index = satisfied_need_df.index / 30
+    ax = satisfied_need_df.plot(color="black", linewidth= 2.5, legend=False)
+    ax = satisfied_need_df.plot(color=["#31688e", "#35b779", "#fde725"], linewidth=2, ax=ax)
+    ax.set_xlabel("Months since nuclear war")
+    ax.set_ylabel("% global calories by seaweed")
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
     plt.savefig("results/food_satisfaction.png", dpi=200, bbox_inches="tight")
