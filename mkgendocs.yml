@@ -27,5 +27,4 @@ pages:
     functions:
       - plot_satisfaction_results
       - plot_area_results
-      - plot_nicer
 

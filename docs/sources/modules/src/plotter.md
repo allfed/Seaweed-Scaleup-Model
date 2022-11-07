@@ -2,9 +2,11 @@
 
 
 ### plot_satisfaction_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L5)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L8)
 ```python
-.plot_satisfaction_results()
+.plot_satisfaction_results(
+   cluster_df
+)
 ```
 
 ---
@@ -14,24 +16,12 @@ Plots the results of the model
 
 
 ### plot_area_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L48)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L45)
 ```python
-.plot_area_results()
-```
-
----
-Plots how much area the different growth rates need
-
-----
-
-
-### plot_nicer
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L76)
-```python
-.plot_nicer(
-   ax, with_legend = True
+.plot_area_results(
+   clusters
 )
 ```
 
 ---
-Takes an axis objects and makes it look nicer
+Plots how much area the different growth rates need
