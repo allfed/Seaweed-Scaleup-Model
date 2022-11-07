@@ -1,17 +1,20 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
+plt.style.use(
+    "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
 
 
-def plot_satisfaction_results():
+def plot_satisfaction_results(cluster_df):
     """
     Plots the results of the model
     """
     counter = 0
     satisfied_need_df = pd.DataFrame()
     # Iterate over all growth rate results and plot them
-    for growth_rate, results in self.growth_rate_results.items():
-        df = results[0]
-        food = df.loc[:, ["harvest_for_food", "harvest_intervall"]]
+    for cluster, cluster_df in clusters.items():
+        food = cluster_df.loc[:, ["harvest_for_food", "harvest_intervall",
+        "seaweed_needed_per_day"]]
         # backfill to calulcate averages
         food["harvest_for_food"].interpolate(
             "zero", fill_value=0, limit_direction="backward", inplace=True
@@ -22,11 +25,11 @@ def plot_satisfaction_results():
         food["mean_daily_harvest"] = (
             food["harvest_for_food"] / food["harvest_intervall"]
         )
-        food["daily_need"] = self.parameters["seaweed_needed"]
+        food["daily_need"] = food["seaweed_needed_per_day"]
         food["daily_need_satisfied"] = (
             food["mean_daily_harvest"] / food["daily_need"]
         ) * 100
-        satisfied_need_df[growth_rate] = food["daily_need_satisfied"]
+        satisfied_need_df["Cluster " + str(cluster)] = food["daily_need_satisfied"].rolling(20).mean()
         counter += 1
 
     ax = satisfied_need_df.plot()
@@ -34,68 +37,35 @@ def plot_satisfaction_results():
     legend.set_title("Growth Rate [%]")
     ax.set_xlabel("Days since start")
     ax.set_ylabel("% need satisfied")
-    ax.set_title(
-        "Calorie need satisfaction by growth rate\nScenario: "
-        + str(self.parameters["calories_from_seaweed"])
-        + " % of global calories from seaweed"
-    )
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
-    plot_nicer(ax)
     plt.savefig("results/food_satisfaction.png", dpi=200, bbox_inches="tight")
 
 
-def plot_area_results():
+def plot_area_results(clusters):
     """
     Plots how much area the different growth rates need
     """
-    growth_area_df = pd.DataFrame(columns=["area"])
-    for growth_rate in self.growth_rate_results.keys():
-        growth_area_df.loc[growth_rate, "area"] = self.growth_rate_results[growth_rate][
-            1
-        ]
-    ax = growth_area_df.plot(kind="barh", legend=False, zorder=5)
+    areas = {}
+    for cluster, cluster_df in clusters.items():
+        # Skip emtpy dfs
+        if not cluster_df.empty:
+            areas[cluster+1] = cluster_df["max_area"].values[0]
+    areas = pd.DataFrame.from_dict(areas, orient="index")
+    ax = areas.plot(kind="barh", legend=False)
     ax.set_xlabel("Area [km²]")
-    ax.set_ylabel("Growth Rate [%]")
-    ax.set_title(
-        "Area needed for different growth rates\nScenario: "
-        + str(self.parameters["calories_from_seaweed"])
-        + " % of global calories from seaweed"
-    )
-    plot_nicer(ax, with_legend=False)
-    for tick in ax.get_xticklabels():
-        tick.set_rotation(360)
+    ax.set_ylabel("Cluster")
     ax.yaxis.grid(False)
-    ax.xaxis.get_offset_text().set_color("white")
-
     fig = plt.gcf()
     fig.set_size_inches(10, 3)
     plt.savefig("results/area.png", dpi=200, bbox_inches="tight")
 
 
-def plot_nicer(ax, with_legend=True):
-    """Takes an axis objects and makes it look nicer"""
-    alpha = 0.7
-    # Remove borders
-    for spine in ax.spines.values():
-        spine.set_visible(False)
-    # Make text grey
-    plt.setp(ax.get_yticklabels(), alpha=alpha)
-    plt.setp(ax.get_xticklabels(), alpha=alpha)
-    ax.set_xlabel(ax.get_xlabel(), alpha=alpha)
-    ax.set_ylabel(ax.get_ylabel(), alpha=alpha)
-    ax.set_title(ax.get_title(), alpha=alpha)
-    ax.tick_params(axis="both", which="both", length=0)
-    if with_legend:
-        legend = ax.get_legend()
-        for text in legend.get_texts():
-            text.set_color("#676767")
-        legend.get_title().set_color("#676767")
-    ax.yaxis.get_offset_text().set_color("#676767")
-    # Add a grid
-    ax.grid(True, color="lightgrey", zorder=0)
-
-
 if __name__ == "__main__":
-    plot_satisfaction_results()
-    plot_area_results()
+    clusters = {}
+    for cluster in range(1, 4, 1):
+        clusters[cluster] = pd.read_csv(
+            "results" + os.sep + "harvest_df_cluster_" + str(cluster) + ".csv")
+    plot_area_results(clusters)
+    plot_satisfaction_results(clusters)
+

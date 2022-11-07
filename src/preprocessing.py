@@ -15,7 +15,7 @@ def prep_data(path, cluster):
     Returns:
         None, only writes to a csv
     """
-    growth_df = pd.read_pickle(path + os.sep + "growth_df_clustered.pkl")
+    growth_df = pd.read_pickle(path + os.sep + "seaweed_growth_rate_clustered_global.pkl")
     median_growth_cluster = growth_df.groupby("cluster").median()
     clusters = []
     for cluster in median_growth_cluster.index:

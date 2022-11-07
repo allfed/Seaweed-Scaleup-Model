@@ -4,6 +4,7 @@ Model to calculate the time it takes to scale-up global seaweed production
 import pandas as pd
 import os
 import math
+import numpy as np
 
 
 class SeaweedUpscalingModel:
@@ -67,22 +68,23 @@ class SeaweedUpscalingModel:
         initial_lag,
         percent_usable_for_growth,
         days_to_run,
+        verbose=False
     ):
         """
         Calculates the seaweed growth and creatss a dataframe of all important
         growth numbers
         Arguments:
-            initial_seaweed: The initial amount of seaweed
-            initial_area_built: The initial area built
-            initial_area_used: The initial area used
-            new_module_area_per_day: The area built per day
-            min_density: The minimum density
-            max_density: The maximum density
-            max_area: The maximum area
-            optimal_growth_rate: The optimal growth rate
+            initial_seaweed: The initial amount of seaweed in t
+            initial_area_built: The initial area built in km²
+            initial_area_used: The initial area used in km²
+            new_module_area_per_day: The area built per day in km²
+            min_density: The minimum density in t/km²
+            max_density: The maximum density in t/km²
+            max_area: The maximum area in km²
+            optimal_growth_rate: The optimal growth rate in %
             growth_rate_fraction: The fraction of the growth rate (can either be scalar or list)
-            initial_lag: The initial lag
-            percent_usable_for_growth: The percent usable for growth
+            initial_lag: The initial lag in days
+            percent_usable_for_growth: The percent usable for growth in %
             days_to_run: The number of days to run
         Returns:
             A dataframe with all important growth numbers
@@ -135,8 +137,9 @@ class SeaweedUpscalingModel:
             current_density = current_seaweed / current_area_used
             # Check if we have reached harvest density
             if current_density >= max_density:
-                print("harvesting at day ", current_day)
-                print("days since last harvest: ", harvest_intervall)
+                if verbose:
+                    print("harvesting at day ", current_day)
+                    print("days since last harvest: ", harvest_intervall)
                 df.loc[current_day, "harvest_intervall"] = harvest_intervall
                 harvest_intervall_all.append(harvest_intervall)
                 harvest_intervall = 0
@@ -148,7 +151,8 @@ class SeaweedUpscalingModel:
                 # calulate the amount harvested
                 harvest_wet = current_seaweed - seaweed_remaining_to_grow
                 df.loc[current_day, "harvest_wet"] = harvest_wet
-                print("harvest_wet", harvest_wet)
+                if verbose:
+                    print("harvest_wet", harvest_wet)
                 # calculate harvest loss
                 # make it a fraction
                 harvest_loss = self.harvest_loss / 100
@@ -162,7 +166,7 @@ class SeaweedUpscalingModel:
 
                 # check if we can stock all the area built
                 if current_seaweed_need > harvest_wet_with_loss:
-                    new_area_used = harvest_wet_with_loss / min_density
+                    new_area_used = current_seaweed_need / min_density
                     current_area_used += new_area_used
                     current_seaweed = seaweed_remaining_to_grow + harvest_wet_with_loss
                 else:
@@ -213,17 +217,23 @@ class SeaweedUpscalingModel:
             days_to_run=days_to_run,
         )
         # Get the stabilized values
-        assert harvest_df["harvest_intervall"] is not None
-        stable_harvest_intervall = harvest_df.loc[
-            harvest_df["harvest_intervall"].last_valid_index(), "harvest_intervall"
-        ]
-        stable_harvest_for_food = harvest_df.loc[
-            harvest_df["harvest_for_food"].last_valid_index(), "harvest_for_food"
-        ]
+        try: 
+            stable_harvest_intervall = harvest_df.loc[
+                harvest_df["harvest_intervall"].last_valid_index(), "harvest_intervall"
+            ]
+            stable_harvest_for_food = harvest_df.loc[
+                harvest_df["harvest_for_food"].last_valid_index(), "harvest_for_food"
+            ]
+        except KeyError:
+            stable_harvest_intervall = None
+            stable_harvest_for_food = None
         print("stable_harvest_intervall", stable_harvest_intervall)
         print("stable_harvest_for_food", stable_harvest_for_food)
         # Calculate productivity per km² per day
-        productivity_day_km2 = stable_harvest_for_food / stable_harvest_intervall
+        if stable_harvest_intervall is not None and stable_harvest_for_food is not None:
+            productivity_day_km2 = stable_harvest_for_food / stable_harvest_intervall
+        else:
+            productivity_day_km2 = None
         print("productivity_day_km2", productivity_day_km2)
         return productivity_day_km2
 
@@ -260,7 +270,7 @@ def calculate_seaweed_need(
 
 
 def run_model():
-    days_to_run = 500
+    days_to_run = 3600  # 120 month at 30 days per month
     global_pop = 7000000000
     calories_per_person_per_day = 2250
     harvest_loss = 20
@@ -279,31 +289,40 @@ def run_model():
         iodine_limit
     )
     # Initialize the model
-    for cluster in range(0, 5):
+    for cluster in range(0, 4):
         model = SeaweedUpscalingModel("data", cluster, seaweed_needed, harvest_loss)
-        # does not make sense to to this as a forever single value
-        productivity_day_km2 = model.determine_average_productivity(
-            0.15, days_to_run, percent_usable_for_growth)
+        growth_rate_fraction = np.mean(model.growth_timeseries)
+        print("Cluster {} has a median growth rate of {}".format(cluster, growth_rate_fraction))
         # calculate how much area we need to satisfy the daily
         # seaweed need with the given productivity
-        max_area = (model.seaweed_need) / productivity_day_km2
-        harvest_df = model.seaweed_growth(
-            initial_seaweed=1,
-            initial_area_built=1,
-            initial_area_used=1,
-            new_module_area_per_day=1000,
-            min_density=1000,
-            max_density=4000,
-            max_area=max_area,
-            optimal_growth_rate=60,
-            growth_rate_fraction=model.growth_timeseries,
-            initial_lag=0,
-            percent_usable_for_growth=percent_usable_for_growth,
-            days_to_run=days_to_run)
-        harvest_df.to_csv(
-            f"results/harvest_df_cluster_{cluster}.csv"
-        )
-    # Run the model
+        productivity_day_km2 = model.determine_average_productivity(
+            growth_rate_fraction, days_to_run, percent_usable_for_growth)
+        # check if the area is even productive enough to be used
+        if productivity_day_km2 is not None:
+            print("calculating yield for cluster {}".format(cluster))
+            max_area = seaweed_needed / productivity_day_km2
+            harvest_df = model.seaweed_growth(
+                initial_seaweed=100,
+                initial_area_built=100,
+                initial_area_used=100,
+                new_module_area_per_day=100,
+                min_density=1000,
+                max_density=4000,
+                max_area=max_area,
+                optimal_growth_rate=60,
+                growth_rate_fraction=model.growth_timeseries,
+                initial_lag=0,
+                percent_usable_for_growth=percent_usable_for_growth,
+                days_to_run=days_to_run)
+            harvest_df["max_area"] = max_area
+            harvest_df["cluster"] = cluster
+            harvest_df["seaweed_needed_per_day"] = seaweed_needed
+            harvest_df.to_csv(
+                f"results/harvest_df_cluster_{cluster}.csv"
+            )
+        else:
+            print("Not enough productivity in cluster for production {}, skipping it".format(
+                cluster))
     print("done")
 
 
