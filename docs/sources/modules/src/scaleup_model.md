@@ -2,10 +2,10 @@
 
 
 ## SeaweedUpscalingModel
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L10)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L9)
 ```python 
 SeaweedUpscalingModel(
-   path, cluster, calories_from_seaweed = 20
+   path, cluster, seaweed_need, harvest_loss
 )
 ```
 
@@ -17,19 +17,8 @@ Class that loads the data, calculates the scaleup and saves it into a csv
 **Methods:**
 
 
-### .load_literature_parameters
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L31)
-```python
-.load_literature_parameters(
-   path
-)
-```
-
----
-Load the parameters we found resonable values for from the file
-
 ### .load_growth_timeseries
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L43)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L30)
 ```python
 .load_growth_timeseries(
    path, cluster
@@ -39,17 +28,8 @@ Load the parameters we found resonable values for from the file
 ---
 Loads the growth timeseries from the file
 
-### .calculate_global_food_demand_parameters
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L52)
-```python
-.calculate_global_food_demand_parameters()
-```
-
----
-Calculates the global demand for food
-
 ### .self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L69)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L39)
 ```python
 .self_shading(
    density
@@ -69,7 +49,7 @@ returns:
     the growth rate fraction
 
 ### .seaweed_growth
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L86)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L56)
 ```python
 .seaweed_growth(
    initial_seaweed, initial_area_built, initial_area_used,
@@ -104,10 +84,10 @@ growth numbers
 A dataframe with all important growth numbers
 
 ### .determine_average_productivity
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L220)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L191)
 ```python
 .determine_average_productivity(
-   growth_rate_fraction, days_to_run
+   growth_rate_fraction, days_to_run, percent_usable_for_growth
 )
 ```
 
@@ -118,8 +98,39 @@ per area and day and the harvest intervall
 ----
 
 
+### calculate_seaweed_need
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L231)
+```python
+.calculate_seaweed_need(
+   global_pop, calories_per_person_per_day, food_waste,
+   calories_per_t_seaweed_wet, iodine_limit
+)
+```
+
+---
+Calculates the amount of seaweed needed to feed the population
+based on global population and the amount of seaweed needed per person
+limited by the iodine content of the seaweed
+
+**Args**
+
+* **global_pop** (int) : Global population
+* **calories_per_person_per_day** (int) : Calories needed per person per day
+* **food_waste** (float) : Fraction of food wasted
+* **calories_per_kg_seaweed** (int) : Calories per t of seaweed
+* **iodine_limit** (float) : how large a fraction of the food can be substituted by seaweed
+
+
+**Returns**
+
+* **float**  : amount of seaweed needed to feed the population
+
+
+----
+
+
 ### run_model
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L259)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L262)
 ```python
 .run_model()
 ```

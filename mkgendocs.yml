@@ -19,6 +19,7 @@ pages:
     classes:
       - SeaweedUpscalingModel
     functions:
+      - calculate_seaweed_need
       - run_model
 
   - page: "modules/src/plotter.md"
