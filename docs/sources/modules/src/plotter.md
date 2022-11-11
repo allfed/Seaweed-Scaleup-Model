@@ -12,7 +12,7 @@
 ---
 Plots the results of the model
 
-**Args**
+**Arguments**
 
 * **cluster_df** (pd.DataFrame) : The results of the model
 
@@ -35,7 +35,7 @@ None, but plots and saves the results
 ---
 Plots how much area the different growth rates need
 
-**Args**
+**Arguments**
 
 * **clusters** (dict) : The seaweed scale up area results sorted by cluster
 
