@@ -1,10 +1,11 @@
 """
 Model to calculate the time it takes to scale-up global seaweed production
 """
-import pandas as pd
-import os
 import math
+import os
+
 import numpy as np
+import pandas as pd
 
 
 class SeaweedUpscalingModel:

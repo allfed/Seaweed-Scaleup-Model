@@ -1,6 +1,8 @@
+import os
+
 import matplotlib.pyplot as plt
 import pandas as pd
-import os
+
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle")
 
@@ -8,6 +10,10 @@ plt.style.use(
 def plot_satisfaction_results(cluster_df):
     """
     Plots the results of the model
+    Args:
+        cluster_df (pd.DataFrame): The results of the model
+    Returns:
+        None, but plots and saves the results
     """
     counter = 0
     satisfied_need_df = pd.DataFrame()
@@ -43,19 +49,23 @@ def plot_satisfaction_results(cluster_df):
     ax.set_ylabel("% global calories by seaweed")
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
-    plt.savefig("results/food_satisfaction.png", dpi=200, bbox_inches="tight")
+    plt.savefig("results/food_satisfaction.png", dpi=250, bbox_inches="tight")
     satisfied_need_df.to_csv("results/food_satisfaction.csv")
 
 
 def plot_area_results(clusters):
     """
     Plots how much area the different growth rates need
+    Args:
+        clusters (dict): The seaweed scale up area results sorted by cluster
+    Returns:
+        None, but plots and saves the results
     """
     areas = {}
     for cluster, cluster_df in clusters.items():
         # Skip emtpy dfs
         if not cluster_df.empty:
-            areas[cluster+1] = cluster_df["max_area"].values[0]
+            areas[cluster + 1] = cluster_df["max_area"].values[0]
     areas = pd.DataFrame.from_dict(areas, orient="index")
     ax = areas.plot(kind="barh", legend=False)
     ax.set_xlabel("Area [km²]")
@@ -63,10 +73,15 @@ def plot_area_results(clusters):
     ax.yaxis.grid(False)
     fig = plt.gcf()
     fig.set_size_inches(10, 3)
-    plt.savefig("results/area.png", dpi=200, bbox_inches="tight")
+    plt.savefig("results/area.png", dpi=250, bbox_inches="tight")
 
 
-if __name__ == "__main__":
+def main():
+    """
+    Main function to run the plotter and read the data
+    Returns:
+        None
+    """
     clusters = {}
     for cluster in range(1, 4, 1):
         clusters[cluster] = pd.read_csv(
@@ -74,3 +89,6 @@ if __name__ == "__main__":
     plot_area_results(clusters)
     plot_satisfaction_results(clusters)
 
+
+if __name__ == "__main__":
+    main()
