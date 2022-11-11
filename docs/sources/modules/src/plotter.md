@@ -16,7 +16,7 @@ Plots the results of the model
 
 
 ### plot_area_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L45)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L50)
 ```python
 .plot_area_results(
    clusters
