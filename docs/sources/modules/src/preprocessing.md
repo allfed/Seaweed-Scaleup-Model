@@ -2,7 +2,7 @@
 
 
 ### prep_data
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/preprocessing.py/#L8)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/preprocessing.py/#L9)
 ```python
 .prep_data(
    path, cluster
