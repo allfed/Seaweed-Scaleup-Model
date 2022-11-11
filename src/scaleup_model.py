@@ -45,9 +45,9 @@ class SeaweedUpscalingModel:
         James, S.C. and Boriah, V. (2010), Modeling algae growth
         in an open-channel raceway
         Journal of Computational Biology, 17(7), 895−906.
-        args:
+        Arguments:
             density: the seaweed density
-        returns:
+        Returns:
             the growth rate fraction
         """
         if density < 0.4:  # kg/m²
@@ -250,7 +250,7 @@ def calculate_seaweed_need(
     Calculates the amount of seaweed needed to feed the population
     based on global population and the amount of seaweed needed per person
     limited by the iodine content of the seaweed
-    Args:
+    Arguments:
         global_pop (int): Global population
         calories_per_person_per_day (int): Calories needed per person per day
         food_waste (float): Fraction of food wasted

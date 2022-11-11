@@ -10,7 +10,7 @@ def prep_data(path, cluster):
     """
     Changes the data from the growth model, so that it is a
     single time series for all the clusters.
-    Args:
+    Arguments:
         path (str): path to the data
         cluster (int): the cluster number
     Returns:

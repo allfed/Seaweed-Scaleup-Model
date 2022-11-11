@@ -10,7 +10,7 @@ plt.style.use(
 def plot_satisfaction_results(cluster_df):
     """
     Plots the results of the model
-    Args:
+    Arguments:
         cluster_df (pd.DataFrame): The results of the model
     Returns:
         None, but plots and saves the results
@@ -57,7 +57,7 @@ def plot_satisfaction_results(cluster_df):
 def plot_area_results(clusters):
     """
     Plots how much area the different growth rates need
-    Args:
+    Arguments:
         clusters (dict): The seaweed scale up area results sorted by cluster
     Returns:
         None, but plots and saves the results
