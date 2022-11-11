@@ -33,7 +33,7 @@ def plot_satisfaction_results(cluster_df):
         daily_need_satisfied = food["daily_need_satisfied"].rolling(20).mean()
         # Convert back to the 20 % of the need 
         daily_need_satisfied = (daily_need_satisfied / 100) * 20
-        satisfied_need_df["Cluster " + str(cluster+1)] = daily_need_satisfied
+        satisfied_need_df["Cluster " + str(cluster + 1)] = daily_need_satisfied
         counter += 1
 
     satisfied_need_df.index = satisfied_need_df.index / 30
@@ -44,6 +44,7 @@ def plot_satisfaction_results(cluster_df):
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
     plt.savefig("results/food_satisfaction.png", dpi=200, bbox_inches="tight")
+    satisfied_need_df.to_csv("results/food_satisfaction.csv")
 
 
 def plot_area_results(clusters):
