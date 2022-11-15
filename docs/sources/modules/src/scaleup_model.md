@@ -42,11 +42,15 @@ Based on the publication:
 James, S.C. and Boriah, V. (2010), Modeling algae growth
 in an open-channel raceway
 Journal of Computational Biology, 17(7), 895−906.
-args:
-density: the seaweed density
----
-returns:
-    the growth rate fraction
+
+**Arguments**
+
+* **density**  : the seaweed density
+
+
+**Returns**
+
+the growth rate fraction
 
 ### .seaweed_growth
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L58)
@@ -112,7 +116,7 @@ Calculates the amount of seaweed needed to feed the population
 based on global population and the amount of seaweed needed per person
 limited by the iodine content of the seaweed
 
-**Args**
+**Arguments**
 
 * **global_pop** (int) : Global population
 * **calories_per_person_per_day** (int) : Calories needed per person per day
