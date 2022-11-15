@@ -3,14 +3,14 @@ Tests the upscaling model.
 """
 import pytest
 
-from src.upscaling_model import SeaweedUpscalingModel
+from src.scaleup_model import SeaweedScaleUpModel
 
 
 def test_initialize_model():
     """
     Tests if the model can be initiliazed
     """
-    model = SeaweedUpscalingModel(
+    model = SeaweedScaleUpModel(
         "data/constants.csv",
         initial_seaweed=1000,
         initial_area_built=1000,
@@ -40,7 +40,7 @@ def test_parameter_calculation():
     """
     Tests if all the parameters were calculated correctly
     """
-    model = SeaweedUpscalingModel("data/constants.csv")
+    model = SeaweedScaleUpModel("data/constants.csv")
     assert model.parameters["seedling_line_length"] == pytest.approx(5.19, 0.1)
     assert model.parameters["space_between_seedling_line"] == pytest.approx(0.781, 0.01)
     assert model.parameters["modules_per_area"] == pytest.approx(44.44, 0.1)
@@ -82,7 +82,7 @@ def test_seaweed_growth():
     """
     Tests if the growth calculations finish correctly
     """
-    model = SeaweedUpscalingModel("data/constants.csv")
+    model = SeaweedScaleUpModel("data/constants.csv")
     df = model.seaweed_growth(
         harvest_loss=model.parameters["harvest_loss"],
         initial_seaweed=model.parameters["initial_seaweed"],
@@ -106,7 +106,7 @@ def test_determine_productivity():
     """
     Tests if the productivity calculations finish correctly
     """
-    model = SeaweedUpscalingModel("data/constants.csv")
+    model = SeaweedScaleUpModel("data/constants.csv")
     productivity_day_km2 = model.determine_productivity(
         growth_rate=5,
         harvest_loss=0.15,
@@ -124,7 +124,7 @@ def test_run_model_for_set_of_growth_rates():
     """
     Tests if the model runs correctly for a set of growth rates
     """
-    model = SeaweedUpscalingModel("data/constants.csv")
+    model = SeaweedScaleUpModel("data/constants.csv")
     assert len(model.growth_rate_results) == 0
     model.run_model_for_set_of_growth_rates(
         growth_rates=[5, 10, 15, 25], days_to_run=365

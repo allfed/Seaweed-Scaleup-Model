@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 
-class SeaweedUpscalingModel:
+class SeaweedScaleUpModel:
     """
     Class that loads the data, calculates the scaleup and saves it into a csv
     """
