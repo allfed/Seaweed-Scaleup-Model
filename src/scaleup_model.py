@@ -277,7 +277,11 @@ def run_model():
     harvest_loss = 20
     food_waste = 13  # https://www.researchsquare.com/article/rs-1446444/v1
     calories_per_t_seaweed_wet = 400000
-    iodine_limit = 0.2  # https://academic.oup.com/jcem/article/87/12/5499/2823602
+    food_limit = 0.1  # https://academic.oup.com/jcem/article/87/12/5499/2823602
+    feed_limit = 0.1  # amount of feed that can be replaced by seaweed
+    biofuel_limit = 0.1  # amount of biofuel that can be replaced by seaweed
+    # Fraction of global calories we want in seaweed
+    seaweed_limit = feed_limit + food_limit + biofuel_limit
     # percent of the area of the module that can acutally be used for food production.
     # Rest is needed for things like lanes for harvesting
     percent_usable_for_growth = 50
@@ -287,11 +291,11 @@ def run_model():
         calories_per_person_per_day,
         food_waste,
         calories_per_t_seaweed_wet,
-        iodine_limit
+        seaweed_limit
     )
     # Initialize the model
     for cluster in range(0, 4):
-        model = SeaweedUpscalingModel("data", cluster, seaweed_needed, harvest_loss)
+        model = SeaweedScaleUpModel("data", cluster, seaweed_needed, harvest_loss)
         growth_rate_fraction = np.mean(model.growth_timeseries)
         print("Cluster {} has a median growth rate of {}".format(cluster, growth_rate_fraction))
         # calculate how much area we need to satisfy the daily
@@ -303,7 +307,7 @@ def run_model():
             print("calculating yield for cluster {}".format(cluster))
             max_area = seaweed_needed / productivity_day_km2
             harvest_df = model.seaweed_growth(
-                initial_seaweed=100,
+                initial_seaweed=10000,
                 initial_area_built=100,
                 initial_area_used=100,
                 new_module_area_per_day=100,
@@ -312,7 +316,7 @@ def run_model():
                 max_area=max_area,
                 optimal_growth_rate=60,
                 growth_rate_fraction=model.growth_timeseries,
-                initial_lag=0,
+                initial_lag=30,
                 percent_usable_for_growth=percent_usable_for_growth,
                 days_to_run=days_to_run)
             harvest_df["max_area"] = max_area
