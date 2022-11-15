@@ -1,10 +1,10 @@
 #
 
 
-## SeaweedUpscalingModel
+## SeaweedScaleUpModel
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L11)
 ```python 
-SeaweedUpscalingModel(
+SeaweedScaleUpModel(
    path, cluster, seaweed_need, harvest_loss
 )
 ```
