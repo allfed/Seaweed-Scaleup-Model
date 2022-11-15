@@ -12,13 +12,8 @@ class SeaweedScaleUpModel:
     """
     Class that loads the data, calculates the scaleup and saves it into a csv
     """
-    def __init__(
-        self,
-        path,
-        cluster,
-        seaweed_need,
-        harvest_loss
-    ):
+
+    def __init__(self, path, cluster, seaweed_need, harvest_loss):
         """
         Initialize the model
         """
@@ -36,7 +31,9 @@ class SeaweedScaleUpModel:
         growth_timeseries = pd.read_csv(
             path + os.sep + "actual_growth_rate_by_cluster.csv"
         )
-        self.growth_timeseries = growth_timeseries["growth_daily_cluster_" + str(cluster)].to_list()
+        self.growth_timeseries = growth_timeseries[
+            "growth_daily_cluster_" + str(cluster)
+        ].to_list()
 
     def self_shading(self, density):
         """
@@ -69,7 +66,7 @@ class SeaweedScaleUpModel:
         initial_lag,
         percent_usable_for_growth,
         days_to_run,
-        verbose=False
+        verbose=False,
     ):
         """
         Calculates the seaweed growth and creatss a dataframe of all important
@@ -121,16 +118,25 @@ class SeaweedScaleUpModel:
             else:
                 df.loc[current_day, "new_module_area_per_day"] = 0
             self_shading_factor = self.self_shading(
-                current_density / 1000)  # convert to kg/m² from t/km2
+                current_density / 1000
+            )  # convert to kg/m² from t/km2
             # Let the seaweed grow
             # This can be done with a fixed value for the growth rate fraction
             # or with a timeseries of the growth rate fraction
             if isinstance(growth_rate_fraction, float):
                 actual_growth_rate = 1 + (
-                    (optimal_growth_rate * growth_rate_fraction * self_shading_factor) / 100)
+                    (optimal_growth_rate * growth_rate_fraction * self_shading_factor)
+                    / 100
+                )
             elif isinstance(growth_rate_fraction, list):
                 actual_growth_rate = 1 + (
-                    (optimal_growth_rate * growth_rate_fraction[current_day] * self_shading_factor) / 100)
+                    (
+                        optimal_growth_rate
+                        * growth_rate_fraction[current_day]
+                        * self_shading_factor
+                    )
+                    / 100
+                )
             else:
                 raise TypeError("growth_rate_fraction must be float or list")
             current_seaweed = current_seaweed * actual_growth_rate
@@ -194,10 +200,7 @@ class SeaweedScaleUpModel:
         return df
 
     def determine_average_productivity(
-        self,
-        growth_rate_fraction,
-        days_to_run,
-        percent_usable_for_growth
+        self, growth_rate_fraction, days_to_run, percent_usable_for_growth
     ):
         """
         Let the model run for one km² to determine the productivity
@@ -218,7 +221,7 @@ class SeaweedScaleUpModel:
             days_to_run=days_to_run,
         )
         # Get the stabilized values
-        try: 
+        try:
             stable_harvest_intervall = harvest_df.loc[
                 harvest_df["harvest_intervall"].last_valid_index(), "harvest_intervall"
             ]
@@ -244,7 +247,7 @@ def calculate_seaweed_need(
     calories_per_person_per_day,
     food_waste,
     calories_per_t_seaweed_wet,
-    iodine_limit
+    iodine_limit,
 ):
     """
     Calculates the amount of seaweed needed to feed the population
@@ -291,17 +294,22 @@ def run_model():
         calories_per_person_per_day,
         food_waste,
         calories_per_t_seaweed_wet,
-        seaweed_limit
+        seaweed_limit,
     )
     # Initialize the model
     for cluster in range(0, 4):
         model = SeaweedScaleUpModel("data", cluster, seaweed_needed, harvest_loss)
         growth_rate_fraction = np.mean(model.growth_timeseries)
-        print("Cluster {} has a median growth rate of {}".format(cluster, growth_rate_fraction))
+        print(
+            "Cluster {} has a median growth rate of {}".format(
+                cluster, growth_rate_fraction
+            )
+        )
         # calculate how much area we need to satisfy the daily
         # seaweed need with the given productivity
         productivity_day_km2 = model.determine_average_productivity(
-            growth_rate_fraction, days_to_run, percent_usable_for_growth)
+            growth_rate_fraction, days_to_run, percent_usable_for_growth
+        )
         # check if the area is even productive enough to be used
         if productivity_day_km2 is not None:
             print("calculating yield for cluster {}".format(cluster))
@@ -318,16 +326,18 @@ def run_model():
                 growth_rate_fraction=model.growth_timeseries,
                 initial_lag=30,
                 percent_usable_for_growth=percent_usable_for_growth,
-                days_to_run=days_to_run)
+                days_to_run=days_to_run,
+            )
             harvest_df["max_area"] = max_area
             harvest_df["cluster"] = cluster
             harvest_df["seaweed_needed_per_day"] = seaweed_needed
-            harvest_df.to_csv(
-                f"results/harvest_df_cluster_{cluster}.csv"
-            )
+            harvest_df.to_csv(f"results/harvest_df_cluster_{cluster}.csv")
         else:
-            print("Not enough productivity in cluster for production {}, skipping it".format(
-                cluster))
+            print(
+                "Not enough productivity in cluster for production {}, skipping it".format(
+                    cluster
+                )
+            )
     print("done")
 
 
