@@ -17,7 +17,7 @@ pages:
   - page: "modules/src/scaleup_model.md"
     source: "src/scaleup_model.py"
     classes:
-      - SeaweedUpscalingModel
+      - SeaweedScaleUpModel
     functions:
       - calculate_seaweed_need
       - run_model
