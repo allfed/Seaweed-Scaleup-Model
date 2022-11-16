@@ -280,9 +280,10 @@ def run_model():
     harvest_loss = 20
     food_waste = 13  # https://www.researchsquare.com/article/rs-1446444/v1
     calories_per_t_seaweed_wet = 400000
-    food_limit = 0.1  # https://academic.oup.com/jcem/article/87/12/5499/2823602
-    feed_limit = 0.1  # amount of feed that can be replaced by seaweed
-    biofuel_limit = 0.1  # amount of biofuel that can be replaced by seaweed
+    food_limit = 0.15  # amount of food that can be replaced by seaweed
+    # https://academic.oup.com/jcem/article/87/12/5499/2823602
+    feed_limit = 0.05  # amount of feed that can be replaced by seaweed
+    biofuel_limit = 0.5  # amount of biofuel that can be replaced by seaweed
     # Fraction of global calories we want in seaweed
     seaweed_limit = feed_limit + food_limit + biofuel_limit
     # percent of the area of the module that can acutally be used for food production.

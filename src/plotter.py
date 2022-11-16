@@ -42,13 +42,13 @@ def plot_satisfaction_results(cluster_df, percent_need):
         daily_need_satisfied = (daily_need_satisfied / 100) * percent_need
         satisfied_need_df["Cluster " + str(cluster + 1)] = daily_need_satisfied
         counter += 1
-
-    satisfied_need_df.index = satisfied_need_df.index / percent_need
+    # Convert to months
+    satisfied_need_df.index = satisfied_need_df.index / 30
     ax = satisfied_need_df.plot(color="black", linewidth=2.5, legend=False)
     ax = satisfied_need_df.plot(
         color=["#31688e", "#35b779", "#fde725"], linewidth=2, ax=ax
     )
-    ax.axhline(y=30, color="dimgrey", alpha=0.5, zorder=0)
+    ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
     ax.set_xlabel("Months since nuclear war")
     ax.set_ylabel("% global calories by seaweed")
     fig = plt.gcf()
@@ -92,7 +92,7 @@ def main():
             "results" + os.sep + "harvest_df_cluster_" + str(cluster) + ".csv"
         )
     plot_area_results(clusters)
-    plot_satisfaction_results(clusters, 30)
+    plot_satisfaction_results(clusters, 70)
 
 
 if __name__ == "__main__":
