@@ -18,7 +18,7 @@ Class that loads the data, calculates the scaleup and saves it into a csv
 
 
 ### .load_growth_timeseries
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L32)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L27)
 ```python
 .load_growth_timeseries(
    path, cluster
@@ -29,7 +29,7 @@ Class that loads the data, calculates the scaleup and saves it into a csv
 Loads the growth timeseries from the file
 
 ### .self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L41)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L38)
 ```python
 .self_shading(
    density
@@ -53,7 +53,7 @@ Journal of Computational Biology, 17(7), 895−906.
 the growth rate fraction
 
 ### .seaweed_growth
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L58)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L55)
 ```python
 .seaweed_growth(
    initial_seaweed, initial_area_built, initial_area_used,
@@ -88,7 +88,7 @@ growth numbers
 A dataframe with all important growth numbers
 
 ### .determine_average_productivity
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L196)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L202)
 ```python
 .determine_average_productivity(
    growth_rate_fraction, days_to_run, percent_usable_for_growth
@@ -103,7 +103,7 @@ per area and day and the harvest intervall
 
 
 ### calculate_seaweed_need
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L242)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L245)
 ```python
 .calculate_seaweed_need(
    global_pop, calories_per_person_per_day, food_waste,
@@ -134,7 +134,7 @@ limited by the iodine content of the seaweed
 
 
 ### run_model
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L273)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L276)
 ```python
 .run_model()
 ```

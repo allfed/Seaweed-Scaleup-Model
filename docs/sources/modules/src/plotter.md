@@ -2,10 +2,10 @@
 
 
 ### plot_satisfaction_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L10)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L11)
 ```python
 .plot_satisfaction_results(
-   cluster_df
+   cluster_df, percent_need
 )
 ```
 
@@ -25,7 +25,7 @@ None, but plots and saves the results
 
 
 ### plot_area_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L57)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L60)
 ```python
 .plot_area_results(
    clusters
