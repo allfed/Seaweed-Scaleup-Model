@@ -9,10 +9,22 @@ copyright: ALLFED
 
 #This specifies the autogeneration portion
 pages:
-  - page: "modules/src/upscaling_model.md"
-    source: "src/upscaling_model.py"
-    classes:
-      - SeaweedUpscalingModel
+  - page: "modules/src/preprocessing.md"
+    source: "src/preprocessing.py"
     functions:
-      - plot_nicer
+      - prep_data
+
+  - page: "modules/src/scaleup_model.md"
+    source: "src/scaleup_model.py"
+    classes:
+      - SeaweedScaleUpModel
+    functions:
+      - calculate_seaweed_need
+      - run_model
+
+  - page: "modules/src/plotter.md"
+    source: "src/plotter.py"
+    functions:
+      - plot_satisfaction_results
+      - plot_area_results
 

@@ -1,5 +1,5 @@
-# Seaweed Upscaling Model   
-Simulates the upscaling of seaweed production in nuclear winter
+# Seaweed Scale-Up Model   
+
 ---
 
 
@@ -10,4 +10,6 @@ Simulates the upscaling of seaweed production in nuclear winter
 
 ---
 
+This model takes the output of the [seaweed growth model](https://github.com/allfed/Seaweed-Growth-Model) and simulates the scale-up of seaweed production in nuclear winter
 An explanation of how to use the model can be found in the scripts folder. 
+
