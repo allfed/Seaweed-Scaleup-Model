@@ -13,6 +13,7 @@ def plot_satisfaction_results(cluster_df, percent_need):
     Plots the results of the model
     Arguments:
         cluster_df (pd.DataFrame): The results of the model
+        percent_need (int): The percent of the population that needs to be satisfied
     Returns:
         None, but plots and saves the results
     """
@@ -84,6 +85,8 @@ def plot_area_results(clusters):
 def main():
     """
     Main function to run the plotter and read the data
+    Arguments:
+        None
     Returns:
         None
     """

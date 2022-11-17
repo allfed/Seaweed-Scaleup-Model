@@ -10,16 +10,7 @@ def test_initialize_model():
     """
     Tests if the model can be initiliazed
     """
-    model = SeaweedScaleUpModel(
-        "data/constants.csv",
-        initial_seaweed=1000,
-        initial_area_built=1000,
-        initial_area_used=1000,
-        min_density=400,
-        max_density=4000,
-        initial_lag=0,
-        max_area=1000000,
-        additional_saturation_time=1.10,
+
     )
 
     assert model is not None
