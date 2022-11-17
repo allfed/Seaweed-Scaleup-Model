@@ -18,7 +18,7 @@ Class that loads the data, calculates the scaleup and saves it into a csv
 
 
 ### .load_growth_timeseries
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L27)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L31)
 ```python
 .load_growth_timeseries(
    path, cluster
@@ -28,8 +28,18 @@ Class that loads the data, calculates the scaleup and saves it into a csv
 ---
 Loads the growth timeseries from the file
 
+**Arguments**
+
+* **path**  : the path to the timeseries
+* **cluster**  : the cluster to use
+
+
+**Returns**
+
+None
+
 ### .self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L38)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L47)
 ```python
 .self_shading(
    density
@@ -53,7 +63,7 @@ Journal of Computational Biology, 17(7), 895−906.
 the growth rate fraction
 
 ### .seaweed_growth
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L55)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L65)
 ```python
 .seaweed_growth(
    initial_seaweed, initial_area_built, initial_area_used,
@@ -88,7 +98,7 @@ growth numbers
 A dataframe with all important growth numbers
 
 ### .determine_average_productivity
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L202)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L212)
 ```python
 .determine_average_productivity(
    growth_rate_fraction, days_to_run, percent_usable_for_growth
@@ -99,11 +109,24 @@ A dataframe with all important growth numbers
 Let the model run for one km² to determine the productivity
 per area and day and the harvest intervall
 
+**Arguments**
+
+* **growth_rate_fraction**  : float or list of the growth rate of seaweed
+* **days_to_run**  : int, number of days to run the model
+* **percent_usable_for_growth**  : float, the percentage of the module area
+    that can be used for growth
+
+
+**Returns**
+
+* **productivity**  : float, the average productivity per km² and day
+
+
 ----
 
 
 ### calculate_seaweed_need
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L245)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L262)
 ```python
 .calculate_seaweed_need(
    global_pop, calories_per_person_per_day, food_waste,
@@ -134,8 +157,18 @@ limited by the iodine content of the seaweed
 
 
 ### run_model
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L276)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L293)
 ```python
 .run_model()
 ```
 
+---
+Run the model
+
+**Arguments**
+
+None
+
+**Returns**
+
+None
