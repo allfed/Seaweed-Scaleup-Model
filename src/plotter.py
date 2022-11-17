@@ -13,6 +13,7 @@ def plot_satisfaction_results(cluster_df, percent_need):
     Plots the results of the model
     Arguments:
         cluster_df (pd.DataFrame): The results of the model
+        percent_need (int): The percent of the population that needs to be satisfied
     Returns:
         None, but plots and saves the results
     """
@@ -41,7 +42,9 @@ def plot_satisfaction_results(cluster_df, percent_need):
         # Convert back to the 30 % of the need
         daily_need_satisfied = (daily_need_satisfied / 100) * percent_need
         satisfied_need_df["Cluster " + str(cluster + 1) + " %"] = daily_need_satisfied
-        satisfied_need_df["Cluster " + str(cluster + 1) + " Mean Harvest Day"] = food["mean_daily_harvest"]
+        satisfied_need_df["Cluster " + str(cluster + 1) + " Mean Harvest Day"] = food[
+            "mean_daily_harvest"
+        ]
         counter += 1
     # Convert to months
     satisfied_need_df.index = satisfied_need_df.index / 30
@@ -84,6 +87,8 @@ def plot_area_results(clusters):
 def main():
     """
     Main function to run the plotter and read the data
+    Arguments:
+        None
     Returns:
         None
     """

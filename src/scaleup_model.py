@@ -16,10 +16,14 @@ class SeaweedScaleUpModel:
     def __init__(self, path, cluster, seaweed_need, harvest_loss):
         """
         Initialize the model
+        Arguments:
+            path: the path to the data
+            cluster: the cluster to use
+            seaweed_need: the amount of seaweed needed
+            harvest_loss: the harvest loss in percent
+        Returns:
+            None
         """
-        self.model_data_calculated = False
-        self.parameters = {}
-        self.optimal_growth_rate_results = {}
         self.seaweed_need = seaweed_need
         self.harvest_loss = harvest_loss
         self.load_growth_timeseries(path, cluster)
@@ -27,6 +31,11 @@ class SeaweedScaleUpModel:
     def load_growth_timeseries(self, path, cluster):
         """
         Loads the growth timeseries from the file
+        Arguments:
+            path: the path to the timeseries
+            cluster: the cluster to use
+        Returns:
+            None
         """
         growth_timeseries = pd.read_csv(
             path + os.sep + "actual_growth_rate_by_cluster.csv"
@@ -47,6 +56,7 @@ class SeaweedScaleUpModel:
         Returns:
             the growth rate fraction
         """
+        assert density > 0
         if density < 0.4:  # kg/m²
             return 1
         else:
@@ -205,6 +215,13 @@ class SeaweedScaleUpModel:
         """
         Let the model run for one km² to determine the productivity
         per area and day and the harvest intervall
+        Arguments:
+            growth_rate_fraction: float or list of the growth rate of seaweed
+            days_to_run: int, number of days to run the model
+            percent_usable_for_growth: float, the percentage of the module area
+                that can be used for growth
+        Returns:
+            productivity: float, the average productivity per km² and day
         """
         harvest_df = self.seaweed_growth(
             initial_seaweed=1,
@@ -274,6 +291,13 @@ def calculate_seaweed_need(
 
 
 def run_model():
+    """
+    Run the model
+    Arguments:
+        None
+    Returns:
+        None
+    """
     days_to_run = 3600  # 120 month at 30 days per month
     global_pop = 7000000000
     calories_per_person_per_day = 2250

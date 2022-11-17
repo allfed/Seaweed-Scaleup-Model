@@ -15,6 +15,7 @@ Plots the results of the model
 **Arguments**
 
 * **cluster_df** (pd.DataFrame) : The results of the model
+* **percent_need** (int) : The percent of the population that needs to be satisfied
 
 
 **Returns**
@@ -25,7 +26,7 @@ None, but plots and saves the results
 
 
 ### plot_area_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L61)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L63)
 ```python
 .plot_area_results(
    clusters
