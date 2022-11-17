@@ -20,13 +20,10 @@ class SeaweedScaleUpModel:
             path: the path to the data
             cluster: the cluster to use
             seaweed_need: the amount of seaweed needed
-            harvest_loss: the harvest loss
+            harvest_loss: the harvest loss in percent
         Returns:
             None
         """
-        self.model_data_calculated = False
-        self.parameters = {}
-        self.optimal_growth_rate_results = {}
         self.seaweed_need = seaweed_need
         self.harvest_loss = harvest_loss
         self.load_growth_timeseries(path, cluster)
@@ -59,6 +56,7 @@ class SeaweedScaleUpModel:
         Returns:
             the growth rate fraction
         """
+        assert density > 0
         if density < 0.4:  # kg/m²
             return 1
         else:
