@@ -41,14 +41,16 @@ def plot_satisfaction_results(cluster_df, percent_need):
         daily_need_satisfied = food["daily_need_satisfied"].rolling(20).mean()
         # Convert back to the 30 % of the need
         daily_need_satisfied = (daily_need_satisfied / 100) * percent_need
-        satisfied_need_df["Cluster " + str(cluster + 1) + " %"] = daily_need_satisfied
+        satisfied_need_df["Cluster " + str(cluster + 1)] = daily_need_satisfied
         satisfied_need_df["Cluster " + str(cluster + 1) + " Mean Harvest Day"] = food[
             "mean_daily_harvest"]
         counter += 1
     # Convert to months
     satisfied_need_df.index = satisfied_need_df.index / 30
-    ax = satisfied_need_df.plot(color="black", linewidth=2.5, legend=False)
-    ax = satisfied_need_df.plot(
+    ax = satisfied_need_df[["Cluster " + str(i) for i in range(2, 5)]].plot(
+        color="black", linewidth=2.5, legend=False
+    )
+    ax = satisfied_need_df[["Cluster " + str(i) for i in range(2, 5)]].plot(
         color=["#31688e", "#35b779", "#fde725"], linewidth=2, ax=ax
     )
     ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
