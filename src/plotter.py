@@ -1,7 +1,10 @@
 import os
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+
+from src.scaleup_model import self_shading
 
 plt.style.use(
     "https://raw.githubusercontent.com/allfed/ALLFED-matplotlib-style-sheet/main/ALLFED.mplstyle"
@@ -60,6 +63,7 @@ def plot_satisfaction_results(cluster_df, percent_need):
     fig.set_size_inches(9, 4)
     plt.savefig("results/food_satisfaction.png", dpi=250, bbox_inches="tight")
     satisfied_need_df.to_csv("results/food_satisfaction.csv")
+    plt.close()
 
 
 def plot_area_results(clusters):
@@ -83,6 +87,38 @@ def plot_area_results(clusters):
     fig = plt.gcf()
     fig.set_size_inches(10, 3)
     plt.savefig("results/area.png", dpi=250, bbox_inches="tight")
+    plt.close()
+
+
+def plot_self_shading():
+    """
+    Plots the self shading used in the model. Based on James and Boriah (2010).
+    Arguments:
+        None
+    Returns:
+        None
+    """
+    # Creates the x-axis
+    x = np.linspace(0.01, 10, 10000)
+    # Creates the y-axis
+    y = [self_shading(i) for i in x]
+    # Plots the results
+    plt.plot(x, y, linewidth=2.5, color="black")
+    plt.plot(x, y, linewidth=2)
+    # Adds the unit to the y-axis
+    plt.ylabel("Self-Shading Factor")
+    # Adds the unit to the x-axis
+    plt.xlabel("Density [kg/m²]")
+    # Change the size
+    plt.gcf().set_size_inches(8, 2)
+    # Saves the plot
+    plt.savefig(
+        "results" + os.sep + "self_shading_factor.png",
+        dpi=250,
+        bbox_inches="tight",
+    )
+    # Closes the plot
+    plt.close()
 
 
 def main():
@@ -100,6 +136,7 @@ def main():
         )
     plot_area_results(clusters)
     plot_satisfaction_results(clusters, 70)
+    plot_self_shading()
 
 
 if __name__ == "__main__":
