@@ -81,7 +81,7 @@ def plot_area_results(clusters):
             areas[cluster + 1] = cluster_df["max_area"].values[0]
     areas = pd.DataFrame.from_dict(areas, orient="index")
     ax = areas.plot(kind="barh", legend=False)
-    ax.set_xlabel("Area [km²]")
+    ax.set_xlabel("Area [km²]")5.36843940e+01
     ax.set_ylabel("Cluster")
     ax.yaxis.grid(False)
     fig = plt.gcf()
