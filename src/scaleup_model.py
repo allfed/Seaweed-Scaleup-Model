@@ -44,7 +44,6 @@ class SeaweedScaleUpModel:
             "growth_daily_cluster_" + str(cluster)
         ].to_list()
 
-
     def seaweed_growth(
         self,
         initial_seaweed,

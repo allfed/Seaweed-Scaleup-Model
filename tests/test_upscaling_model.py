@@ -59,9 +59,7 @@ def test_determine_productivity():
     """
     model = SeaweedScaleUpModel("data", 2, 1000, 20)
     productivity_day_km2 = model.determine_average_productivity(
-        growth_rate_fraction=0.5,
-        days_to_run=100,
-        percent_usable_for_growth=50
+        growth_rate_fraction=0.5, days_to_run=100, percent_usable_for_growth=50
     )
 
     assert productivity_day_km2 is not None
