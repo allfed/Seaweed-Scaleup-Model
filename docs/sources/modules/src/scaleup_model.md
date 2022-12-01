@@ -38,32 +38,8 @@ Loads the growth timeseries from the file
 
 None
 
-### .self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L47)
-```python
-.self_shading(
-   density
-)
-```
-
----
-Calculates how much the growth rate is reduced due to self shading.
-Based on the publication:
-James, S.C. and Boriah, V. (2010), Modeling algae growth
-in an open-channel raceway
-Journal of Computational Biology, 17(7), 895−906.
-
-**Arguments**
-
-* **density**  : the seaweed density
-
-
-**Returns**
-
-the growth rate fraction
-
 ### .seaweed_growth
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L65)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L48)
 ```python
 .seaweed_growth(
    initial_seaweed, initial_area_built, initial_area_used,
@@ -98,7 +74,7 @@ growth numbers
 A dataframe with all important growth numbers
 
 ### .determine_average_productivity
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L212)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L195)
 ```python
 .determine_average_productivity(
    growth_rate_fraction, days_to_run, percent_usable_for_growth
@@ -125,8 +101,35 @@ per area and day and the harvest intervall
 ----
 
 
+### self_shading
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L245)
+```python
+.self_shading(
+   density
+)
+```
+
+---
+Calculates how much the growth rate is reduced due to self shading.
+Based on the publication:
+James, S.C. and Boriah, V. (2010), Modeling algae growth
+in an open-channel raceway
+Journal of Computational Biology, 17(7), 895−906.
+
+**Arguments**
+
+* **density**  : the seaweed density
+
+
+**Returns**
+
+the growth rate fraction
+
+----
+
+
 ### calculate_seaweed_need
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L262)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L264)
 ```python
 .calculate_seaweed_need(
    global_pop, calories_per_person_per_day, food_waste,
@@ -157,7 +160,7 @@ limited by the iodine content of the seaweed
 
 
 ### run_model
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L293)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L295)
 ```python
 .run_model()
 ```

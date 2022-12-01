@@ -1,10 +1,10 @@
 """
 Tests the upscaling model.
 """
-import pytest
 import pandas as pd
+import pytest
 
-from src.scaleup_model import SeaweedScaleUpModel
+from src.scaleup_model import SeaweedScaleUpModel, self_shading
 
 
 def test_initialize_model():
@@ -23,9 +23,9 @@ def test_self_shading():
     """
     model = SeaweedScaleUpModel("data", 2, 1000, 20)
     with pytest.raises(AssertionError):
-        assert model.self_shading(0) == 0
-    assert model.self_shading(0.1) == 1
-    assert model.self_shading(5) == pytest.approx(0.094, 0.01)
+        assert self_shading(0) == 0
+    assert self_shading(0.1) == 1
+    assert self_shading(5) == pytest.approx(0.094, 0.01)
 
 
 def test_seaweed_growth():

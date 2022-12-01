@@ -44,24 +44,6 @@ class SeaweedScaleUpModel:
             "growth_daily_cluster_" + str(cluster)
         ].to_list()
 
-    def self_shading(self, density):
-        """
-        Calculates how much the growth rate is reduced due to self shading.
-        Based on the publication:
-        James, S.C. and Boriah, V. (2010), Modeling algae growth
-        in an open-channel raceway
-        Journal of Computational Biology, 17(7), 895−906.
-        Arguments:
-            density: the seaweed density
-        Returns:
-            the growth rate fraction
-        """
-        assert density > 0
-        if density < 0.4:  # kg/m²
-            return 1
-        else:
-            return math.exp(-0.513 * (density - 0.4))
-
     def seaweed_growth(
         self,
         initial_seaweed,
@@ -127,7 +109,7 @@ class SeaweedScaleUpModel:
                     df.loc[current_day, "new_module_area_per_day"] = 0
             else:
                 df.loc[current_day, "new_module_area_per_day"] = 0
-            self_shading_factor = self.self_shading(
+            self_shading_factor = self_shading(
                 current_density / 1000
             )  # convert to kg/m² from t/km2
             # Let the seaweed grow
@@ -257,6 +239,25 @@ class SeaweedScaleUpModel:
             productivity_day_km2 = None
         print("productivity_day_km2", productivity_day_km2)
         return productivity_day_km2
+
+
+def self_shading(density):
+    """
+    Calculates how much the growth rate is reduced due to self shading.
+    Based on the publication:
+    James, S.C. and Boriah, V. (2010), Modeling algae growth
+    in an open-channel raceway
+    Journal of Computational Biology, 17(7), 895−906.
+    Arguments:
+        density: the seaweed density
+    Returns:
+        the growth rate fraction
+    """
+    assert density > 0
+    if density < 0.4:  # kg/m²
+        return 1
+    else:
+        return math.exp(-0.513 * (density - 0.4))
 
 
 def calculate_seaweed_need(

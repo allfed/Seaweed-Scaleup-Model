@@ -19,6 +19,7 @@ pages:
     classes:
       - SeaweedScaleUpModel
     functions:
+      - self_shading
       - calculate_seaweed_need
       - run_model
 
@@ -27,4 +28,5 @@ pages:
     functions:
       - plot_satisfaction_results
       - plot_area_results
+      - plot_self_shading
 
