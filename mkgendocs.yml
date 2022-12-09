@@ -21,6 +21,8 @@ pages:
     functions:
       - self_shading
       - calculate_seaweed_need
+      - seaweed_farm_area_per_day
+      - logistic_curve
       - run_model
 
   - page: "modules/src/plotter.md"
