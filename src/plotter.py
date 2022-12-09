@@ -46,7 +46,8 @@ def plot_satisfaction_results(cluster_df, percent_need):
         daily_need_satisfied = (daily_need_satisfied / 100) * percent_need
         satisfied_need_df["Cluster " + str(cluster + 1)] = daily_need_satisfied
         satisfied_need_df["Cluster " + str(cluster + 1) + " Mean Harvest Day"] = food[
-            "mean_daily_harvest"]
+            "mean_daily_harvest"
+        ]
         counter += 1
     # Convert to months
     satisfied_need_df.index = satisfied_need_df.index / 30

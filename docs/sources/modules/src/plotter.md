@@ -27,6 +27,7 @@ None, but plots and saves the results
 
 ### plot_area_results
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L69)
+
 ```python
 .plot_area_results(
    clusters
