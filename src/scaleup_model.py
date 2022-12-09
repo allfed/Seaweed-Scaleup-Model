@@ -84,10 +84,7 @@ class SeaweedScaleUpModel:
         current_area_used = initial_area_used
         current_seaweed = initial_seaweed
         current_density = current_seaweed / current_area_used
-        # We can only use a fraction of the module area to grow seaweed
-        growth_area_per_day = new_module_area_per_day * (
-            percent_usable_for_growth / 100
-        )
+
         cumulative_harvest_for_food = 0
         current_seaweed_need = 0
         harvest_intervall = 0
@@ -95,6 +92,15 @@ class SeaweedScaleUpModel:
         harvest_intervall_all = []
         df = pd.DataFrame(index=range(days_to_run))
         for current_day in range(days_to_run):
+            # Calculate the area that can be built on that day
+            # Check if it is larger than 0, because this means that
+            # the model is running to estimate the productivity on a fixed area
+            if new_module_area_per_day > 0:
+                new_module_area_per_day = seaweed_farm_area_per_day(current_day)
+            # We can only use a fraction of the module area to grow seaweed
+            growth_area_per_day = new_module_area_per_day * (
+                percent_usable_for_growth / 100
+            )
             # Skip days that are needed to coordinate production
             if current_day > initial_lag:
                 # Build more seaweed farms if maximum is not reached
@@ -289,6 +295,42 @@ def calculate_seaweed_need(
     # Calculate the amount of seaweed needed
     seaweed_needed = global_food_demand / calories_per_t_seaweed_wet
     return seaweed_needed
+
+
+def seaweed_farm_area_per_day(day):
+    """
+    Estimates the area that can be built per day
+    based on how many days have passed. This is a rough estimate
+    based on:
+        https://github.com/allfed/Seaweed-Scaleup-Model/blob/main/scripts/Logistic%20Growth.ipynb
+    Arguments:
+        day: the day
+    Returns:
+        the area that can be built per day
+    """
+    # The parameter values based on the fitting
+    max_L = 4.01307030e+03
+    k = 1.42633035e-01
+    x0 = 4.50000000e+01
+    off = -6.53515132e+00
+    # Calculate the area that can be built per day
+    area_per_day = logistic_curve(day, max_L, k, x0, off)
+    return area_per_day
+
+
+def logistic_curve(x, max_L, k, x0, off):
+    """
+    Describes a logistic growth curve
+    Arguments:
+        x: value to calculate
+        max_L: maximum value of the curve
+        k: the logistic growth rate
+        x0: the sigmoid's midpoint
+        off: offset to 0
+    Returns
+        float: y value corresponding to x
+    """
+    return max_L / (1 + np.exp(- k * (x - x0))) + off
 
 
 def run_model():
