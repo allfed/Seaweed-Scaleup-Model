@@ -14,6 +14,13 @@ pages:
     functions:
       - prep_data
 
+  - page: "modules/src/plotter.md"
+    source: "src/plotter.py"
+    functions:
+      - plot_satisfaction_results
+      - plot_area_results
+      - plot_self_shading
+
   - page: "modules/src/scaleup_model.md"
     source: "src/scaleup_model.py"
     classes:
@@ -24,11 +31,4 @@ pages:
       - seaweed_farm_area_per_day
       - logistic_curve
       - run_model
-
-  - page: "modules/src/plotter.md"
-    source: "src/plotter.py"
-    functions:
-      - plot_satisfaction_results
-      - plot_area_results
-      - plot_self_shading
 
