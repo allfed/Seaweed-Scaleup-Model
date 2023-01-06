@@ -5,7 +5,7 @@
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/preprocessing.py/#L9)
 ```python
 .prep_data(
-   path, cluster
+   path
 )
 ```
 
@@ -16,7 +16,6 @@ single time series for all the clusters.
 **Arguments**
 
 * **path** (str) : path to the data
-* **cluster** (int) : the cluster number
 
 
 **Returns**
