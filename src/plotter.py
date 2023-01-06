@@ -1,6 +1,7 @@
 import os
 
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import numpy as np
 import pandas as pd
 
@@ -44,8 +45,8 @@ def plot_satisfaction_results(clusters, percent_need):
         daily_need_satisfied = food["daily_need_satisfied"].rolling(20).mean()
         # Convert back to the 30 % of the need
         daily_need_satisfied = (daily_need_satisfied / 100) * percent_need
-        satisfied_need_df["Cluster " + str(cluster)] = daily_need_satisfied
-        satisfied_need_df["Cluster " + str(cluster) + " Mean Harvest Day"] = food[
+        satisfied_need_df["Cluster " + str(cluster + 1)] = daily_need_satisfied
+        satisfied_need_df["Cluster " + str(cluster + 1) + " Mean Harvest Day"] = food[
             "mean_daily_harvest"
         ]
         counter += 1
@@ -55,7 +56,7 @@ def plot_satisfaction_results(clusters, percent_need):
         color="black", linewidth=2.5, legend=False
     )
     ax = satisfied_need_df[["Cluster " + str(i) for i in [1, 3]]].plot(
-        color=["#31688e", "#35b779", "#fde725"], linewidth=2, ax=ax
+        color=["#95c091", "#3A913F"], linewidth=2, ax=ax, label=["Cluster 1", "Cluster 3"]
     )
     ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
     ax.set_xlabel("Months since nuclear war")
@@ -81,7 +82,17 @@ def plot_area_results(clusters):
         if not cluster_df.empty:
             areas[cluster + 1] = cluster_df["max_area"].values[0]
     areas = pd.DataFrame.from_dict(areas, orient="index")
-    ax = areas.plot(kind="barh", legend=False)
+    areas.reset_index(inplace=True)
+    areas.columns = ["Cluster", "Area [km²]"]
+    ax = areas.plot(
+        kind="barh",
+        y="Area [km²]",
+        x="Cluster",
+        legend=False,
+        color=("#95c091", "#3A913F")
+    )
+    # Format the x tick labels with a thousand separator
+    ax.xaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
     ax.set_xlabel("Area [km²]")
     ax.set_ylabel("Cluster")
     ax.yaxis.grid(False)
@@ -131,7 +142,7 @@ def main():
         None
     """
     clusters = {}
-    for cluster in [1, 3]:
+    for cluster in [0, 2]:
         clusters[cluster] = pd.read_csv(
             "results" + os.sep + "harvest_df_cluster_" + str(cluster) + ".csv"
         )
