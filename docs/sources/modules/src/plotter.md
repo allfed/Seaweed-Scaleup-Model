@@ -5,7 +5,7 @@
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L14)
 ```python
 .plot_satisfaction_results(
-   cluster_df, percent_need
+   clusters, percent_need
 )
 ```
 
