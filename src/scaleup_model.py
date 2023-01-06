@@ -365,7 +365,7 @@ def run_model():
         seaweed_limit,
     )
     # Initialize the model
-    for cluster in range(0, 4):
+    for cluster in range(0, 3):
         model = SeaweedScaleUpModel("data", cluster, seaweed_needed, harvest_loss)
         growth_rate_fraction = np.mean(model.growth_timeseries)
         print(
