@@ -6,13 +6,12 @@ import os
 import pandas as pd
 
 
-def prep_data(path, cluster):
+def prep_data(path):
     """
     Changes the data from the growth model, so that it is a
     single time series for all the clusters.
     Arguments:
         path (str): path to the data
-        cluster (int): the cluster number
     Returns:
         None, only writes to a csv
     """
@@ -21,7 +20,7 @@ def prep_data(path, cluster):
     )
     median_growth_cluster = growth_df.groupby("cluster").median()
     clusters = []
-    for cluster in median_growth_cluster.index:
+    for cluster in [0, 1, 2]:
         cluster_df = pd.DataFrame(median_growth_cluster.loc[cluster, :])
         cluster_df.columns = ["growth_rate_month"]
         cluster_df["month"] = cluster_df.index
@@ -42,6 +41,7 @@ def prep_data(path, cluster):
 
 
 if __name__ == "__main__":
+    print("Start preprocessing")
     path = "data"
     cluster = 0
-    prep_data(path, cluster)
+    prep_data(path)

@@ -1,6 +1,7 @@
 import os
 
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import numpy as np
 import pandas as pd
 
@@ -11,7 +12,7 @@ plt.style.use(
 )
 
 
-def plot_satisfaction_results(cluster_df, percent_need):
+def plot_satisfaction_results(clusters, percent_need):
     """
     Plots the results of the model
     Arguments:
@@ -23,7 +24,7 @@ def plot_satisfaction_results(cluster_df, percent_need):
     counter = 0
     satisfied_need_df = pd.DataFrame()
     # Iterate over all growth rate results and plot them
-    for cluster, cluster_df in cluster_df.items():
+    for cluster, cluster_df in clusters.items():
         food = cluster_df.loc[
             :, ["harvest_for_food", "harvest_intervall", "seaweed_needed_per_day"]
         ]
@@ -51,15 +52,18 @@ def plot_satisfaction_results(cluster_df, percent_need):
         counter += 1
     # Convert to months
     satisfied_need_df.index = satisfied_need_df.index / 30
-    ax = satisfied_need_df[["Cluster " + str(i) for i in range(2, 5)]].plot(
+    ax = satisfied_need_df[["Cluster " + str(i) for i in [1, 3]]].plot(
         color="black", linewidth=2.5, legend=False
     )
-    ax = satisfied_need_df[["Cluster " + str(i) for i in range(2, 5)]].plot(
-        color=["#31688e", "#35b779", "#fde725"], linewidth=2, ax=ax
+    ax = satisfied_need_df[["Cluster " + str(i) for i in [1, 3]]].plot(
+        color=["#95c091", "#3A913F"],
+        linewidth=2,
+        ax=ax,
+        label=["Cluster 1", "Cluster 3"],
     )
     ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
-    ax.set_xlabel("Months since nuclear war")
-    ax.set_ylabel("% global calories by seaweed")
+    ax.set_xlabel("Months since Nuclear War")
+    ax.set_ylabel("%Gglobal Calories by Seaweed")
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
     plt.savefig("results/food_satisfaction.png", dpi=250, bbox_inches="tight")
@@ -81,8 +85,18 @@ def plot_area_results(clusters):
         if not cluster_df.empty:
             areas[cluster + 1] = cluster_df["max_area"].values[0]
     areas = pd.DataFrame.from_dict(areas, orient="index")
-    ax = areas.plot(kind="barh", legend=False)
-    ax.set_xlabel("Area [km²]")5.36843940e+01
+    areas.reset_index(inplace=True)
+    areas.columns = ["Cluster", "Area [km²]"]
+    ax = areas.plot(
+        kind="barh",
+        y="Area [km²]",
+        x="Cluster",
+        legend=False,
+        color=("#95c091", "#3A913F"),
+    )
+    # Format the x tick labels with a thousand separator
+    ax.xaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))
+    ax.set_xlabel("Area [km²]")
     ax.set_ylabel("Cluster")
     ax.yaxis.grid(False)
     fig = plt.gcf()
@@ -131,7 +145,7 @@ def main():
         None
     """
     clusters = {}
-    for cluster in range(1, 4, 1):
+    for cluster in [0, 2]:
         clusters[cluster] = pd.read_csv(
             "results" + os.sep + "harvest_df_cluster_" + str(cluster) + ".csv"
         )

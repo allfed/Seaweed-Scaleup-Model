@@ -39,7 +39,7 @@ Loads the growth timeseries from the file
 None
 
 ### .seaweed_growth
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L48)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L47)
 ```python
 .seaweed_growth(
    initial_seaweed, initial_area_built, initial_area_used,
@@ -74,7 +74,7 @@ growth numbers
 A dataframe with all important growth numbers
 
 ### .determine_average_productivity
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L195)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L200)
 ```python
 .determine_average_productivity(
    growth_rate_fraction, days_to_run, percent_usable_for_growth
@@ -102,7 +102,7 @@ per area and day and the harvest intervall
 
 
 ### self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L245)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L250)
 ```python
 .self_shading(
    density
@@ -129,7 +129,7 @@ the growth rate fraction
 
 
 ### calculate_seaweed_need
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L264)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L269)
 ```python
 .calculate_seaweed_need(
    global_pop, calories_per_person_per_day, food_waste,
@@ -159,8 +159,60 @@ limited by the iodine content of the seaweed
 ----
 
 
+### seaweed_farm_area_per_day
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L300)
+```python
+.seaweed_farm_area_per_day(
+   day
+)
+```
+
+---
+Estimates the area that can be built per day
+based on how many days have passed. This is a rough estimate
+based on:
+https://github.com/allfed/Seaweed-Scaleup-Model/blob/main/scripts/Logistic%20Growth.ipynb
+
+**Arguments**
+
+* **day**  : the day
+
+
+**Returns**
+
+the area that can be built per day
+
+----
+
+
+### logistic_curve
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L321)
+```python
+.logistic_curve(
+   x, max_L, k, x0, off
+)
+```
+
+---
+Describes a logistic growth curve
+
+**Arguments**
+
+* **x**  : value to calculate
+* **max_L**  : maximum value of the curve
+* **k**  : the logistic growth rate
+* **x0**  : the sigmoid's midpoint
+* **off**  : offset to 0
+
+---
+Returns
+    float: y value corresponding to x
+
+----
+
+
 ### run_model
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L295)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L336)
 ```python
 .run_model()
 ```
