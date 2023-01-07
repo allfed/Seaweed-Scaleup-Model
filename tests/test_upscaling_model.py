@@ -21,7 +21,6 @@ def test_self_shading():
     """
     Tests if the self shading calculations finish correctly
     """
-    model = SeaweedScaleUpModel("data", 2, 1000, 20)
     with pytest.raises(AssertionError):
         assert self_shading(0) == 0
     assert self_shading(0.1) == 1
