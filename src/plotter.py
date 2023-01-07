@@ -56,7 +56,10 @@ def plot_satisfaction_results(clusters, percent_need):
         color="black", linewidth=2.5, legend=False
     )
     ax = satisfied_need_df[["Cluster " + str(i) for i in [1, 3]]].plot(
-        color=["#95c091", "#3A913F"], linewidth=2, ax=ax, label=["Cluster 1", "Cluster 3"]
+        color=["#95c091", "#3A913F"],
+        linewidth=2,
+        ax=ax,
+        label=["Cluster 1", "Cluster 3"],
     )
     ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
     ax.set_xlabel("Months since Nuclear War")
@@ -89,7 +92,7 @@ def plot_area_results(clusters):
         y="Area [km²]",
         x="Cluster",
         legend=False,
-        color=("#95c091", "#3A913F")
+        color=("#95c091", "#3A913F"),
     )
     # Format the x tick labels with a thousand separator
     ax.xaxis.set_major_formatter(ticker.StrMethodFormatter("{x:,.0f}"))

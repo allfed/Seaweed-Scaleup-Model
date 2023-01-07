@@ -309,10 +309,10 @@ def seaweed_farm_area_per_day(day):
         the area that can be built per day
     """
     # The parameter values based on the fitting
-    max_L = 4.15610385e+03
+    max_L = 4.15610385e03
     k = 2.83799528e-02
-    x0 = 1.57630971e+02
-    off = -4.10270637e+01
+    x0 = 1.57630971e02
+    off = -4.10270637e01
     # Calculate the area that can be built per day
     area_per_day = logistic_curve(day, max_L, k, x0, off)
     return area_per_day
@@ -330,7 +330,7 @@ def logistic_curve(x, max_L, k, x0, off):
     Returns
         float: y value corresponding to x
     """
-    return max_L / (1 + np.exp(- k * (x - x0))) + off
+    return max_L / (1 + np.exp(-k * (x - x0))) + off
 
 
 def run_model():
