@@ -77,7 +77,8 @@ A dataframe with all important growth numbers
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L200)
 ```python
 .determine_average_productivity(
-   growth_rate_fraction, days_to_run, percent_usable_for_growth
+   growth_rate_fraction, days_to_run, percent_usable_for_growth,
+   optimal_growth_rate
 )
 ```
 
@@ -91,6 +92,7 @@ per area and day and the harvest intervall
 * **days_to_run**  : int, number of days to run the model
 * **percent_usable_for_growth**  : float, the percentage of the module area
     that can be used for growth
+* **optimal_growth_rate**  : float, the optimal growth rate of the seaweed
 
 
 **Returns**
@@ -102,7 +104,7 @@ per area and day and the harvest intervall
 
 
 ### self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L250)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L251)
 ```python
 .self_shading(
    density
@@ -129,7 +131,7 @@ the growth rate fraction
 
 
 ### calculate_seaweed_need
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L269)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L270)
 ```python
 .calculate_seaweed_need(
    global_pop, calories_per_person_per_day, food_waste,
@@ -160,7 +162,7 @@ limited by the iodine content of the seaweed
 
 
 ### seaweed_farm_area_per_day
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L300)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L301)
 ```python
 .seaweed_farm_area_per_day(
    day
@@ -186,7 +188,7 @@ the area that can be built per day
 
 
 ### logistic_curve
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L321)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L322)
 ```python
 .logistic_curve(
    x, max_L, k, x0, off
@@ -212,7 +214,7 @@ Returns
 
 
 ### run_model
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L336)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L337)
 ```python
 .run_model()
 ```
