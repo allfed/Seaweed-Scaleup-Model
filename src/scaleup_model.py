@@ -198,7 +198,7 @@ class SeaweedScaleUpModel:
         return df
 
     def determine_average_productivity(
-        self, growth_rate_fraction, days_to_run, percent_usable_for_growth
+        self, growth_rate_fraction, days_to_run, percent_usable_for_growth, optimal_growth_rate
     ):
         """
         Let the model run for one km² to determine the productivity
@@ -208,6 +208,7 @@ class SeaweedScaleUpModel:
             days_to_run: int, number of days to run the model
             percent_usable_for_growth: float, the percentage of the module area
                 that can be used for growth
+            optimal_growth_rate: float, the optimal growth rate of the seaweed
         Returns:
             productivity: float, the average productivity per km² and day
         """
@@ -216,10 +217,10 @@ class SeaweedScaleUpModel:
             initial_area_built=1,
             initial_area_used=1,
             new_module_area_per_day=0,
-            min_density=1000,
-            max_density=4000,
+            min_density=1200,
+            max_density=3600,
             max_area=1,
-            optimal_growth_rate=60,  # % per day
+            optimal_growth_rate=optimal_growth_rate,  # % per day
             growth_rate_fraction=growth_rate_fraction,
             initial_lag=0,
             percent_usable_for_growth=percent_usable_for_growth,
@@ -341,6 +342,7 @@ def run_model():
     Returns:
         None
     """
+    optimal_growth_rate = 30  # % per day
     days_to_run = 3600  # 120 month at 30 days per month
     global_pop = 7000000000
     calories_per_person_per_day = 2250
@@ -376,7 +378,7 @@ def run_model():
         # calculate how much area we need to satisfy the daily
         # seaweed need with the given productivity
         productivity_day_km2 = model.determine_average_productivity(
-            growth_rate_fraction, days_to_run, percent_usable_for_growth
+            growth_rate_fraction, days_to_run, percent_usable_for_growth, optimal_growth_rate
         )
         # check if the area is even productive enough to be used
         if productivity_day_km2 is not None:
@@ -387,10 +389,10 @@ def run_model():
                 initial_area_built=100,
                 initial_area_used=100,
                 new_module_area_per_day=100,
-                min_density=1000,
-                max_density=4000,
+                min_density=1200,
+                max_density=3600,
                 max_area=max_area,
-                optimal_growth_rate=60,
+                optimal_growth_rate=optimal_growth_rate,
                 growth_rate_fraction=model.growth_timeseries,
                 initial_lag=30,
                 percent_usable_for_growth=percent_usable_for_growth,
