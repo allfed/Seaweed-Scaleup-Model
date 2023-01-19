@@ -20,7 +20,7 @@ This will create a virtual environment called "seaweed-scaleup-model". Once you 
 
 `pip install -e .`
 
-When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. If you run into any problems feel free to open an issue in this repository or contact IT-support@allfed.info. 
+When you follow these steps you should have a virtual environment that is able to run the seaweed growth model. If you run into any problems feel free to open an issue in this repository.
 
 ## How this model works in general
 
