@@ -9,6 +9,17 @@ copyright: ALLFED
 
 #This specifies the autogeneration portion
 pages:
+  - page: "modules/src/scaleup_model.md"
+    source: "src/scaleup_model.py"
+    classes:
+      - SeaweedScaleUpModel
+    functions:
+      - self_shading
+      - calculate_seaweed_need
+      - seaweed_farm_area_per_day
+      - logistic_curve
+      - run_model
+
   - page: "modules/src/preprocessing.md"
     source: "src/preprocessing.py"
     functions:
@@ -20,15 +31,4 @@ pages:
       - plot_satisfaction_results
       - plot_area_results
       - plot_self_shading
-
-  - page: "modules/src/scaleup_model.md"
-    source: "src/scaleup_model.py"
-    classes:
-      - SeaweedScaleUpModel
-    functions:
-      - self_shading
-      - calculate_seaweed_need
-      - seaweed_farm_area_per_day
-      - logistic_curve
-      - run_model
 
