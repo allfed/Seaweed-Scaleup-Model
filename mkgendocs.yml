@@ -9,11 +9,6 @@ copyright: ALLFED
 
 #This specifies the autogeneration portion
 pages:
-  - page: "modules/src/preprocessing.md"
-    source: "src/preprocessing.py"
-    functions:
-      - prep_data
-
   - page: "modules/src/plotter.md"
     source: "src/plotter.py"
     functions:
@@ -31,4 +26,9 @@ pages:
       - seaweed_farm_area_per_day
       - logistic_curve
       - run_model
+
+  - page: "modules/src/preprocessing.md"
+    source: "src/preprocessing.py"
+    functions:
+      - prep_data
 
