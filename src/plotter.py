@@ -63,7 +63,7 @@ def plot_satisfaction_results(clusters, percent_need):
     )
     ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
     ax.set_xlabel("Months since Nuclear War")
-    ax.set_ylabel("% Global Calories by Seaweed")
+    ax.set_ylabel("Percent of Human Food Demand")
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
     plt.savefig("results/food_satisfaction.png", dpi=300, bbox_inches="tight")
