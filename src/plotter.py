@@ -71,6 +71,19 @@ def plot_satisfaction_results(clusters, percent_need):
     plt.close()
 
 
+def plot_scenario_comparison(percent_need):
+    """
+    Plots the results of the model from all scenarios and compares the 
+    cluster with the highest growth rate for a given scenario.
+    Arguments:
+        percent_need (int): The percent of the population that needs to be satisfied
+    Returns:
+        None, but plots and saves the results
+    """
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:    
+
+
+
 def plot_area_results(clusters):
     """
     Plots how much area the different growth rates need
