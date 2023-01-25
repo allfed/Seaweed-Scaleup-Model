@@ -42,7 +42,7 @@ def prep_data(path):
 
 if __name__ == "__main__":
     # Go through all nuclear war scenarios
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:    
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
         print("Start preprocessing for scenario " + scenario)
         path = "data"
         prep_data(path + os.sep + scenario)

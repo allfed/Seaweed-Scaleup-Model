@@ -198,7 +198,11 @@ class SeaweedScaleUpModel:
         return df
 
     def determine_average_productivity(
-        self, growth_rate_fraction, days_to_run, percent_usable_for_growth, optimal_growth_rate
+        self,
+        growth_rate_fraction,
+        days_to_run,
+        percent_usable_for_growth,
+        optimal_growth_rate,
     ):
         """
         Let the model run for one km² to determine the productivity
@@ -367,7 +371,7 @@ def run_model():
         seaweed_limit,
     )
     # Run for all scenarios
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:    
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
         print("Running scenario {}".format(scenario))
         # Initialize the model
         for cluster in range(0, 3):
@@ -382,7 +386,10 @@ def run_model():
             # calculate how much area we need to satisfy the daily
             # seaweed need with the given productivity
             productivity_day_km2 = model.determine_average_productivity(
-                growth_rate_fraction, days_to_run, percent_usable_for_growth, optimal_growth_rate
+                growth_rate_fraction,
+                days_to_run,
+                percent_usable_for_growth,
+                optimal_growth_rate,
             )
             # check if the area is even productive enough to be used
             if productivity_day_km2 is not None:
