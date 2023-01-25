@@ -13,6 +13,7 @@ pages:
     source: "src/plotter.py"
     functions:
       - plot_satisfaction_results
+      - plot_scenario_comparison
       - plot_area_results
       - plot_self_shading
 
