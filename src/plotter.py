@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 import pandas as pd
+from matplotlib.lines import Line2D
 
 from src.scaleup_model import self_shading
 
@@ -12,12 +13,13 @@ plt.style.use(
 )
 
 
-def plot_satisfaction_results(clusters, percent_need):
+def plot_satisfaction_results(clusters, percent_need, scenario):
     """
     Plots the results of the model
     Arguments:
         cluster_df (pd.DataFrame): The results of the model
         percent_need (int): The percent of the population that needs to be satisfied
+        scenario (str): The scenario name
     Returns:
         None, but plots and saves the results
     """
@@ -50,28 +52,32 @@ def plot_satisfaction_results(clusters, percent_need):
             "mean_daily_harvest"
         ]
         counter += 1
+    available_clusters = ["Cluster " + str(i+1) for i in clusters.keys()]
     # Convert to months
     satisfied_need_df.index = satisfied_need_df.index / 30
-    ax = satisfied_need_df[["Cluster " + str(i) for i in [1, 3]]].plot(
+    ax = satisfied_need_df[available_clusters].plot(
         color="black", linewidth=2.5, legend=False
     )
-    ax = satisfied_need_df[["Cluster " + str(i) for i in [1, 3]]].plot(
+    ax = satisfied_need_df[available_clusters].plot(
         color=["#95c091", "#3A913F"],
         linewidth=2,
         ax=ax,
-        label=["Cluster 1", "Cluster 3"],
+        label=available_clusters,
     )
     ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
     ax.set_xlabel("Months since Nuclear War")
     ax.set_ylabel("Percent of Human Food Demand")
+    # reformat scenario from 5tg to 5 Tg
+    scenario_reformat = scenario.replace("tg", " Tg")
+    ax.set_title("Scenario " + scenario_reformat)
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
-    plt.savefig("results/food_satisfaction.png", dpi=300, bbox_inches="tight")
-    satisfied_need_df.to_csv("results/food_satisfaction.csv")
+    plt.savefig("results" + os.sep + scenario + os.sep + "food_satisfaction.png", dpi=300, bbox_inches="tight")
+    satisfied_need_df.to_csv("results" + os.sep + scenario + os.sep + "food_satisfaction.csv")
     plt.close()
 
 
-def plot_scenario_comparison(percent_need):
+def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
     """
     Plots the results of the model from all scenarios and compares the 
     cluster with the highest growth rate for a given scenario.
@@ -80,11 +86,128 @@ def plot_scenario_comparison(percent_need):
     Returns:
         None, but plots and saves the results
     """
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:    
+    # Define the colors
+    colors = {
+        "150 Tg": "#3A913F",
+        "47 Tg": "#3F9C4A",
+        "37 Tg": "#45A755",
+        "27 Tg": "#4BB260",
+        "16 Tg": "#50BD6B",
+        "5 Tg": "#56C877",
+        "Control": "#5BD282",
+    }
+    # Create a figure to plot in
+    fig, ax = plt.subplots(1, 1)
+    # Iterate over all scenarios
+    for scenario in ["control"] + [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
+        # Find the cluster with the highest growth rate
+        scenario_growth = scenario_max_growth_rates_df[scenario_max_growth_rates_df["scenario"] == scenario]
+        max_growth_rate_index = scenario_growth["max_growth_rate"].idxmax()
+        max_growth_rate_cluster = scenario_growth.loc[max_growth_rate_index, "cluster"]
+        # Read in the results for the cluster with the highest growth rate
+        cluster_df = pd.read_csv(
+            "results" + os.sep + scenario + os.sep + "harvest_df_cluster_" + str(max_growth_rate_cluster) + ".csv"
+        )
+        # Calculate the food needed
+        food = cluster_df.loc[
+            :, ["harvest_for_food", "harvest_intervall", "seaweed_needed_per_day"]
+        ]
+        # backfill to calulcate averages
+        food["harvest_for_food"].interpolate(
+            "zero", fill_value=0, limit_direction="backward", inplace=True
+        )
+        food["harvest_intervall"].fillna(method="backfill", inplace=True)
+        food.fillna(method="ffill", inplace=True)
+        # Calculate the food needed
+        food["mean_daily_harvest"] = (
+            food["harvest_for_food"] / food["harvest_intervall"]
+        )
+        food["daily_need"] = food["seaweed_needed_per_day"]
+        food["daily_need_satisfied"] = (
+            food["mean_daily_harvest"] / food["daily_need"]
+        ) * 100
+        daily_need_satisfied = food["daily_need_satisfied"].rolling(20).mean()
+        # Convert back to the 30 % of the need
+        daily_need_satisfied = (daily_need_satisfied / 100) * percent_need
+
+        # Convert to months
+        daily_need_satisfied.index = daily_need_satisfied.index / 30
+        # Plot the results
+        ax = daily_need_satisfied.plot(
+            color="black", linewidth=2.5, label=None, ax=ax
+        )
+        if scenario != "control":
+            scenario = scenario.replace("tg", " Tg")
+        else:
+            scenario = "Control"
+        ax = daily_need_satisfied.plot(
+            color=colors[scenario],
+            linewidth=2,
+            ax=ax,
+        )
+    # Create a custom legend
+    legend_elements = [
+        Line2D(
+            [0],
+            [0],
+            color=colors["150 Tg"],
+            lw=2,
+            label="150 Tg",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=colors["47 Tg"],
+            lw=2,
+            label="47 Tg",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=colors["37 Tg"],
+            lw=2,
+            label="37 Tg",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=colors["27 Tg"],
+            lw=2,
+            label="27 Tg",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=colors["16 Tg"],
+            lw=2,
+            label="16 Tg",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=colors["5 Tg"],
+            lw=2,
+            label="5 Tg",
+        ),
+        Line2D(
+            [0],
+            [0],
+            color=colors["Control"],
+            lw=2,
+            label="Control",
+        ),
+    ]
+    ax.legend(handles=legend_elements)
+    ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
+    ax.set_xlabel("Months since Nuclear War")
+    ax.set_ylabel("Percent of Human Food Demand")
+    fig = plt.gcf()
+    fig.set_size_inches(9, 4)
+    plt.savefig("results" + os.sep + "scenario_comparison.png", dpi=300, bbox_inches="tight")
+    plt.close()
 
 
-
-def plot_area_results(clusters):
+def plot_area_results(clusters, scenario):
     """
     Plots how much area the different growth rates need
     Arguments:
@@ -114,7 +237,7 @@ def plot_area_results(clusters):
     ax.yaxis.grid(False)
     fig = plt.gcf()
     fig.set_size_inches(10, 3)
-    plt.savefig("results/area.png", dpi=250, bbox_inches="tight")
+    plt.savefig("results" + os.sep + scenario + os.sep + "area.png", dpi=300, bbox_inches="tight")
     plt.close()
 
 
@@ -126,19 +249,21 @@ def plot_self_shading():
     Returns:
         None
     """
+    # Create a new figure
+    fig, ax = plt.subplots(1, 1)
     # Creates the x-axis
     x = np.linspace(0.01, 10, 10000)
     # Creates the y-axis
     y = [self_shading(i) for i in x]
     # Plots the results
-    plt.plot(x, y, linewidth=2.5, color="black")
-    plt.plot(x, y, linewidth=2)
+    ax.plot(x, y, linewidth=2.5, color="black")
+    ax.plot(x, y, linewidth=2)
     # Adds the unit to the y-axis
-    plt.ylabel("Self-Shading Factor")
+    ax.set_ylabel("Self-Shading Factor")
     # Adds the unit to the x-axis
-    plt.xlabel("Density [kg/m²]")
+    ax.set_xlabel("Density [kg/m²]")
     # Change the size
-    plt.gcf().set_size_inches(8, 2)
+    fig.set_size_inches(8, 2)
     # Saves the plot
     plt.savefig(
         "results" + os.sep + "self_shading_factor.png",
@@ -157,13 +282,23 @@ def main():
     Returns:
         None
     """
-    clusters = {}
-    for cluster in [0, 2]:
-        clusters[cluster] = pd.read_csv(
-            "results" + os.sep + "harvest_df_cluster_" + str(cluster) + ".csv"
-        )
-    plot_area_results(clusters)
-    plot_satisfaction_results(clusters, 70)
+    # Make the overall comparison plot
+    scenario_max_growth_rates_df = pd.read_csv("results" + os.sep + "scenario_max_growth_rates.csv")
+    plot_scenario_comparison(70, scenario_max_growth_rates_df)
+    # Plot the results for all scenarios
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
+        print("Plotting results for scenario " + scenario)
+        clusters = {}
+        for cluster in [0, 1, 2]:
+            try:
+                clusters[cluster] = pd.read_csv(
+                    "results" + os.sep + scenario + os.sep + "harvest_df_cluster_" + str(cluster) + ".csv"
+                )
+                print("Reading in results for cluster " + str(cluster) + " in scenario " + scenario)
+            except FileNotFoundError:
+                print("No results for cluster " + str(cluster) + " in scenario " + scenario)
+        plot_area_results(clusters, scenario)
+        plot_satisfaction_results(clusters, 70, scenario)
     plot_self_shading()
 
 

@@ -370,6 +370,8 @@ def run_model():
         calories_per_t_seaweed_wet,
         seaweed_limit,
     )
+    # Save the results for each scenario
+    scenario_max_growth_rates = []
     # Run for all scenarios
     for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
         print("Running scenario {}".format(scenario))
@@ -383,6 +385,7 @@ def run_model():
                     cluster, growth_rate_fraction
                 )
             )
+            scenario_max_growth_rates.append((scenario, cluster, growth_rate_fraction))
             # calculate how much area we need to satisfy the daily
             # seaweed need with the given productivity
             productivity_day_km2 = model.determine_average_productivity(
@@ -405,14 +408,22 @@ def run_model():
                     max_area=max_area,
                     optimal_growth_rate=optimal_growth_rate,
                     growth_rate_fraction=model.growth_timeseries,
-                    initial_lag=30,
+                    initial_lag=0,  # 0 because this is taken care of with the logistic growth
                     percent_usable_for_growth=percent_usable_for_growth,
                     days_to_run=days_to_run,
                 )
                 harvest_df["max_area"] = max_area
                 harvest_df["cluster"] = cluster
                 harvest_df["seaweed_needed_per_day"] = seaweed_needed
-                harvest_df.to_csv(f"results/harvest_df_cluster_{cluster}.csv")
+                harvest_df.to_csv(
+                    "results"
+                    + os.sep
+                    + scenario
+                    + os.sep
+                    + "harvest_df_cluster_"
+                    + str(cluster)
+                    + ".csv"
+                )
             else:
                 print(
                     "Not enough productivity in cluster for production {}, skipping it".format(
@@ -420,6 +431,11 @@ def run_model():
                     )
                 )
         print("done")
+    # Convert the results to a dataframe
+    scenario_max_growth_rates_df = pd.DataFrame(
+        scenario_max_growth_rates, columns=["scenario", "cluster", "max_growth_rate"]
+    )
+    scenario_max_growth_rates_df.to_csv("results" + os.sep + "scenario_max_growth_rates.csv")
 
 
 if __name__ == "__main__":

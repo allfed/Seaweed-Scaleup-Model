@@ -20,7 +20,7 @@ def prep_data(path):
     )
     median_growth_cluster = growth_df.groupby("cluster").median()
     clusters = []
-    for cluster in [0, 1, 2, 3]:
+    for cluster in [0, 1, 2]:
         cluster_df = pd.DataFrame(median_growth_cluster.loc[cluster, :])
         cluster_df.columns = ["growth_rate_month"]
         cluster_df["month"] = cluster_df.index
