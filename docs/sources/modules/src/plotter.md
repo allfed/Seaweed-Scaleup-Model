@@ -27,7 +27,7 @@ None, but plots and saves the results
 
 
 ### plot_scenario_comparison
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L80)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L86)
 ```python
 .plot_scenario_comparison(
    percent_need, scenario_max_growth_rates_df
@@ -35,7 +35,7 @@ None, but plots and saves the results
 ```
 
 ---
-Plots the results of the model from all scenarios and compares the 
+Plots the results of the model from all scenarios and compares the
 cluster with the highest growth rate for a given scenario.
 
 **Arguments**
@@ -51,7 +51,7 @@ None, but plots and saves the results
 
 
 ### plot_area_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L222)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L236)
 ```python
 .plot_area_results(
    clusters, scenario
@@ -74,7 +74,7 @@ None, but plots and saves the results
 
 
 ### plot_self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L256)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L274)
 ```python
 .plot_self_shading()
 ```
