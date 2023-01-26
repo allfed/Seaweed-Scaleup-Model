@@ -52,7 +52,7 @@ def plot_satisfaction_results(clusters, percent_need, scenario):
             "mean_daily_harvest"
         ]
         counter += 1
-    available_clusters = ["Cluster " + str(i+1) for i in clusters.keys()]
+    available_clusters = ["Cluster " + str(i + 1) for i in clusters.keys()]
     # Convert to months
     satisfied_need_df.index = satisfied_need_df.index / 30
     ax = satisfied_need_df[available_clusters].plot(
@@ -72,14 +72,20 @@ def plot_satisfaction_results(clusters, percent_need, scenario):
     ax.set_title("Scenario " + scenario_reformat)
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
-    plt.savefig("results" + os.sep + scenario + os.sep + "food_satisfaction.png", dpi=300, bbox_inches="tight")
-    satisfied_need_df.to_csv("results" + os.sep + scenario + os.sep + "food_satisfaction.csv")
+    plt.savefig(
+        "results" + os.sep + scenario + os.sep + "food_satisfaction.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+    satisfied_need_df.to_csv(
+        "results" + os.sep + scenario + os.sep + "food_satisfaction.csv"
+    )
     plt.close()
 
 
 def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
     """
-    Plots the results of the model from all scenarios and compares the 
+    Plots the results of the model from all scenarios and compares the
     cluster with the highest growth rate for a given scenario.
     Arguments:
         percent_need (int): The percent of the population that needs to be satisfied
@@ -101,12 +107,20 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
     # Iterate over all scenarios
     for scenario in ["control"] + [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]]:
         # Find the cluster with the highest growth rate
-        scenario_growth = scenario_max_growth_rates_df[scenario_max_growth_rates_df["scenario"] == scenario]
+        scenario_growth = scenario_max_growth_rates_df[
+            scenario_max_growth_rates_df["scenario"] == scenario
+        ]
         max_growth_rate_index = scenario_growth["max_growth_rate"].idxmax()
         max_growth_rate_cluster = scenario_growth.loc[max_growth_rate_index, "cluster"]
         # Read in the results for the cluster with the highest growth rate
         cluster_df = pd.read_csv(
-            "results" + os.sep + scenario + os.sep + "harvest_df_cluster_" + str(max_growth_rate_cluster) + ".csv"
+            "results"
+            + os.sep
+            + scenario
+            + os.sep
+            + "harvest_df_cluster_"
+            + str(max_growth_rate_cluster)
+            + ".csv"
         )
         # Calculate the food needed
         food = cluster_df.loc[
@@ -133,9 +147,7 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
         # Convert to months
         daily_need_satisfied.index = daily_need_satisfied.index / 30
         # Plot the results
-        ax = daily_need_satisfied.plot(
-            color="black", linewidth=2.5, label=None, ax=ax
-        )
+        ax = daily_need_satisfied.plot(color="black", linewidth=2.5, label=None, ax=ax)
         if scenario != "control":
             scenario = scenario.replace("tg", " Tg")
         else:
@@ -201,7 +213,7 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
     ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
     # Annotate the line for 150 Tg
     ax.annotate(
-        r'$\longleftarrow$ 150 Tg',
+        r"$\longleftarrow$ 150 Tg",
         xy=(85, 45),
         xytext=(85, 45),
         xycoords="data",
@@ -215,7 +227,9 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
     ax.set_ylabel("Percent of Human Food Demand")
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
-    plt.savefig("results" + os.sep + "scenario_comparison.png", dpi=300, bbox_inches="tight")
+    plt.savefig(
+        "results" + os.sep + "scenario_comparison.png", dpi=300, bbox_inches="tight"
+    )
     plt.close()
 
 
@@ -249,7 +263,11 @@ def plot_area_results(clusters, scenario):
     ax.yaxis.grid(False)
     fig = plt.gcf()
     fig.set_size_inches(10, 3)
-    plt.savefig("results" + os.sep + scenario + os.sep + "area.png", dpi=300, bbox_inches="tight")
+    plt.savefig(
+        "results" + os.sep + scenario + os.sep + "area.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
     plt.close()
 
 
@@ -295,7 +313,9 @@ def main():
         None
     """
     # Make the overall comparison plot
-    scenario_max_growth_rates_df = pd.read_csv("results" + os.sep + "scenario_max_growth_rates.csv")
+    scenario_max_growth_rates_df = pd.read_csv(
+        "results" + os.sep + "scenario_max_growth_rates.csv"
+    )
     plot_scenario_comparison(70, scenario_max_growth_rates_df)
     # Plot the results for all scenarios
     for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
@@ -304,11 +324,27 @@ def main():
         for cluster in [0, 1, 2]:
             try:
                 clusters[cluster] = pd.read_csv(
-                    "results" + os.sep + scenario + os.sep + "harvest_df_cluster_" + str(cluster) + ".csv"
+                    "results"
+                    + os.sep
+                    + scenario
+                    + os.sep
+                    + "harvest_df_cluster_"
+                    + str(cluster)
+                    + ".csv"
                 )
-                print("Reading in results for cluster " + str(cluster) + " in scenario " + scenario)
+                print(
+                    "Reading in results for cluster "
+                    + str(cluster)
+                    + " in scenario "
+                    + scenario
+                )
             except FileNotFoundError:
-                print("No results for cluster " + str(cluster) + " in scenario " + scenario)
+                print(
+                    "No results for cluster "
+                    + str(cluster)
+                    + " in scenario "
+                    + scenario
+                )
         plot_area_results(clusters, scenario)
         plot_satisfaction_results(clusters, 70, scenario)
     plot_self_shading()

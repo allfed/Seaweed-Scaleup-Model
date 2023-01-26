@@ -435,7 +435,9 @@ def run_model():
     scenario_max_growth_rates_df = pd.DataFrame(
         scenario_max_growth_rates, columns=["scenario", "cluster", "max_growth_rate"]
     )
-    scenario_max_growth_rates_df.to_csv("results" + os.sep + "scenario_max_growth_rates.csv")
+    scenario_max_growth_rates_df.to_csv(
+        "results" + os.sep + "scenario_max_growth_rates.csv"
+    )
 
 
 if __name__ == "__main__":
