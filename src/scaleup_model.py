@@ -314,10 +314,10 @@ def seaweed_farm_area_per_day(day):
         the area that can be built per day
     """
     # The parameter values based on the fitting
-    max_L = 4.15610385e03
-    k = 2.83799528e-02
-    x0 = 1.57630971e02
-    off = -4.10270637e01
+    max_L = 5.66723164e+03
+    k = 1.71381694e-02
+    x0 = 1.80760112e+02
+    off = -3.26796624e+02
     # Calculate the area that can be built per day
     area_per_day = logistic_curve(day, max_L, k, x0, off)
     return area_per_day
