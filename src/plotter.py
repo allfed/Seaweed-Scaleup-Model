@@ -199,6 +199,18 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
     ]
     ax.legend(handles=legend_elements)
     ax.axhline(y=percent_need, color="dimgrey", alpha=0.5, zorder=0)
+    # Annotate the line for 150 Tg
+    ax.annotate(
+        r'$\longleftarrow$ 150 Tg',
+        xy=(85, 45),
+        xytext=(85, 45),
+        xycoords="data",
+        textcoords="data",
+        fontsize=7,
+        color="dimgrey",
+        horizontalalignment="left",
+        verticalalignment="bottom",
+    )
     ax.set_xlabel("Months since Nuclear War")
     ax.set_ylabel("Percent of Human Food Demand")
     fig = plt.gcf()
