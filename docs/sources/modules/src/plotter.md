@@ -51,7 +51,7 @@ None, but plots and saves the results
 
 
 ### plot_area_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L236)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L237)
 ```python
 .plot_area_results(
    clusters, scenario
@@ -74,7 +74,7 @@ None, but plots and saves the results
 
 
 ### plot_self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L274)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L275)
 ```python
 .plot_self_shading()
 ```
