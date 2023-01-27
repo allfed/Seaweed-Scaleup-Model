@@ -1,6 +1,7 @@
 """
 Tests the upscaling model.
 """
+import os
 import pandas as pd
 import pytest
 
@@ -11,7 +12,7 @@ def test_initialize_model():
     """
     Tests if the model can be initiliazed
     """
-    model = SeaweedScaleUpModel("data", 2, 1000, 20)
+    model = SeaweedScaleUpModel("data" + os.sep + "150tg", 2, 1000, 20)
     assert model is not None
     assert model.seaweed_need == 1000
     assert model.harvest_loss == 20
@@ -33,7 +34,7 @@ def test_seaweed_growth():
     """
     seaweed_needed = 1000
     productivity_day_km2 = 4
-    model = SeaweedScaleUpModel("data", 2, 1000, 20)
+    model = SeaweedScaleUpModel("data" + os.sep + "150tg", 2, 1000, 20)
     max_area = seaweed_needed / productivity_day_km2
     harvest_df = model.seaweed_growth(
         initial_seaweed=10000,
@@ -56,10 +57,13 @@ def test_determine_productivity():
     """
     Tests if the productivity calculations finish correctly
     """
-    model = SeaweedScaleUpModel("data", 2, 1000, 20)
+    model = SeaweedScaleUpModel("data" + os.sep + "150tg", 2, 1000, 20)
     productivity_day_km2 = model.determine_average_productivity(
-        growth_rate_fraction=0.5, days_to_run=100, percent_usable_for_growth=50
+        growth_rate_fraction=0.5,
+        days_to_run=100,
+        percent_usable_for_growth=50,
+        optimal_growth_rate=30
     )
 
     assert productivity_day_km2 is not None
-    assert productivity_day_km2 == pytest.approx(178.5, 0.1)
+    assert productivity_day_km2 == pytest.approx(94.8, 0.1)

@@ -198,7 +198,11 @@ class SeaweedScaleUpModel:
         return df
 
     def determine_average_productivity(
-        self, growth_rate_fraction, days_to_run, percent_usable_for_growth, optimal_growth_rate
+        self,
+        growth_rate_fraction,
+        days_to_run,
+        percent_usable_for_growth,
+        optimal_growth_rate,
     ):
         """
         Let the model run for one km² to determine the productivity
@@ -346,9 +350,9 @@ def run_model():
     days_to_run = 3600  # 120 month at 30 days per month
     global_pop = 7000000000
     calories_per_person_per_day = 2250
-    harvest_loss = 20
+    harvest_loss = 20  # % of the harvest that is lost
     food_waste = 13  # https://www.researchsquare.com/article/rs-1446444/v1
-    calories_per_t_seaweed_wet = 400000
+    calories_per_t_seaweed_wet = 288200  # see Efficiency.ipynb
     food_limit = 0.15  # amount of food that can be replaced by seaweed
     # https://academic.oup.com/jcem/article/87/12/5499/2823602
     feed_limit = 0.05  # amount of feed that can be replaced by seaweed
@@ -357,7 +361,7 @@ def run_model():
     seaweed_limit = feed_limit + food_limit + biofuel_limit
     # percent of the area of the module that can acutally be used for food production.
     # Rest is needed for things like lanes for harvesting
-    percent_usable_for_growth = 50
+    percent_usable_for_growth = 50  # %
     # Calculate the seaweed needed per day to feed everyone, given the iodine limit
     seaweed_needed = calculate_seaweed_need(
         global_pop,
@@ -366,49 +370,74 @@ def run_model():
         calories_per_t_seaweed_wet,
         seaweed_limit,
     )
-    # Initialize the model
-    for cluster in range(0, 3):
-        model = SeaweedScaleUpModel("data", cluster, seaweed_needed, harvest_loss)
-        growth_rate_fraction = np.mean(model.growth_timeseries)
-        print(
-            "Cluster {} has a median growth rate of {}".format(
-                cluster, growth_rate_fraction
-            )
-        )
-        # calculate how much area we need to satisfy the daily
-        # seaweed need with the given productivity
-        productivity_day_km2 = model.determine_average_productivity(
-            growth_rate_fraction, days_to_run, percent_usable_for_growth, optimal_growth_rate
-        )
-        # check if the area is even productive enough to be used
-        if productivity_day_km2 is not None:
-            print("calculating yield for cluster {}".format(cluster))
-            max_area = seaweed_needed / productivity_day_km2
-            harvest_df = model.seaweed_growth(
-                initial_seaweed=10000,
-                initial_area_built=100,
-                initial_area_used=100,
-                new_module_area_per_day=100,
-                min_density=1200,
-                max_density=3600,
-                max_area=max_area,
-                optimal_growth_rate=optimal_growth_rate,
-                growth_rate_fraction=model.growth_timeseries,
-                initial_lag=30,
-                percent_usable_for_growth=percent_usable_for_growth,
-                days_to_run=days_to_run,
-            )
-            harvest_df["max_area"] = max_area
-            harvest_df["cluster"] = cluster
-            harvest_df["seaweed_needed_per_day"] = seaweed_needed
-            harvest_df.to_csv(f"results/harvest_df_cluster_{cluster}.csv")
-        else:
+    # Save the results for each scenario
+    scenario_max_growth_rates = []
+    # Run for all scenarios
+    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
+        print("Running scenario {}".format(scenario))
+        # Initialize the model
+        for cluster in range(0, 3):
+            path = "data" + os.sep + scenario
+            model = SeaweedScaleUpModel(path, cluster, seaweed_needed, harvest_loss)
+            growth_rate_fraction = np.mean(model.growth_timeseries)
             print(
-                "Not enough productivity in cluster for production {}, skipping it".format(
-                    cluster
+                "Cluster {} has a median growth rate of {}".format(
+                    cluster, growth_rate_fraction
                 )
             )
-    print("done")
+            scenario_max_growth_rates.append((scenario, cluster, growth_rate_fraction))
+            # calculate how much area we need to satisfy the daily
+            # seaweed need with the given productivity
+            productivity_day_km2 = model.determine_average_productivity(
+                growth_rate_fraction,
+                days_to_run,
+                percent_usable_for_growth,
+                optimal_growth_rate,
+            )
+            # check if the area is even productive enough to be used
+            if productivity_day_km2 is not None:
+                print("calculating yield for cluster {}".format(cluster))
+                max_area = seaweed_needed / productivity_day_km2
+                harvest_df = model.seaweed_growth(
+                    initial_seaweed=10000,
+                    initial_area_built=100,
+                    initial_area_used=100,
+                    new_module_area_per_day=100,
+                    min_density=1200,
+                    max_density=3600,
+                    max_area=max_area,
+                    optimal_growth_rate=optimal_growth_rate,
+                    growth_rate_fraction=model.growth_timeseries,
+                    initial_lag=0,  # 0 because this is taken care of with the logistic growth
+                    percent_usable_for_growth=percent_usable_for_growth,
+                    days_to_run=days_to_run,
+                )
+                harvest_df["max_area"] = max_area
+                harvest_df["cluster"] = cluster
+                harvest_df["seaweed_needed_per_day"] = seaweed_needed
+                harvest_df.to_csv(
+                    "results"
+                    + os.sep
+                    + scenario
+                    + os.sep
+                    + "harvest_df_cluster_"
+                    + str(cluster)
+                    + ".csv"
+                )
+            else:
+                print(
+                    "Not enough productivity in cluster for production {}, skipping it".format(
+                        cluster
+                    )
+                )
+        print("done")
+    # Convert the results to a dataframe
+    scenario_max_growth_rates_df = pd.DataFrame(
+        scenario_max_growth_rates, columns=["scenario", "cluster", "max_growth_rate"]
+    )
+    scenario_max_growth_rates_df.to_csv(
+        "results" + os.sep + "scenario_max_growth_rates.csv"
+    )
 
 
 if __name__ == "__main__":
