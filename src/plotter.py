@@ -92,7 +92,8 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
     Returns:
         None, but plots and saves the results
     """
-    # Define the colors starting with #3A913F for the 150 tg scenario and adding 6 very distinct green colors
+    # Define the colors starting with #3A913F for the 150 tg scenario
+    # and adding 6 very distinct green colors
     colors = {
         "150 Tg": "#3A913F",
         "47 Tg": "#5DAF5D",
