@@ -371,7 +371,7 @@ def run_model(
         scenarios (list): list of scenarios to run
         location (str): location on the globe
         number_of_clusters (int): number of clusters
-    Returns:    
+    Returns:
         None
     """
     # Fraction of max calories we want in seaweed
