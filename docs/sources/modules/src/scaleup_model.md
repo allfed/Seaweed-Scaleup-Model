@@ -216,7 +216,12 @@ Returns
 ### run_model
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L341)
 ```python
-.run_model()
+.run_model(
+   optimal_growth_rate, days_to_run, global_pop, calories_per_person_per_day,
+   harvest_loss, food_waste, calories_per_t_seaweed_wet, food_limit, feed_limit,
+   biofuel_limit, percent_usable_for_growth, scenarios, location,
+   number_of_clusters
+)
 ```
 
 ---
@@ -224,7 +229,21 @@ Run the model
 
 **Arguments**
 
-None
+* **optimal_growth_rate** (float) : the optimal growth rate
+* **days_to_run** (int) : the number of days to run the model
+* **global_pop** (int) : Global population
+* **calories_per_person_per_day** (int) : Calories needed per person per day
+* **harvest_loss** (float) : Fraction of harvest lost
+* **food_waste** (float) : Fraction of food wasted
+* **calories_per_kg_seaweed** (int) : Calories per t of seaweed
+* **food_limit** (float) : how large a fraction of the food can be substituted by seaweed
+* **feed_limit** (float) : how large a fraction of the feed can be substituted by seaweed
+* **biofuel_limit** (float) : how large a fraction of the biofuel can be substituted by seaweed
+* **percent_usable_for_growth** (float) : how much of the harvest is usable for growth
+* **scenarios** (list) : list of scenarios to run
+* **location** (str) : location on the globe
+* **number_of_clusters** (int) : number of clusters
+
 
 **Returns**
 

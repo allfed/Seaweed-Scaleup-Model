@@ -5,7 +5,7 @@
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L16)
 ```python
 .plot_satisfaction_results(
-   clusters, percent_need, scenario
+   clusters, percent_need, scenario, location
 )
 ```
 
@@ -30,7 +30,7 @@ None, but plots and saves the results
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L86)
 ```python
 .plot_scenario_comparison(
-   percent_need, scenario_max_growth_rates_df
+   percent_need, scenario_max_growth_rates_df, location
 )
 ```
 
@@ -51,10 +51,10 @@ None, but plots and saves the results
 
 
 ### plot_area_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L238)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L240)
 ```python
 .plot_area_results(
-   clusters, scenario
+   clusters, scenario, location
 )
 ```
 
@@ -74,13 +74,35 @@ None, but plots and saves the results
 
 
 ### plot_self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L276)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L278)
 ```python
 .plot_self_shading()
 ```
 
 ---
 Plots the self shading used in the model. Based on James and Boriah (2010).
+
+**Arguments**
+
+None
+
+**Returns**
+
+None
+
+----
+
+
+### create_plots
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L311)
+```python
+.create_plots(
+   location, consumption_aim
+)
+```
+
+---
+Main function to run the plotter and read the data
 
 **Arguments**
 
