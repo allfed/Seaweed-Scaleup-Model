@@ -39,10 +39,3 @@ def prep_data(path):
     ]
     all_clusters_daily.to_csv(path + os.sep + "actual_growth_rate_by_cluster.csv")
 
-
-if __name__ == "__main__":
-    # Go through all nuclear war scenarios
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
-        print("Start preprocessing for scenario " + scenario)
-        path = "data"
-        prep_data(path + os.sep + scenario)

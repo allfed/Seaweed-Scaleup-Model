@@ -13,7 +13,7 @@ plt.style.use(
 )
 
 
-def plot_satisfaction_results(clusters, percent_need, scenario):
+def plot_satisfaction_results(clusters, percent_need, scenario, location):
     """
     Plots the results of the model
     Arguments:
@@ -73,17 +73,17 @@ def plot_satisfaction_results(clusters, percent_need, scenario):
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
     plt.savefig(
-        "results" + os.sep + scenario + os.sep + "food_satisfaction.png",
+        "results" + os.sep + location + os.sep + scenario + os.sep + "food_satisfaction.png",
         dpi=300,
         bbox_inches="tight",
     )
     satisfied_need_df.to_csv(
-        "results" + os.sep + scenario + os.sep + "food_satisfaction.csv"
+        "results" + os.sep + location + os.sep + scenario + os.sep + "food_satisfaction.csv"
     )
     plt.close()
 
 
-def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
+def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df, location):
     """
     Plots the results of the model from all scenarios and compares the
     cluster with the highest growth rate for a given scenario.
@@ -117,6 +117,8 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
         # Read in the results for the cluster with the highest growth rate
         cluster_df = pd.read_csv(
             "results"
+            + os.sep
+            + location
             + os.sep
             + scenario
             + os.sep
@@ -230,12 +232,12 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df):
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
     plt.savefig(
-        "results" + os.sep + "scenario_comparison.png", dpi=300, bbox_inches="tight"
+        "results" + os.sep + location + os.sep + "scenario_comparison.png", dpi=300, bbox_inches="tight"
     )
     plt.close()
 
 
-def plot_area_results(clusters, scenario):
+def plot_area_results(clusters, scenario, location):
     """
     Plots how much area the different growth rates need
     Arguments:
@@ -266,7 +268,7 @@ def plot_area_results(clusters, scenario):
     fig = plt.gcf()
     fig.set_size_inches(10, 3)
     plt.savefig(
-        "results" + os.sep + scenario + os.sep + "area.png",
+        "results" + os.sep + location + os.sep + scenario + os.sep + "area.png",
         dpi=300,
         bbox_inches="tight",
     )
@@ -306,7 +308,10 @@ def plot_self_shading():
     plt.close()
 
 
-def main():
+def create_plots(
+    location,
+    consumption_aim,
+):
     """
     Main function to run the plotter and read the data
     Arguments:
@@ -316,9 +321,9 @@ def main():
     """
     # Make the overall comparison plot
     scenario_max_growth_rates_df = pd.read_csv(
-        "results" + os.sep + "scenario_max_growth_rates.csv"
+        "results" + os.sep + location + os.sep + "scenario_max_growth_rates.csv"
     )
-    plot_scenario_comparison(70, scenario_max_growth_rates_df)
+    plot_scenario_comparison(consumption_aim, scenario_max_growth_rates_df, location)
     # Plot the results for all scenarios
     for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
         print("Plotting results for scenario " + scenario)
@@ -327,6 +332,8 @@ def main():
             try:
                 clusters[cluster] = pd.read_csv(
                     "results"
+                    + os.sep
+                    + location
                     + os.sep
                     + scenario
                     + os.sep
@@ -347,10 +354,7 @@ def main():
                     + " in scenario "
                     + scenario
                 )
-        plot_area_results(clusters, scenario)
-        plot_satisfaction_results(clusters, 70, scenario)
-    plot_self_shading()
+        plot_area_results(clusters, scenario, location)
+        plot_satisfaction_results(clusters, consumption_aim, scenario, location)
+    # plot_self_shading()
 
-
-if __name__ == "__main__":
-    main()
