@@ -144,7 +144,7 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df, locatio
         food["daily_need_satisfied"] = (
             food["mean_daily_harvest"] / food["daily_need"]
         ) * 100
-        daily_need_satisfied = food["daily_need_satisfied"].rolling(30).mean()
+        daily_need_satisfied = food["daily_need_satisfied"].rolling(20).mean()
         # Convert back to the 30 % of the need
         daily_need_satisfied = (daily_need_satisfied / 100) * percent_need
 
