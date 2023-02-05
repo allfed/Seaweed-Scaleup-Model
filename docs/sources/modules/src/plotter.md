@@ -97,7 +97,8 @@ None
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L311)
 ```python
 .create_plots(
-   location, consumption_aim
+   location, scenarios, consumption_aim, number_of_clusters,
+   with__shading = False, with_comparison = True
 )
 ```
 
@@ -106,7 +107,11 @@ Main function to run the plotter and read the data
 
 **Arguments**
 
-None
+* **location** (str) : The location to plot
+* **consumption_aim** (float) : The consumption aim in percent
+* **with_self_shading** (bool) : Whether to plot the self shading factor
+* **with_comparison** (bool) : Whether to plot the scenario comparison
+
 
 **Returns**
 
