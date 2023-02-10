@@ -256,9 +256,9 @@ def self_shading(density):
     """
     Calculates how much the growth rate is reduced due to self shading.
     Based on the publication:
-    James, S.C. and Boriah, V. (2010), Modeling algae growth
-    in an open-channel raceway
-    Journal of Computational Biology, 17(7), 895−906.
+    Lapointe, B. E., & Ryther, J. H. (1978).
+    Some aspects of the growth and yield of Gracilaria tikvahiae in culture.
+    Aquaculture, 15(3), 185-193. https://doi.org/10.1016/0044-8486(78)90030-3
     Arguments:
         density: the seaweed density
     Returns:
@@ -276,7 +276,7 @@ def calculate_seaweed_need(
     calories_per_person_per_day,
     food_waste,
     calories_per_t_seaweed_wet,
-    iodine_limit,
+    seaweed_limit,
 ):
     """
     Calculates the amount of seaweed needed to feed the population
@@ -287,7 +287,7 @@ def calculate_seaweed_need(
         calories_per_person_per_day (int): Calories needed per person per day
         food_waste (float): Fraction of food wasted
         calories_per_kg_seaweed (int): Calories per t of seaweed
-        iodine_limit (float): how large a fraction of the food can be substituted by seaweed
+        seaweed_limit (float): how large a fraction of the food can be substituted by seaweed
     Returns:
         float: amount of seaweed needed to feed the population
     """
@@ -295,8 +295,8 @@ def calculate_seaweed_need(
     global_food_demand = global_pop * calories_per_person_per_day
     # Multiply by the fraction of food wasted
     global_food_demand = global_food_demand * ((1 + food_waste) / 100)
-    # Multiply by the iodine limit, as we cannot have more than that
-    global_food_demand = global_food_demand * iodine_limit
+    # Multiply by the seaweed limit, as we cannot have more than that due to iodine content
+    global_food_demand = global_food_demand * seaweed_limit
     # Calculate the amount of seaweed needed
     seaweed_needed = global_food_demand / calories_per_t_seaweed_wet
     return seaweed_needed
