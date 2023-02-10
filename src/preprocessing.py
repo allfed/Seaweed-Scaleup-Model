@@ -54,4 +54,3 @@ def prep_data(scenario, location, num_clusters):
         + os.sep
         + "actual_growth_rate_by_cluster.csv"
     )
-

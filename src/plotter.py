@@ -73,12 +73,24 @@ def plot_satisfaction_results(clusters, percent_need, scenario, location):
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
     plt.savefig(
-        "results" + os.sep + location + os.sep + scenario + os.sep + "food_satisfaction.png",
+        "results"
+        + os.sep
+        + location
+        + os.sep
+        + scenario
+        + os.sep
+        + "food_satisfaction.png",
         dpi=300,
         bbox_inches="tight",
     )
     satisfied_need_df.to_csv(
-        "results" + os.sep + location + os.sep + scenario + os.sep + "food_satisfaction.csv"
+        "results"
+        + os.sep
+        + location
+        + os.sep
+        + scenario
+        + os.sep
+        + "food_satisfaction.csv"
     )
     plt.close()
 
@@ -232,7 +244,9 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df, locatio
     fig = plt.gcf()
     fig.set_size_inches(9, 4)
     plt.savefig(
-        "results" + os.sep + location + os.sep + "scenario_comparison.png", dpi=300, bbox_inches="tight"
+        "results" + os.sep + location + os.sep + "scenario_comparison.png",
+        dpi=300,
+        bbox_inches="tight",
     )
     plt.close()
 
@@ -331,7 +345,9 @@ def create_plots(
         "results" + os.sep + location + os.sep + "scenario_max_growth_rates.csv"
     )
     if with_comparison:
-        plot_scenario_comparison(consumption_aim, scenario_max_growth_rates_df, location)
+        plot_scenario_comparison(
+            consumption_aim, scenario_max_growth_rates_df, location
+        )
     # Plot the results for all scenarios
     for scenario in scenarios:
         print("Plotting results for scenario " + scenario)
@@ -366,4 +382,3 @@ def create_plots(
         plot_satisfaction_results(clusters, consumption_aim, scenario, location)
     if with_self_shading:
         plot_self_shading()
-

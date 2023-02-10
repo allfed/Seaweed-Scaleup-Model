@@ -62,7 +62,7 @@ def test_determine_productivity():
         growth_rate_fraction=0.5,
         days_to_run=100,
         percent_usable_for_growth=50,
-        optimal_growth_rate=30
+        optimal_growth_rate=30,
     )
 
     assert productivity_day_km2 is not None
