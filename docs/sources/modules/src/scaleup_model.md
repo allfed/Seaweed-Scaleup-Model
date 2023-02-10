@@ -114,9 +114,9 @@ per area and day and the harvest intervall
 ---
 Calculates how much the growth rate is reduced due to self shading.
 Based on the publication:
-James, S.C. and Boriah, V. (2010), Modeling algae growth
-in an open-channel raceway
-Journal of Computational Biology, 17(7), 895−906.
+Lapointe, B. E., & Ryther, J. H. (1978).
+Some aspects of the growth and yield of Gracilaria tikvahiae in culture.
+Aquaculture, 15(3), 185-193. https://doi.org/10.1016/0044-8486(78)90030-3
 
 **Arguments**
 
@@ -135,7 +135,7 @@ the growth rate fraction
 ```python
 .calculate_seaweed_need(
    global_pop, calories_per_person_per_day, food_waste,
-   calories_per_t_seaweed_wet, iodine_limit
+   calories_per_t_seaweed_wet, seaweed_limit
 )
 ```
 
@@ -150,7 +150,7 @@ limited by the iodine content of the seaweed
 * **calories_per_person_per_day** (int) : Calories needed per person per day
 * **food_waste** (float) : Fraction of food wasted
 * **calories_per_kg_seaweed** (int) : Calories per t of seaweed
-* **iodine_limit** (float) : how large a fraction of the food can be substituted by seaweed
+* **seaweed_limit** (float) : how large a fraction of the food can be substituted by seaweed
 
 
 **Returns**
