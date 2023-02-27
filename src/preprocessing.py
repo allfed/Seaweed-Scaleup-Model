@@ -6,7 +6,7 @@ import os
 import pandas as pd
 
 
-def prep_data(path):
+def prep_data(scenario, location, num_clusters):
     """
     Changes the data from the growth model, so that it is a
     single time series for all the clusters.
@@ -16,11 +16,19 @@ def prep_data(path):
         None, only writes to a csv
     """
     growth_df = pd.read_pickle(
-        path + os.sep + "seaweed_growth_rate_clustered_global.pkl"
+        "data"
+        + os.sep
+        + location
+        + os.sep
+        + scenario
+        + os.sep
+        + "seaweed_growth_rate_clustered_"
+        + location
+        + ".pkl"
     )
     median_growth_cluster = growth_df.groupby("cluster").median()
     clusters = []
-    for cluster in [0, 1, 2]:
+    for cluster in range(num_clusters):
         cluster_df = pd.DataFrame(median_growth_cluster.loc[cluster, :])
         cluster_df.columns = ["growth_rate_month"]
         cluster_df["month"] = cluster_df.index
@@ -37,12 +45,12 @@ def prep_data(path):
         "growth_daily_cluster_" + str(cluster)
         for cluster in median_growth_cluster.index
     ]
-    all_clusters_daily.to_csv(path + os.sep + "actual_growth_rate_by_cluster.csv")
-
-
-if __name__ == "__main__":
-    # Go through all nuclear war scenarios
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
-        print("Start preprocessing for scenario " + scenario)
-        path = "data"
-        prep_data(path + os.sep + scenario)
+    all_clusters_daily.to_csv(
+        "data"
+        + os.sep
+        + location
+        + os.sep
+        + scenario
+        + os.sep
+        + "actual_growth_rate_by_cluster.csv"
+    )

@@ -114,9 +114,9 @@ per area and day and the harvest intervall
 ---
 Calculates how much the growth rate is reduced due to self shading.
 Based on the publication:
-James, S.C. and Boriah, V. (2010), Modeling algae growth
-in an open-channel raceway
-Journal of Computational Biology, 17(7), 895−906.
+Lapointe, B. E., & Ryther, J. H. (1978).
+Some aspects of the growth and yield of Gracilaria tikvahiae in culture.
+Aquaculture, 15(3), 185-193. https://doi.org/10.1016/0044-8486(78)90030-3
 
 **Arguments**
 
@@ -135,7 +135,7 @@ the growth rate fraction
 ```python
 .calculate_seaweed_need(
    global_pop, calories_per_person_per_day, food_waste,
-   calories_per_t_seaweed_wet, iodine_limit
+   calories_per_t_seaweed_wet, seaweed_limit
 )
 ```
 
@@ -150,7 +150,7 @@ limited by the iodine content of the seaweed
 * **calories_per_person_per_day** (int) : Calories needed per person per day
 * **food_waste** (float) : Fraction of food wasted
 * **calories_per_kg_seaweed** (int) : Calories per t of seaweed
-* **iodine_limit** (float) : how large a fraction of the food can be substituted by seaweed
+* **seaweed_limit** (float) : how large a fraction of the food can be substituted by seaweed
 
 
 **Returns**
@@ -216,7 +216,12 @@ Returns
 ### run_model
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L341)
 ```python
-.run_model()
+.run_model(
+   optimal_growth_rate, days_to_run, global_pop, calories_per_person_per_day,
+   harvest_loss, food_waste, calories_per_t_seaweed_wet, food_limit, feed_limit,
+   biofuel_limit, percent_usable_for_growth, scenarios, location,
+   number_of_clusters
+)
 ```
 
 ---
@@ -224,7 +229,21 @@ Run the model
 
 **Arguments**
 
-None
+* **optimal_growth_rate** (float) : the optimal growth rate
+* **days_to_run** (int) : the number of days to run the model
+* **global_pop** (int) : Global population
+* **calories_per_person_per_day** (int) : Calories needed per person per day
+* **harvest_loss** (float) : Fraction of harvest lost
+* **food_waste** (float) : Fraction of food wasted
+* **calories_per_kg_seaweed** (int) : Calories per t of seaweed
+* **food_limit** (float) : how large a fraction of the food can be substituted by seaweed
+* **feed_limit** (float) : how large a fraction of the feed can be substituted by seaweed
+* **biofuel_limit** (float) : how large a fraction of the biofuel can be substituted by seaweed
+* **percent_usable_for_growth** (float) : how much of the harvest is usable for growth
+* **scenarios** (list) : list of scenarios to run
+* **location** (str) : location on the globe
+* **number_of_clusters** (int) : number of clusters
+
 
 **Returns**
 

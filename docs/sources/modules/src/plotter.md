@@ -5,7 +5,7 @@
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L16)
 ```python
 .plot_satisfaction_results(
-   clusters, percent_need, scenario
+   clusters, percent_need, scenario, location
 )
 ```
 
@@ -27,10 +27,10 @@ None, but plots and saves the results
 
 
 ### plot_scenario_comparison
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L86)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L98)
 ```python
 .plot_scenario_comparison(
-   percent_need, scenario_max_growth_rates_df
+   percent_need, scenario_max_growth_rates_df, location
 )
 ```
 
@@ -51,10 +51,10 @@ None, but plots and saves the results
 
 
 ### plot_area_results
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L238)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L254)
 ```python
 .plot_area_results(
-   clusters, scenario
+   clusters, scenario, location
 )
 ```
 
@@ -74,7 +74,7 @@ None, but plots and saves the results
 
 
 ### plot_self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L276)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L292)
 ```python
 .plot_self_shading()
 ```
@@ -85,6 +85,33 @@ Plots the self shading used in the model. Based on James and Boriah (2010).
 **Arguments**
 
 None
+
+**Returns**
+
+None
+
+----
+
+
+### create_plots
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/plotter.py/#L325)
+```python
+.create_plots(
+   location, scenarios, consumption_aim, number_of_clusters,
+   with__shading = False, with_comparison = True
+)
+```
+
+---
+Main function to run the plotter and read the data
+
+**Arguments**
+
+* **location** (str) : The location to plot
+* **consumption_aim** (float) : The consumption aim in percent
+* **with_self_shading** (bool) : Whether to plot the self shading factor
+* **with_comparison** (bool) : Whether to plot the scenario comparison
+
 
 **Returns**
 

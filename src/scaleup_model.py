@@ -256,9 +256,9 @@ def self_shading(density):
     """
     Calculates how much the growth rate is reduced due to self shading.
     Based on the publication:
-    James, S.C. and Boriah, V. (2010), Modeling algae growth
-    in an open-channel raceway
-    Journal of Computational Biology, 17(7), 895−906.
+    Lapointe, B. E., & Ryther, J. H. (1978).
+    Some aspects of the growth and yield of Gracilaria tikvahiae in culture.
+    Aquaculture, 15(3), 185-193. https://doi.org/10.1016/0044-8486(78)90030-3
     Arguments:
         density: the seaweed density
     Returns:
@@ -276,7 +276,7 @@ def calculate_seaweed_need(
     calories_per_person_per_day,
     food_waste,
     calories_per_t_seaweed_wet,
-    iodine_limit,
+    seaweed_limit,
 ):
     """
     Calculates the amount of seaweed needed to feed the population
@@ -287,7 +287,7 @@ def calculate_seaweed_need(
         calories_per_person_per_day (int): Calories needed per person per day
         food_waste (float): Fraction of food wasted
         calories_per_kg_seaweed (int): Calories per t of seaweed
-        iodine_limit (float): how large a fraction of the food can be substituted by seaweed
+        seaweed_limit (float): how large a fraction of the food can be substituted by seaweed
     Returns:
         float: amount of seaweed needed to feed the population
     """
@@ -295,8 +295,8 @@ def calculate_seaweed_need(
     global_food_demand = global_pop * calories_per_person_per_day
     # Multiply by the fraction of food wasted
     global_food_demand = global_food_demand * ((1 + food_waste) / 100)
-    # Multiply by the iodine limit, as we cannot have more than that
-    global_food_demand = global_food_demand * iodine_limit
+    # Multiply by the seaweed limit, as we cannot have more than that due to iodine content
+    global_food_demand = global_food_demand * seaweed_limit
     # Calculate the amount of seaweed needed
     seaweed_needed = global_food_demand / calories_per_t_seaweed_wet
     return seaweed_needed
@@ -338,30 +338,44 @@ def logistic_curve(x, max_L, k, x0, off):
     return max_L / (1 + np.exp(-k * (x - x0))) + off
 
 
-def run_model():
+def run_model(
+    optimal_growth_rate,
+    days_to_run,
+    global_pop,
+    calories_per_person_per_day,
+    harvest_loss,
+    food_waste,
+    calories_per_t_seaweed_wet,
+    food_limit,
+    feed_limit,
+    biofuel_limit,
+    percent_usable_for_growth,
+    scenarios,
+    location,
+    number_of_clusters,
+):
     """
     Run the model
     Arguments:
-        None
+        optimal_growth_rate (float): the optimal growth rate
+        days_to_run (int): the number of days to run the model
+        global_pop (int): Global population
+        calories_per_person_per_day (int): Calories needed per person per day
+        harvest_loss (float): Fraction of harvest lost
+        food_waste (float): Fraction of food wasted
+        calories_per_kg_seaweed (int): Calories per t of seaweed
+        food_limit (float): how large a fraction of the food can be substituted by seaweed
+        feed_limit (float): how large a fraction of the feed can be substituted by seaweed
+        biofuel_limit (float): how large a fraction of the biofuel can be substituted by seaweed
+        percent_usable_for_growth (float): how much of the harvest is usable for growth
+        scenarios (list): list of scenarios to run
+        location (str): location on the globe
+        number_of_clusters (int): number of clusters
     Returns:
         None
     """
-    optimal_growth_rate = 30  # % per day
-    days_to_run = 3600  # 120 month at 30 days per month
-    global_pop = 7000000000
-    calories_per_person_per_day = 2250
-    harvest_loss = 20  # % of the harvest that is lost
-    food_waste = 13  # https://www.researchsquare.com/article/rs-1446444/v1
-    calories_per_t_seaweed_wet = 288200  # see Efficiency.ipynb
-    food_limit = 0.15  # amount of food that can be replaced by seaweed
-    # https://academic.oup.com/jcem/article/87/12/5499/2823602
-    feed_limit = 0.05  # amount of feed that can be replaced by seaweed
-    biofuel_limit = 0.5  # amount of biofuel that can be replaced by seaweed
-    # Fraction of global calories we want in seaweed
+    # Fraction of max calories we want in seaweed
     seaweed_limit = feed_limit + food_limit + biofuel_limit
-    # percent of the area of the module that can acutally be used for food production.
-    # Rest is needed for things like lanes for harvesting
-    percent_usable_for_growth = 50  # %
     # Calculate the seaweed needed per day to feed everyone, given the iodine limit
     seaweed_needed = calculate_seaweed_need(
         global_pop,
@@ -373,11 +387,11 @@ def run_model():
     # Save the results for each scenario
     scenario_max_growth_rates = []
     # Run for all scenarios
-    for scenario in [str(i) + "tg" for i in [5, 16, 27, 37, 47, 150]] + ["control"]:
+    for scenario in scenarios:
         print("Running scenario {}".format(scenario))
         # Initialize the model
-        for cluster in range(0, 3):
-            path = "data" + os.sep + scenario
+        for cluster in range(0, number_of_clusters):
+            path = "data" + os.sep + location + os.sep + scenario
             model = SeaweedScaleUpModel(path, cluster, seaweed_needed, harvest_loss)
             growth_rate_fraction = np.mean(model.growth_timeseries)
             print(
@@ -418,6 +432,8 @@ def run_model():
                 harvest_df.to_csv(
                     "results"
                     + os.sep
+                    + location
+                    + os.sep
                     + scenario
                     + os.sep
                     + "harvest_df_cluster_"
@@ -436,9 +452,5 @@ def run_model():
         scenario_max_growth_rates, columns=["scenario", "cluster", "max_growth_rate"]
     )
     scenario_max_growth_rates_df.to_csv(
-        "results" + os.sep + "scenario_max_growth_rates.csv"
+        "results" + os.sep + location + os.sep + "scenario_max_growth_rates.csv"
     )
-
-
-if __name__ == "__main__":
-    run_model()
