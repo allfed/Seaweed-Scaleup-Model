@@ -6,7 +6,7 @@ import os
 import pandas as pd
 
 
-def prep_data(scenario, location, num_clusters):
+def prep_data(scenario, location, num_clusters, starting_month=0, max_growth=30):
     """
     Changes the data from the growth model, so that it is a
     single time series for all the clusters.
@@ -32,8 +32,10 @@ def prep_data(scenario, location, num_clusters):
         cluster_df = pd.DataFrame(median_growth_cluster.loc[cluster, :])
         cluster_df.columns = ["growth_rate_month"]
         cluster_df["month"] = cluster_df.index
+        # Only use the months after the nuclear war started
+        cluster_df = cluster_df[cluster_df["month"] >= starting_month]
         cluster_df_daily = (
-            pd.concat([cluster_df] * 30)
+            pd.concat([cluster_df] * max_growth)
             .assign(growth_rate_daily=lambda x: x["growth_rate_month"])
             .sort_values("month")
         )
@@ -54,3 +56,7 @@ def prep_data(scenario, location, num_clusters):
         + os.sep
         + "actual_growth_rate_by_cluster.csv"
     )
+
+
+if __name__ == "__main__":
+    prep_data("150tg", "AUS", 2)
