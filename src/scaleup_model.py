@@ -404,7 +404,7 @@ def run_model(
             # seaweed need with the given productivity
             productivity_day_km2 = model.determine_average_productivity(
                 growth_rate_fraction,
-                days_to_run,
+                500,  # days to calibrate run (has to be longer than time needed to saturate farms)
                 percent_usable_for_growth,
                 optimal_growth_rate,
             )

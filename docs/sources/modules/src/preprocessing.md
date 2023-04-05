@@ -5,7 +5,7 @@
 [source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/preprocessing.py/#L9)
 ```python
 .prep_data(
-   scenario, location, num_clusters
+   scenario, location, num_clusters, starting_month = 0, max_growth = 30
 )
 ```
 
