@@ -395,7 +395,7 @@ def run_model(
             model = SeaweedScaleUpModel(path, cluster, seaweed_needed, harvest_loss)
             growth_rate_fraction = np.mean(model.growth_timeseries)
             print(
-                "Cluster {} has a median growth rate of {}".format(
+                "Cluster {} has a median growth rate (unit: fraction of maximum growth rate) of {}".format(
                     cluster, growth_rate_fraction
                 )
             )
