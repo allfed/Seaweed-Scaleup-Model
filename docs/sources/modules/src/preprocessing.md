@@ -13,6 +13,9 @@
 Changes the data from the growth model, so that it is a
 single time series for all the clusters.
 
+The data at this point is still in fraction of maximum growth rate and not in % per day
+
+
 **Arguments**
 
 * **path** (str) : path to the data
