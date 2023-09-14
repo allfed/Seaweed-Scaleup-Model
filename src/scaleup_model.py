@@ -400,7 +400,7 @@ def run_model(
     for scenario in scenarios:
         print("Running scenario {}".format(scenario))
         # Initialize the model
-        for cluster in range(0, number_of_clusters):
+        for cluster in range(1, number_of_clusters + 1):
             path = "data" + os.sep + location + os.sep + scenario
             model = SeaweedScaleUpModel(path, cluster, seaweed_needed, harvest_loss)
             growth_rate_fraction = np.mean(model.growth_timeseries)
@@ -456,7 +456,7 @@ def run_model(
                         cluster
                     )
                 )
-        print("done")
+        print("done\n")
     # Convert the results to a dataframe
     scenario_max_growth_rates_df = pd.DataFrame(
         scenario_max_growth_rates, columns=["scenario", "cluster", "max_growth_rate"]

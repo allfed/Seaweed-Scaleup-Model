@@ -47,7 +47,7 @@ def prep_data(scenario, location, num_clusters, starting_month=0, max_growth=30)
         clusters.append(cluster_df_daily)
     all_clusters_daily = pd.concat(clusters, axis=1)
     all_clusters_daily.columns = [
-        "growth_daily_cluster_" + str(cluster)
+        "growth_daily_cluster_" + str(cluster + 1)
         for cluster in median_growth_cluster.index
     ]
     all_clusters_daily.to_csv(
