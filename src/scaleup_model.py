@@ -122,11 +122,18 @@ class SeaweedScaleUpModel:
             # This can be done with a fixed value for the growth rate fraction
             # or with a timeseries of the growth rate fraction
             if isinstance(growth_rate_fraction, float):
+                # Make sure the growth rate fraction is between 0 and 1
+                assert self_shading_factor <= 1 and self_shading_factor >= 0
                 actual_growth_rate = 1 + (
                     (optimal_growth_rate * growth_rate_fraction * self_shading_factor)
                     / 100
                 )
             elif isinstance(growth_rate_fraction, list):
+                # Make sure all the values in the growth rate fraction list are between 0 and 1
+                assert all(
+                    self_shading_factor <= 1 and self_shading_factor >= 0
+                    for self_shading_factor in growth_rate_fraction
+                )
                 actual_growth_rate = 1 + (
                     (
                         optimal_growth_rate
@@ -137,6 +144,9 @@ class SeaweedScaleUpModel:
                 )
             else:
                 raise TypeError("growth_rate_fraction must be float or list")
+            # Make sure the actual growth rate is in a reasonable range
+            df.loc[current_day, "actual_growth_rate_multiplicator"] = actual_growth_rate
+            assert actual_growth_rate <= 2 and actual_growth_rate >= 0
             current_seaweed = current_seaweed * actual_growth_rate
             # Calculate the seaweed density, so we know when to harvest
             current_density = current_seaweed / current_area_used
@@ -145,8 +155,10 @@ class SeaweedScaleUpModel:
                 if verbose:
                     print("harvesting at day ", current_day)
                     print("days since last harvest: ", harvest_intervall)
+                # Saving the harvest intervall
                 df.loc[current_day, "harvest_intervall"] = harvest_intervall
                 harvest_intervall_all.append(harvest_intervall)
+                # Reset the intervall, as we just have harvested
                 harvest_intervall = 0
                 # calculate the amount of seaweed we have to leave in the field
                 seaweed_remaining_to_grow = current_area_used * min_density
@@ -168,7 +180,6 @@ class SeaweedScaleUpModel:
                 current_seaweed_need = (
                     current_area_built - current_area_used
                 ) * min_density
-
                 # check if we can stock all the area built
                 if current_seaweed_need > harvest_wet_with_loss:
                     new_area_used = current_seaweed_need / min_density
@@ -183,7 +194,6 @@ class SeaweedScaleUpModel:
                     # newly stocked area
                     current_area_used += new_area_used
                     current_seaweed = current_area_used * min_density
-
                 df.loc[current_day, "new_area_used"] = new_area_used
             # Increment the harvest counter
             harvest_intervall += 1
@@ -395,7 +405,7 @@ def run_model(
             model = SeaweedScaleUpModel(path, cluster, seaweed_needed, harvest_loss)
             growth_rate_fraction = np.mean(model.growth_timeseries)
             print(
-                "Cluster {} has a median growth rate (fraction of max growth rate) of {}".format(
+                "Cluster {} has a mean growth rate (fraction of max growth rate) of {}".format(
                     cluster, growth_rate_fraction
                 )
             )
