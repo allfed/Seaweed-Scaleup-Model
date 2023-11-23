@@ -304,7 +304,7 @@ def calculate_seaweed_need(
     # Calculate the amount of calories needed to feed the population
     global_food_demand = global_pop * calories_per_person_per_day
     # Multiply by the fraction of food wasted
-    global_food_demand = global_food_demand * ((1 + food_waste) / 100)
+    global_food_demand = global_food_demand * (1 + (food_waste / 100))
     # Multiply by the seaweed limit, as we cannot have more than that due to iodine content
     global_food_demand = global_food_demand * seaweed_limit
     # Calculate the amount of seaweed needed

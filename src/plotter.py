@@ -47,19 +47,19 @@ def plot_satisfaction_results(clusters, percent_need, scenario, location):
         daily_need_satisfied = food["daily_need_satisfied"].rolling(20).mean()
         # Convert back to the 30 % of the need
         daily_need_satisfied = (daily_need_satisfied / 100) * percent_need
-        satisfied_need_df["Cluster " + str(cluster + 1)] = daily_need_satisfied
-        satisfied_need_df["Cluster " + str(cluster + 1) + " Mean Harvest Day"] = food[
+        satisfied_need_df["Cluster " + str(cluster)] = daily_need_satisfied
+        satisfied_need_df["Cluster " + str(cluster) + " Mean Harvest Day"] = food[
             "mean_daily_harvest"
         ]
         counter += 1
-    available_clusters = ["Cluster " + str(i + 1) for i in clusters.keys()]
+    available_clusters = ["Cluster " + str(i) for i in clusters.keys()]
     # Convert to months
     satisfied_need_df.index = satisfied_need_df.index / 30
     ax = satisfied_need_df[available_clusters].plot(
         color="black", linewidth=2.5, legend=False
     )
     ax = satisfied_need_df[available_clusters].plot(
-        color=["#95c091", "#3A913F"],
+        color=["#95c091", "#3A913F", "grey"],
         linewidth=2,
         ax=ax,
         label=available_clusters,
@@ -263,7 +263,7 @@ def plot_area_results(clusters, scenario, location):
     for cluster, cluster_df in clusters.items():
         # Skip emtpy dfs
         if not cluster_df.empty:
-            areas_dict[cluster + 1] = cluster_df["max_area"].values[0]
+            areas_dict[cluster] = cluster_df["max_area"].values[0]
     areas = pd.DataFrame.from_dict(areas_dict, orient="index")
     areas.reset_index(inplace=True)
     areas.columns = ["Cluster", "Area [km²]"]
@@ -352,7 +352,7 @@ def create_plots(
     for scenario in scenarios:
         print("Plotting results for scenario " + scenario)
         clusters = {}
-        for cluster in range(number_of_clusters):
+        for cluster in range(number_of_clusters+1):
             try:
                 clusters[cluster] = pd.read_csv(
                     "results"
