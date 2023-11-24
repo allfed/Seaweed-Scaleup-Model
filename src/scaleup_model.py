@@ -259,6 +259,7 @@ class SeaweedScaleUpModel:
         else:
             productivity_day_km2 = None
         print("productivity_day_km2", productivity_day_km2)
+        print("This productivity refers to the area that is usable for growth")
         return productivity_day_km2
 
 
@@ -436,7 +437,10 @@ def run_model(
                     percent_usable_for_growth=percent_usable_for_growth,
                     days_to_run=days_to_run,
                 )
-                harvest_df["max_area"] = max_area
+                # The productivity assumes that the whole area is used for growth
+                # but we can only use a fraction of it. Therefore, we have to multiply
+                # the productivity by the fraction of the area that is usable for growth
+                harvest_df["max_area"] = max_area / (percent_usable_for_growth / 100)
                 harvest_df["cluster"] = cluster
                 harvest_df["seaweed_needed_per_day"] = seaweed_needed
                 harvest_df.to_csv(
