@@ -352,7 +352,7 @@ def create_plots(
     for scenario in scenarios:
         print("Plotting results for scenario " + scenario)
         clusters = {}
-        for cluster in range(number_of_clusters+1):
+        for cluster in range(number_of_clusters + 1):
             try:
                 clusters[cluster] = pd.read_csv(
                     "results"
