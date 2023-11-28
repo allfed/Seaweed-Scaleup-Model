@@ -59,6 +59,7 @@ class SeaweedScaleUpModel:
         percent_usable_for_growth,
         days_to_run,
         verbose=False,
+        calibration_run=False
     ):
         """
         Calculates the seaweed growth and creatss a dataframe of all important
@@ -84,6 +85,7 @@ class SeaweedScaleUpModel:
         current_area_used = initial_area_used
         current_seaweed = initial_seaweed
         current_density = current_seaweed / current_area_used
+        track_max_area = False
 
         cumulative_harvest_for_food = 0
         current_seaweed_need = 0
@@ -113,6 +115,9 @@ class SeaweedScaleUpModel:
                         current_area_built = max_area
                 else:
                     df.loc[current_day, "new_module_area_per_day"] = 0
+                    if not track_max_area and not calibration_run:
+                        print("max area reached at month ", current_day / 30)
+                        track_max_area = True
             else:
                 df.loc[current_day, "new_module_area_per_day"] = 0
             self_shading_factor = self_shading(
@@ -212,7 +217,7 @@ class SeaweedScaleUpModel:
         growth_rate_fraction,
         days_to_run,
         percent_usable_for_growth,
-        optimal_growth_rate,
+        optimal_growth_rate
     ):
         """
         Let the model run for one km² to determine the productivity
@@ -239,6 +244,7 @@ class SeaweedScaleUpModel:
             initial_lag=0,
             percent_usable_for_growth=percent_usable_for_growth,
             days_to_run=days_to_run,
+            calibration_run=True
         )
         # Get the stabilized values
         try:
@@ -251,8 +257,10 @@ class SeaweedScaleUpModel:
         except KeyError:
             stable_harvest_intervall = None
             stable_harvest_for_food = None
-        print("stable_harvest_intervall", stable_harvest_intervall)
-        print("stable_harvest_for_food", stable_harvest_for_food)
+        print("stable_harvest_intervall every {} days".format(
+            stable_harvest_intervall)
+        )
+        print("Stable harvest for food is {} t".format(stable_harvest_for_food))
         # Calculate productivity per km² per day
         if stable_harvest_intervall is not None and stable_harvest_for_food is not None:
             productivity_day_km2 = stable_harvest_for_food / stable_harvest_intervall
@@ -406,8 +414,8 @@ def run_model(
             model = SeaweedScaleUpModel(path, cluster, seaweed_needed, harvest_loss)
             growth_rate_fraction = np.mean(model.growth_timeseries)
             print(
-                "Cluster {} has a mean growth rate (fraction of max growth rate) of {}".format(
-                    cluster, growth_rate_fraction
+                "Cluster {}: mean growth rate of {} percent per day before self shading".format(
+                    cluster, round(growth_rate_fraction * 30, 2)
                 )
             )
             scenario_max_growth_rates.append((scenario, cluster, growth_rate_fraction))
@@ -440,6 +448,9 @@ def run_model(
                 # The productivity assumes that the whole area is used for growth
                 # but we can only use a fraction of it. Therefore, we have to multiply
                 # the productivity by the fraction of the area that is usable for growth
+                print("The complete area is {} km²".format(
+                    round(max_area / (percent_usable_for_growth / 100), 0))
+                )
                 harvest_df["max_area"] = max_area / (percent_usable_for_growth / 100)
                 harvest_df["cluster"] = cluster
                 harvest_df["seaweed_needed_per_day"] = seaweed_needed
@@ -460,7 +471,8 @@ def run_model(
                         cluster
                     )
                 )
-        print("done\n")
+            print("done with cluster\n")
+        print("done with scenario\n\n")
     # Convert the results to a dataframe
     scenario_max_growth_rates_df = pd.DataFrame(
         scenario_max_growth_rates, columns=["scenario", "cluster", "max_growth_rate"]

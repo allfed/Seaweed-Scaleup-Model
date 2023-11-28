@@ -230,8 +230,8 @@ def plot_scenario_comparison(percent_need, scenario_max_growth_rates_df, locatio
     # Annotate the line for 150 Tg
     ax.annotate(
         r"$\longleftarrow$ 150 Tg",
-        xy=(85, 45),
-        xytext=(85, 45),
+        xy=(90, 37),
+        xytext=(90, 37),
         xycoords="data",
         textcoords="data",
         fontsize=7,
