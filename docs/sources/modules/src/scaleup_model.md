@@ -45,7 +45,7 @@ None
    initial_seaweed, initial_area_built, initial_area_used,
    new_module_area_per_day, min_density, max_density, max_area,
    optimal_growth_rate, growth_rate_fraction, initial_lag,
-   percent_usable_for_growth, days_to_run, verbose = False
+   percent_usable_for_growth, days_to_run, verbose = False, calibration_run = False
 )
 ```
 
@@ -74,7 +74,7 @@ growth numbers
 A dataframe with all important growth numbers
 
 ### .determine_average_productivity
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L210)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L215)
 ```python
 .determine_average_productivity(
    growth_rate_fraction, days_to_run, percent_usable_for_growth,
@@ -104,7 +104,7 @@ per area and day and the harvest intervall
 
 
 ### self_shading
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L265)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L274)
 ```python
 .self_shading(
    density
@@ -131,7 +131,7 @@ the growth rate fraction
 
 
 ### calculate_seaweed_need
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L284)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L293)
 ```python
 .calculate_seaweed_need(
    global_pop, calories_per_person_per_day, food_waste,
@@ -162,7 +162,7 @@ limited by the iodine content of the seaweed
 
 
 ### seaweed_farm_area_per_day
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L315)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L324)
 ```python
 .seaweed_farm_area_per_day(
    day
@@ -188,7 +188,7 @@ the area that can be built per day
 
 
 ### logistic_curve
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L336)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L345)
 ```python
 .logistic_curve(
    x, max_L, k, x0, off
@@ -214,7 +214,7 @@ Returns
 
 
 ### run_model
-[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L351)
+[source](https://github.com/allfed/Seaweed-Upscaling-Model/blob/master/src/scaleup_model.py/#L360)
 ```python
 .run_model(
    optimal_growth_rate, days_to_run, global_pop, calories_per_person_per_day,
